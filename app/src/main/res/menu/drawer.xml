@@ -1,0 +1,31 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:title="主页" />
+        <item
+            android:id="@+id/nav_bu_artclie"
+            android:checked="true"
+            android:title="最美文章" />
+        <item
+            android:id="@+id/nav_messages"
+            android:title="我的帖子" />
+        <item
+            android:id="@+id/nav_friends"
+            android:title="美文分类" />
+        <item
+            android:id="@+id/nav_favo"
+            android:title="我的收藏" />
+    </group>
+    <item android:title="扩展功能">
+        <menu>
+            <item
+                android:id="@+id/night_type"
+                android:title="切换模式" />
+            <item android:id="@+id/nav_setting"
+                android:title="设置"
+                />
+        </menu>
+    </item>
+</menu>

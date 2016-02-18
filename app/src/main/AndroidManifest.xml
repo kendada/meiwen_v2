@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="cc.meiwen" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
+
+    <!-- Bmob -->
+    <permission android:protectionLevel="normal" android:name="cn.bmob.permission.push"></permission>
+    <uses-permission android:name="cn.bmob.permission.push"/><!-- 添加自定义的权限-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:name=".ui.activity.BaseApplication"
+        >
+        <activity
+            android:name=".ui.activity.SplashActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 登录 -->
+        <activity android:name=".ui.activity.LoginActivity" />
+        <!-- 首页 -->
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.Main2Activity" />
+        <!-- 注册 -->
+        <activity android:name=".ui.activity.RegisUserActivity" />
+        <!-- 用户信息 -->
+        <activity android:name=".ui.activity.UserInfoActivity" />
+        <!-- app设置界面 -->
+        <activity android:name=".ui.activity.AppSettingActivity" android:theme="@style/translucent" />
+        <!-- 发表帖子 -->
+        <activity android:name=".ui.activity.SavePostActivity" />
+        <!-- 帖子分类 -->
+        <activity android:name=".ui.activity.PostTypeActivity" />
+        <!-- 帖子详细信息和评论 -->
+        <activity android:name=".ui.activity.PostCommentActivity" />
+        <!-- 游客查看帖子 -->
+        <activity android:name=".ui.activity.NoPassActivity" />
+        <!-- 关于我们 -->
+        <activity android:name=".ui.activity.AboutActivity" android:theme="@style/translucent" />
+        <!-- 用户反馈 -->
+        <activity android:name=".ui.activity.FeedbackActivity" />
+
+        <!-- 2.8.66增加 -->
+        <activity android:name=".ui.activity.ShowImageActivity" />
+        <activity android:name=".ui.activity.FavoActivity" />
+        <!-- 2.8.0增加 -->
+
+        <!-- 3.0.0增加 -->
+        <activity android:name=".ui.activity.MostBeautifulActivity" />
+
+        <!-- 第三方登录：腾讯 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1104956192" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+
+
+        <!-- ***********************Bmob以下******************************* -->
+        <meta-data android:value="xiaomi" android:name="BMOB_CHANNEL"/>
+        <service
+            android:label="PushService"
+            android:name="cn.bmob.push.lib.service.PushService"
+            android:process="cn.bmob.push"
+            android:permission="cn.bmob.permission.push"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.bmob.push.lib.service.PushService"/>
+            </intent-filter>
+        </service>
+        <receiver android:name="cn.bmob.push.PushReceiver" >
+            <intent-filter android:priority="2147483647" ><!--优先级加最高-->
+                <!-- 系统启动完成后会调用 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- 解锁完成后会调用 -->
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <!-- 监听网络连通性 -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".MyPushMessageReceiver" >
+            <intent-filter >
+                <action android:name="cn.bmob.push.action.MESSAGE" />
+            </intent-filter>
+        </receiver>
+        <!-- Bmob自动更新 -->
+        <activity
+            android:name="cn.bmob.v3.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <!-- ***********************Bmob以上******************************* -->
+
+        <meta-data android:value="563c61ea67e58e67c2000779" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="xiaomi" android:name="UMENG_CHANNEL"/>
+
+        <!-- 友盟移动统计 -->
+
+    </application>
+
+</manifest>

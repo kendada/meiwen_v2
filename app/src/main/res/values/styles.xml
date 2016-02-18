@@ -1,0 +1,72 @@
+<resources>
+
+    <!-- 日间模式 -->
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/darkPrimaryColor</item>
+        <item name="colorAccent">@color/darkPrimaryColor</item>
+
+        <item name="theme_list_item_bg">@drawable/circle_bg</item>
+        <item name="theme_bg">@color/all_bg</item>
+        <item name="theme_toolbar_menu">@style/tooBarMenuStyle</item>
+
+        <item name="theme_setting_item_bg">@drawable/setting_item_bg_no</item>
+        <item name="theme_save_post_edit_bg">@drawable/setting_item_bg_no</item>
+        <item name="theme_save_post_btn_bg">@color/primaryColor</item>
+
+        <item name="theme_comment_item_bg">@color/text</item>
+
+
+    </style>
+
+    <style name="AppTheme" parent="BaseAppTheme">
+
+    </style>
+
+    <style name="toolBarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/text</item>
+    </style>
+    <!-- 日间模式-Menu菜单样式 -->
+    <style name="tooBarMenuStyle" parent="@style/ThemeOverlay.AppCompat.Light">
+
+    </style>
+
+    <!-- 夜间模式 -->
+    <style name="DrakTheme" parent="Theme.AppCompat.NoActionBar" >
+        <item name="colorPrimary">@color/nightPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/nightDarkPrimaryColor</item>
+        <item name="colorAccent">@color/nightDarkPrimaryColor</item>
+
+        <item name="theme_list_item_bg">@drawable/circle_bg_drak</item>
+        <item name="theme_bg">@color/nightDarkPrimaryColor</item>
+        <item name="theme_toolbar_menu">@style/tooBarMenuStyleDark</item>
+
+        <item name="theme_setting_item_bg">@drawable/setting_item_bg_no_drak</item>
+
+        <item name="theme_save_post_edit_bg">@drawable/setting_item_bg_no_drak</item>
+        <item name="theme_save_post_btn_bg">@color/nightPrimaryColor</item>
+
+        <item name="theme_comment_item_bg">@color/nightPrimaryColor</item>
+
+
+    </style>
+    <!-- 夜间模式-Menu菜单样式 -->
+    <style name="tooBarMenuStyleDark" parent="@style/ThemeOverlay.AppCompat">
+
+    </style>
+
+    <style name="translucent" parent="AppTheme">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- 自定义loading dialog loading_bg-->
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/dialog_pro_bg</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+</resources>

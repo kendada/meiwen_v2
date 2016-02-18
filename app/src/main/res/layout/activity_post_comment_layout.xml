@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/theme_bg"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    >
+    <include layout="@layout/toobar_layout" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_layout"
+        android:layout_margin="5dp"
+        android:background="?attr/theme_comment_item_bg"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/darkPrimaryColor"
+            android:textColor="@color/text"
+            android:text="评论"
+            android:id="@+id/comment_btn"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/comment_btn"
+            android:background="?attr/theme_comment_item_bg"
+            android:padding="3dp"
+            android:hint="写评论"
+            android:singleLine="true"
+            android:id="@+id/edit_comment"
+            />
+    </RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/refresh_layout"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/bottom_layout"
+        >
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@color/no_color"
+            android:dividerHeight="0dp"
+            android:divider="@color/no_color"
+            android:id="@+id/list_view"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</RelativeLayout>

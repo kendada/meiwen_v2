@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    >
+
+    <include layout="@layout/toobar_layout" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:background="?attr/theme_save_post_edit_bg"
+        android:id="@+id/edit_post"
+        android:gravity="left"
+        android:hint="分享美文。。。"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="?attr/theme_save_post_btn_bg"
+        android:textColor="@color/text"
+        android:text="发布帖子"
+        android:id="@+id/post_btn"
+        />
+
+</LinearLayout>

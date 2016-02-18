@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="theme_list_item_bg" format="reference|color" />
+    <attr name="theme_bg" format="reference|color" />
+    <attr name="theme_toolbar_menu" format="reference" />
+    <attr name="theme_setting_item_bg" format="reference|color" />
+    <attr name="theme_save_post_edit_bg" format="reference|color" />
+    <attr name="theme_save_post_btn_bg" format="reference|color" />
+
+    <attr name="theme_comment_item_bg" format="reference|color" />
+
+</resources>

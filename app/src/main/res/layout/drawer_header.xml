@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/topbg_3"
+        />
+
+    <cc.meiwen.view.SelectableRoundedImageView
+        android:layout_width="@dimen/act_user_info_icon_height"
+        android:layout_height="@dimen/act_user_info_icon_height"
+        android:layout_centerInParent="true"
+        android:id="@+id/user_icon"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/banner"
+        app:sriv_left_top_corner_radius="16dip"
+        app:sriv_right_top_corner_radius="0dip"
+        app:sriv_left_bottom_corner_radius="48dip"
+        app:sriv_right_bottom_corner_radius="16dip"
+        app:sriv_border_width="2dip"
+        app:sriv_border_color="@color/text"
+        app:sriv_oval="true"
+        android:visibility="gone"
+        />
+
+</RelativeLayout>

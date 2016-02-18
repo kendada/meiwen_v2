@@ -1,0 +1,11 @@
+<resources>
+    <!--
+        Base application theme for API 19+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 19+ devices.
+    -->
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="android:windowTranslucentNavigation" >false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>

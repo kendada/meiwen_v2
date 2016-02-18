@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cc.meiwen.view.SwipeBackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:id="@+id/swip_back_layout"
+    >
+
+    <include layout="@layout/toobar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:id="@+id/scrollView"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="31dp"
+                android:src="@mipmap/icon_singe"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="17sp"
+                android:layout_marginTop="11dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:text="天天美文V2.8.66"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="1dp"
+                android:lineSpacingMultiplier="1.2"
+                android:textSize="15sp"
+                android:layout_marginTop="31dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:text="@string/about_info"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_margin="11dp"
+                android:text="@string/app_name"
+                android:id="@+id/how_btn"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_margin="11dp"
+                android:text="QQ群：287292031【点击可复制】"
+                android:id="@+id/qq_btn"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+
+</cc.meiwen.view.SwipeBackLayout>

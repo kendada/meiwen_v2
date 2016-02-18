@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="darkPrimaryColor">#009688</color>
+    <color name="primaryColor">#00c4af</color>
+    <color name="lightPrimaryColor">#B2EBF2</color>
+    <color name="text">#FFFFFF</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#727272</color>
+    <color name="dividerColor">#B6B6B6</color>
+    <color name="all_bg">#eeeeee</color>
+
+    <color name="no_color">#00000000</color>
+
+
+    <color name="nightDarkPrimaryColor">#222222</color>
+    <color name="nightPrimaryColor">#454545</color>
+    <color name="night_list_text_color">#B8B8B8</color>
+    <color name="night_list_divider">#484848</color>
+    <color name="night_actionbar_color">#3B3B3B</color>
+
+
+    <color name="isShow">#009688</color>
+    <color name="isNotShow">#E64A19</color>
+
+    <color name="tab_bg_green">#00c4af</color>
+
+    <color name="transparent">#00000000</color>
+
+</resources>

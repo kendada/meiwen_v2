@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="StateFrameLayout">
+        <attr name="msv_loadingView" format="reference" />
+        <attr name="msv_emptyView" format="reference" />
+        <attr name="msv_errorView" format="reference" />
+        <attr name="msv_viewState" format="enum" >
+            <enum name="content" value="0" />
+            <enum name="error" value="1" />
+            <enum name="empty" value="2" />
+            <enum name="loading" value="3" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SelectableRoundedImageView">
+        <attr name="sriv_left_top_corner_radius" format="dimension" />
+        <attr name="sriv_right_top_corner_radius" format="dimension" />
+        <attr name="sriv_left_bottom_corner_radius" format="dimension" />
+        <attr name="sriv_right_bottom_corner_radius" format="dimension" />
+        <attr name="sriv_border_width" format="dimension" />
+        <attr name="sriv_border_color" format="color" />
+        <attr name="sriv_oval" format="boolean" />
+        <attr name="android:scaleType" />
+    </declare-styleable>
+
+
+    <declare-styleable name="WeiXinTabLayoutStyleable">
+        <attr name="tabChecked" format="boolean" />
+        <attr name="tabTitle" format="string" />
+        <attr name="tabTitleSize" format="dimension" />
+        <attr name="tabTitleColor" format="color" />
+        <attr name="tabIcon" format="reference" />
+        <attr name="tabIconOver" format="reference" />
+        <attr name="tabLableColor" format="color" />
+        <attr name="tabLableText" format="string" />
+        <attr name="tabLableTextSize" format="dimension" />
+        <attr name="tabLablebackground" format="color"/>
+    </declare-styleable>
+
+</resources>
