@@ -19,5 +19,3 @@
      <br />   <br />
 **个人博客**       <br />   
 [CSDN](http://blog.csdn.net/zengdesen)    <br />
-[安卓巴士](http://www.apkbus.com/home.php?mod=space&uid=38687&do=blog&view=me&from=space)
-
