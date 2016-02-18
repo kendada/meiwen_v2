@@ -13,3 +13,7 @@
      <br />
 截图为稳定版本截图，最新bete版本已更换主题 **【此版本BUG未修复】**
 
+使用第三方开源：    <br />
+* [Android-Universal-Image-Loader](https://github.com/nostra13/Android-Universal-Image-Loader)
+* [ormlite-android](http://ormlite.com/)
+
