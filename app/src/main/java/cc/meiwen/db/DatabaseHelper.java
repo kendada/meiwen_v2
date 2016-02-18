@@ -40,6 +40,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try{
+            // 创建表
             TableUtils.createTable(connectionSource, Favo.class);
             TableUtils.createTable(connectionSource, User.class);
             TableUtils.createTable(connectionSource, PostType.class);
@@ -51,7 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
-        //数据库升级
+        //数据库升级：删除字段，添加字段
     }
 
     public synchronized Dao getDao(Class aClass) throws SQLException {
