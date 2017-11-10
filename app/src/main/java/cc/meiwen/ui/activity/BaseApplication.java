@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 
+import com.koudai.kbase.imageselector.ImagePicker;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -15,8 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import cc.emm.AppConnect;
-
+import cc.meiwen.util.GlideImageLoader;
 
 public class BaseApplication extends Application {
 
@@ -30,6 +30,9 @@ public class BaseApplication extends Application {
 		activities = new ArrayList<>();
 		instance = this;
 		initImageLoader(getApplicationContext());
+
+
+		ImagePicker.getInstance().setImageLoader(new GlideImageLoader());
 	}
 
 	public static void initImageLoader(Context context) {
@@ -65,7 +68,6 @@ public class BaseApplication extends Application {
 	 * finish所有的Activity
 	 * */
 	public void finishAllActivity(){
-		AppConnect.getInstance(this).close();
 		for(Activity activity:activities){
 			if(activity!=null){
 				activity.finish();

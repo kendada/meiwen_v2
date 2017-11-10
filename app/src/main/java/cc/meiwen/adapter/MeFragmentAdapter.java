@@ -14,7 +14,6 @@ import java.util.List;
 import cc.meiwen.R;
 import cc.meiwen.adapter.base.AdapterHolder;
 import cc.meiwen.adapter.base.MnBaseAdapter;
-import cc.meiwen.db.FavoDao;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
@@ -45,17 +44,12 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
 
     private String url = "http://file.bmob.cn/";
 
-    private FavoDao favoDao;
-
     private String tag = MeFragmentAdapter.class.getSimpleName();
 
     public MeFragmentAdapter(Context context, List<Post> datas) {
         super(context, datas);
         user = BmobUser.getCurrentUser(context, User.class);
         ph = MnAppUtil.getPhoneH(mContext)/3;
-
-        favoDao = new FavoDao(context);
-
     }
 
     @Override
@@ -175,7 +169,6 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
         favo.delete(mContext, favo.getObjectId(), new DeleteListener() {
             @Override
             public void onSuccess() {
-                favoDao.delete(favo.clone());
             }
 
             @Override
@@ -195,7 +188,6 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
             public void onSuccess(List<Favo> list) {
                 if(list!=null && list.size()>0){
                     Favo favo = list.get(0);
-                    favoDao.add(favo.clone());
                 }
             }
 

@@ -40,7 +40,7 @@
         <activity android:name=".ui.activity.LoginActivity" />
         <!-- 首页 -->
         <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.Main2Activity" />
+        <activity android:name=".ui.activity.MainActivityV2" />
         <!-- 注册 -->
         <activity android:name=".ui.activity.RegisUserActivity" />
         <!-- 用户信息 -->

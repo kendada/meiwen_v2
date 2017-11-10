@@ -18,8 +18,6 @@ import java.util.List;
 import cc.meiwen.R;
 import cc.meiwen.adapter.base.AdapterHolder;
 import cc.meiwen.adapter.base.MnBaseAdapter;
-import cc.meiwen.db.FavoDao;
-import cc.meiwen.db.PostDao;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
@@ -52,18 +50,12 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
 
     private String url = "http://file.bmob.cn/";
 
-    private FavoDao favoDao;
-    private PostDao postDao;
-
     private String tag = MainFragmentAdapter.class.getSimpleName();
 
     public MainFragmentAdapter(Context context, List<Post> datas) {
         super(context, datas);
         user = BmobUser.getCurrentUser(context, User.class);
         ph = MnAppUtil.getPhoneH(mContext)/3;
-
-        favoDao = new FavoDao(context);
-        postDao = new PostDao(context);
     }
 
     @Override
@@ -211,8 +203,6 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
         favo.delete(mContext, favo.getObjectId(), new DeleteListener() {
             @Override
             public void onSuccess() {
-                favoDao.delete(favo);
-                postDao.update(post);
                 Log.i(tag, "---取消收藏帖子。。。--成功。。。。。。");
             }
 
@@ -235,8 +225,6 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
                 if (list != null && list.size() > 0) {
                     Favo favo = list.get(0);
                     Log.i(tag, "-----234----favo=" + favo.getObjectId());
-                    favoDao.add(favo);
-                    postDao.update(post);
                 }
             }
 

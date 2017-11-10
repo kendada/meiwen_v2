@@ -16,7 +16,6 @@ import java.util.List;
 
 import cc.meiwen.R;
 import cc.meiwen.adapter.NoPassAdapter;
-import cc.meiwen.db.PostDao;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.User;
 import cc.meiwen.util.CopyUtil;
@@ -55,7 +54,6 @@ public class NoPassActivity extends BaseActivity {
     private boolean isFinish = true; //是否加载完成
 
     private List<Post> favoPosts;
-    private PostDao postDao;
 
     private ThreadPoolManager threadPoolManager;
 
@@ -74,7 +72,6 @@ public class NoPassActivity extends BaseActivity {
         initViews();
 
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
-        postDao = new PostDao(getContext());
         bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
         initData();
         getDBFavo();
@@ -152,7 +149,6 @@ public class NoPassActivity extends BaseActivity {
 
             @Override
             public Object loadData() {
-                favoPosts = postDao.getAllDatas();
                 return null;
             }
         };

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -24,6 +25,9 @@ public class FileUtils {
 
     private final static String APP_PACKAGE_FOLDER = "/Android/data";
 
+    private final static String F_PICTURE = getSDCardPath() + "/jz/cache/picture";//下载目录
+    private final static String SDCARD_PATH = getSDCardPath();
+
     private final static String FOLDER_NAME = "/image";
 
     private String appPackage = null;
@@ -38,6 +42,52 @@ public class FileUtils {
         mContext = context;
         Log.i(tag, "----38-appPackage:"+appPackage);
         Log.i(tag, "----39-mDataRootPath:"+mDataRootPath);
+    }
+
+    public static File getCachePictureDirectory() {
+        return getFile(F_PICTURE);
+    }
+
+    public static String createCacheImagePath() {
+        long dateTaken = System.currentTimeMillis();
+        String title = CommonConstants.RequestCode.FILE_CACHE_START_NAME + dateTaken;
+        String filename = title + CommonConstants.RequestCode.IMAGE_EXTENSION;
+        return getCachePictureDirectory().getAbsolutePath() + "/" + filename;
+    }
+
+    public static File getFile(String path) {
+        if (null == path) {
+            return null;
+        }
+
+        File f = new File(path);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        return f;
+
+    }
+
+    public static String getSDCardPath() {
+        String sdCardPathString = "";
+        if (checkSDCard()) {
+            sdCardPathString = Environment.getExternalStorageDirectory()
+                    .getPath();
+        } else {
+            sdCardPathString = Environment.getExternalStorageDirectory()
+                    .getParentFile().getPath();
+        }
+
+        return sdCardPathString;
+    }
+
+    /**
+     * 检查sdcard是否存在
+     *
+     * @return
+     */
+    public static boolean checkSDCard() {
+        return TextUtils.equals(android.os.Environment.MEDIA_MOUNTED, android.os.Environment.getExternalStorageState());
     }
 
     /**

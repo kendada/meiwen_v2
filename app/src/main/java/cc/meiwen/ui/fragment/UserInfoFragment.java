@@ -2,16 +2,16 @@ package cc.meiwen.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.utils.L;
 
 import java.util.List;
 
@@ -20,11 +20,10 @@ import cc.meiwen.adapter.MainFragmentAdapter;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.User;
 import cc.meiwen.ui.activity.AppSettingActivity;
-import cc.meiwen.ui.activity.BaseActivity;
 import cc.meiwen.ui.activity.FavoActivity;
+import cc.meiwen.ui.activity.SavePostActivity;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
-import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.listener.CountListener;
@@ -38,11 +37,9 @@ import cn.bmob.v3.listener.CountListener;
 
 public class UserInfoFragment extends BaseFragment implements View.OnClickListener{
 
-    private SwipeRefreshLayout refresh_layout;
-    private SelectableRoundedImageView user_icon; //用户头像
-    private TextView name, post_count, friends_count, message_count;
-    private Button sign_out_btn;
-    private LinearLayout favo_btn, more_setting_btn;
+    private ImageView user_icon; //用户头像
+    private TextView name, post_count, friends_count, message_count, user_explain_view;
+    private LinearLayout favo_btn, more_setting_btn, publish_layout;
 
     private User bmobUser;
 
@@ -70,22 +67,19 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
     }
 
     public void initViews(View view){
-        refresh_layout = (SwipeRefreshLayout)view.findViewById(R.id.refresh_layout);
-        refresh_layout.setColorSchemeResources(R.color.darkPrimaryColor, R.color.primaryColor, R.color.lightPrimaryColor);
-
-        user_icon = (SelectableRoundedImageView)view.findViewById(R.id.user_icon);
+        user_icon = (ImageView)view.findViewById(R.id.user_icon);
         name = (TextView)view.findViewById(R.id.name);
         post_count = (TextView)view.findViewById(R.id.post_count);
         friends_count = (TextView)view.findViewById(R.id.friends_count);
         message_count = (TextView)view.findViewById(R.id.message_count);
-
-        sign_out_btn = (Button)view.findViewById(R.id.sign_out_btn);
-        sign_out_btn.setOnClickListener(this);
+        user_explain_view = (TextView) view.findViewById(R.id.user_explain_view);
 
         favo_btn = (LinearLayout)view.findViewById(R.id.favo_btn);
         favo_btn.setOnClickListener(this);
         more_setting_btn = (LinearLayout)view.findViewById(R.id.more_setting_btn);
         more_setting_btn.setOnClickListener(this);
+        publish_layout = (LinearLayout)view.findViewById(R.id.publish_layout);
+        publish_layout.setOnClickListener(this);
 
     }
 
@@ -102,6 +96,9 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
         bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
         if(bmobUser!=null){
             name.setText(bmobUser.getUsername());
+            if(!TextUtils.isEmpty(bmobUser.getUserInfo())){
+                user_explain_view.setText(bmobUser.getUserInfo());
+            }
             //获取登录用户发布帖子的数量
             getPostCount();
         }
@@ -140,6 +137,10 @@ public class UserInfoFragment extends BaseFragment implements View.OnClickListen
             case R.id.more_setting_btn:
                 Intent mIntent = new Intent(getContext(), AppSettingActivity.class);
                 startActivity(mIntent);
+                break;
+            case R.id.publish_layout:
+                Intent sIntent = new Intent(getContext(), SavePostActivity.class);
+                startActivity(sIntent);
                 break;
         }
     }

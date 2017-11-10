@@ -4,14 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+    <cc.meiwen.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:popupTheme="?attr/theme_toolbar_menu"
-        app:theme="@style/toolBarTheme"
+        android:id="@+id/toolbar"
+        app:tbTitleText="@string/app_name"
+        app:tbShowReturn="false"
         />
     <cc.meiwen.view.tab.MnTabGroupLayout
         android:layout_width="match_parent"
@@ -27,9 +25,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:tabTitle="首页"
-            app:tabTitleColor="@color/tab_bg_green"
-            app:tabIcon="@mipmap/ic_main_top_normal"
-            app:tabIconOver="@mipmap/ic_main_top_press"
+            app:tabTitleColor="@color/tab_bg_green1"
+            app:tabIcon="@mipmap/ic_home_normal"
+            app:tabIconOver="@mipmap/ic_home_pressed"
             app:tabLablebackground="@color/text"
             app:tabChecked="true"
             />
@@ -37,20 +35,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            app:tabTitle="分类"
-            app:tabTitleColor="@color/tab_bg_green"
+            app:tabTitle="发现"
+            app:tabTitleColor="@color/tab_bg_green1"
             app:tabLableColor="@color/text"
-            app:tabIcon="@mipmap/ic_main_rss_normal"
-            app:tabIconOver="@mipmap/ic_main_rss_press"
+            app:tabIcon="@mipmap/ic_app_normal"
+            app:tabIconOver="@mipmap/ic_app_pressed"
+            />
+        <cc.meiwen.view.tab.MnTabLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:tabTitle="分类"
+            app:tabTitleColor="@color/tab_bg_green1"
+            app:tabLableColor="@color/text"
+            app:tabIcon="@mipmap/ic_game_normal"
+            app:tabIconOver="@mipmap/ic_game_pressed"
             />
         <cc.meiwen.view.tab.MnTabLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             app:tabTitle="我"
-            app:tabTitleColor="@color/tab_bg_green"
-            app:tabIcon="@mipmap/ic_main_my_normal"
-            app:tabIconOver="@mipmap/ic_main_my_press"
+            app:tabTitleColor="@color/tab_bg_green1"
+            app:tabIcon="@mipmap/ic_setting_normal"
+            app:tabIconOver="@mipmap/ic_setting_pressed"
             />
     </cc.meiwen.view.tab.MnTabGroupLayout>
 

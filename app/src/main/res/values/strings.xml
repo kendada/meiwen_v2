@@ -8,7 +8,13 @@
 
     <string name="zc_str">注册</string>
     <string name="dl_str">登录</string>
-    <string name="yk_str">进入软件</string>
+    <string name="yk_str">游客访问</string>
+
+    <string name="live_cancel">取消</string>
+
+    <string name="live_status_live">往期美文回顾</string>
+
+    <string name="jz_hen_lan_txt">这家伙很懒，什么都不想说！</string>
 
     <string name="setting_share_txt">退出登录</string>
     <string name="setting_news_push_txt">新闻推送</string>

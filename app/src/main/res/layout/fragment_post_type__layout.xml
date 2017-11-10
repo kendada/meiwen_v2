@@ -11,16 +11,13 @@
         android:layout_height="match_parent"
         android:id="@+id/refresh_layout"
         >
-        <GridView
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="none"
-            android:numColumns="2"
-            android:verticalSpacing="3dp"
-            android:horizontalSpacing="3dp"
             android:dividerHeight="0dp"
             android:divider="@color/no_color"
-            android:id="@+id/grid_view"
+            android:id="@+id/list_view"
             />
     </android.support.v4.widget.SwipeRefreshLayout>
 

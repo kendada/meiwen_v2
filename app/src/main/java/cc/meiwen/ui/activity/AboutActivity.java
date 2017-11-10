@@ -22,7 +22,7 @@ public class AboutActivity extends BaseActivity{
     private Toolbar toolbar;
     private SwipeBackLayout swip_back_layout;
     private ScrollView scrollView;
-    private TextView qq_btn, how_btn;
+    private TextView qq_btn, how_btn, wx_btn, wx_user_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,20 @@ public class AboutActivity extends BaseActivity{
                 new CopyUtil(getContext()).copy("287292031");
             }
         });
-
+        wx_btn = (TextView) findViewById(R.id.wx_btn);
+        wx_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CopyUtil(getContext()).copy("图说微情话");
+            }
+        });
+        wx_user_btn = (TextView) findViewById(R.id.wx_user_btn);
+        wx_user_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new CopyUtil(getContext()).copy("vqh1314");
+            }
+        });
         how_btn = (TextView)findViewById(R.id.how_btn);
         how_btn.setText("使用说明：\r\n" +
                 "1. 每条美文长按可复制；\r\n" +

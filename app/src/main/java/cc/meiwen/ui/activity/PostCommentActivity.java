@@ -22,7 +22,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-import cc.emm.AppConnect;
 import cc.meiwen.R;
 import cc.meiwen.adapter.PostCommentAdapter;
 import cc.meiwen.model.Comment;
@@ -164,7 +163,6 @@ public class PostCommentActivity extends BaseActivity{
         text = (TextView)footerView.findViewById(R.id.text);
         //万普广告
         LinearLayout adlayout =(LinearLayout)footerView.findViewById(R.id.AdLinearLayout);
-        AppConnect.getInstance(getContext()).showBannerAd(getContext(), adlayout);
 
         list_view.addFooterView(footerView);
 

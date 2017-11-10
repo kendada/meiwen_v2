@@ -16,10 +16,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cc.emm.AppConnect;
 import cc.meiwen.R;
 import cc.meiwen.adapter.MostArtcileAdapter;
-import cc.meiwen.db.PostDao;
 import cc.meiwen.model.Artcile;
 import cc.meiwen.model.Datas;
 import cc.meiwen.model.Post;
@@ -60,7 +58,6 @@ public class MostArtcileFragment extends BaseFragment {
     private boolean isFinish = true; //是否加载完成
 
     private List<Post> favoPosts;
-    private PostDao postDao;
 
     private ThreadPoolManager threadPoolManager;
 
@@ -78,7 +75,6 @@ public class MostArtcileFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        postDao = new PostDao(getContext());
         loadingDialog = new LoadingDialog(getContext());
         dialog = loadingDialog.createLoadingDialog("正在获取数据");
         View rootView = inflater.inflate(R.layout.fragment_main_layout, container, false);
@@ -148,7 +144,6 @@ public class MostArtcileFragment extends BaseFragment {
         text = (TextView)footerView.findViewById(R.id.text);
         //万普广告
         LinearLayout adlayout =(LinearLayout)footerView.findViewById(R.id.AdLinearLayout);
-        AppConnect.getInstance(getContext()).showBannerAd(getContext(), adlayout);
 
         list_view.addFooterView(footerView);
         footerView.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +202,6 @@ public class MostArtcileFragment extends BaseFragment {
 
             @Override
             public Object loadData() {
-                favoPosts = postDao.getAllDatas();
                 return null;
             }
         };

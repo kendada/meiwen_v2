@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <declare-styleable name="TitleBar">
+        <attr name="tbTitleText" format="string"/>
+        <attr name="tbRightEventText2" format="string"/>
+        <attr name="tbRightEventText" format="string"/>
+        <attr name="tbShowReturn" format="boolean"/>
+        <attr name="tbShowEvent" format="boolean"/>
+        <attr name="tbBackground" format="color|reference"/>
+        <attr name="tbRightEventSrc" format="reference"/>
+        <attr name="tbShowImgEvent" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="FindSearchUserLiveLayout">
+        <attr name="user_count" format="integer" />
+    </declare-styleable>
+
     <declare-styleable name="StateFrameLayout">
         <attr name="msv_loadingView" format="reference" />
         <attr name="msv_emptyView" format="reference" />

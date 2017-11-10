@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
@@ -16,14 +17,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import cc.emm.AppConnect;
 import cc.meiwen.R;
-import cc.meiwen.db.FavoDao;
-import cc.meiwen.db.PostTypeDao;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.User;
 import cc.meiwen.ui.fragment.FavoFragment;
+import cc.meiwen.ui.fragment.FindFragment;
 import cc.meiwen.ui.fragment.MainFragment;
 import cc.meiwen.ui.fragment.MeFragment;
 import cc.meiwen.ui.fragment.MostArtcileFragment;
@@ -55,9 +54,7 @@ public class MainActivity extends BaseActivity {
     private MeFragment meFragment;
     private FavoFragment favoFragment;
     private MostArtcileFragment mostArtcileFragment;
-
-    private FavoDao favoDao;
-    private PostTypeDao postTypeDao;
+    private FindFragment mFindFragment;
 
     private String tag = MainActivity.class.getSimpleName();
 
@@ -71,12 +68,8 @@ public class MainActivity extends BaseActivity {
         meFragment = new MeFragment();
         favoFragment = new FavoFragment();
         mostArtcileFragment = new MostArtcileFragment();
+        mFindFragment = new FindFragment();
 
-        //初始化揑屏广告
-        AppConnect.getInstance(this).initPopAd(this);
-
-        favoDao = new FavoDao(getContext());
-        postTypeDao = new PostTypeDao(getContext());
         //保存Post分类
         getPostType();
 
@@ -119,19 +112,22 @@ public class MainActivity extends BaseActivity {
                 tempId = itemId;
                 switch (itemId) {
                     case R.id.nav_friends: //美文分类
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, postTypeFragment).commit();
+                        onFragmentCommit(postTypeFragment);
                         break;
                     case R.id.nav_home:  //主页
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, mainFragment).commit();
+                        onFragmentCommit(mainFragment);
                         break;
                     case R.id.nav_messages: //消息
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, meFragment).commit();
+                        onFragmentCommit(meFragment);
                         break;
                     case R.id.nav_favo: //收藏
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, favoFragment).commit();
+                        onFragmentCommit(favoFragment);
                         break;
                     case R.id.nav_bu_artclie:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, mostArtcileFragment).commit();
+                        onFragmentCommit(mostArtcileFragment);
+                        break;
+                    case R.id.nav_find:
+                        onFragmentCommit(mFindFragment);
                         break;
                 }
             }
@@ -178,20 +174,22 @@ public class MainActivity extends BaseActivity {
         saveFavoData(); //缓存已经收藏的帖子
     }
 
+    private void onFragmentCommit(Fragment fragment){
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
     /**
      * 获取Post分类
      * */
     private void getPostType(){
-        int count = postTypeDao.count();
+        int count = 0;
         if(count == 11){ //目前11个
             return;
         }
-        postTypeDao.delete(null); //全部清除
         BmobQuery<PostType> bmobQuery = new BmobQuery<>();
         bmobQuery.findObjects(getContext(), new FindListener<PostType>() {
             @Override
             public void onSuccess(List<PostType> list) {
-                postTypeDao.addPostTypes(list);
             }
 
             @Override
@@ -206,7 +204,6 @@ public class MainActivity extends BaseActivity {
      * 获取已经收藏的帖子
      * */
     private void saveFavoData(){
-        if(favoDao.count()>0) return; //如果已缓存收藏帖子，则不需要再次缓存
         User user = BmobUser.getCurrentUser(getContext(), User.class);
         BmobQuery<Favo> query = new BmobQuery<>();
         query.addWhereEqualTo("user", user);
@@ -235,7 +232,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public Object loadData() {
-                favoDao.saveAllFavos(list);
                 return null;
             }
         };

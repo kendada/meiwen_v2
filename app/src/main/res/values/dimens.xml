@@ -11,4 +11,125 @@
     <dimen name="setting_item_m19">19dp</dimen>
     <dimen name="setting_item_m31">31dp</dimen>
 
+    <dimen name="dividerHeight">0.5dp</dimen>
+    <dimen name="Live_find_head_divider_height">4dp</dimen>
+    <!-- 空白状态 -->
+    <dimen name="live_empty_margin_top">20dp</dimen>
+    <dimen name="live_empty_margin_top_sm">15dp</dimen>
+    <dimen name="live_empty_padding_left">20dp</dimen>
+    <dimen name="live_empty_padding_right">20dp</dimen>
+    <dimen name="live_empty_bottom_text_size">15sp</dimen>
+    <dimen name="live_empty_info_text_size">15sp</dimen>
+    <!-- 首页 -->
+    <dimen name="live_main_bottom_float_btn_margin">15dp</dimen>
+    <dimen name="live_main_adapter_icon_w_h">60dp</dimen>
+    <dimen name="live_main_adapter_item_icon_margin">12dp</dimen>
+    <dimen name="live_main_adapter_item_nick_name_text_size">19sp</dimen>
+    <dimen name="live_main_adapter_item_nick_margin_top">20dp</dimen>
+    <dimen name="live_main_adapter_item_trends_margin_top">13dp</dimen>
+    <dimen name="live_main_adapter_item_trends_text_size">12sp</dimen>
+    <dimen name="live_main_adapter_item_arrow_margin_right">10dp</dimen>
+    <dimen name="live_main_adapter_item_num_margin_right">20dp</dimen>
+    <dimen name="live_main_adapter_item_status_margin_left">5dp</dimen>
+    <dimen name="live_main_adapter_item_status_margin_top">24dp</dimen>
+    <dimen name="live_main_adapter_footer_btn_height">60dp</dimen>
+    <dimen name="live_main_adapter_footer_btn_margin_left_right">20dp</dimen>
+    <dimen name="live_main_adapter_bottom_text_size">18sp</dimen>
+    <dimen name="live_main_bottom_menu_margin_txt_top">10dp</dimen>
+    <dimen name="live_main_bottom_mneu_item_margin">40dp</dimen>
+    <dimen name="live_find_liveing_user_icon_w_h">40dp</dimen>
+    <dimen name="live_find_liveing_user_icon_w_h_b">44dp</dimen>
+    <dimen name="live_find_liveing_user_icon_w_h_b_1">28dp</dimen>
+    <dimen name="live_find_liveing_user_icon_w_h_b_2">32dp</dimen>
+    <dimen name="live_find_liveing_user_icon_w_h_b_3">30dp</dimen>
+    <dimen name="live_refersh_margin">5dp</dimen>
+    <dimen name="live_main_bottom_menu_btn_h_w">70dp</dimen>
+    <dimen name="live_main_bottom_menu_btn_m_top">10dp</dimen>
+    <dimen name="live_main_bottom_menu_btn_m_right">15dp</dimen>
+    <dimen name="live_main_bottom_menu_btn_m_bottom">15dp</dimen>
+    <dimen name="chat_sound_menu_left20">20dp</dimen>
+    <dimen name="chat_sound_menu_left27">27dp</dimen>
+    <dimen name="live_dynamic_image_top_margin">55dp</dimen>
+    <dimen name="live_dynamic_image_top_margin60">60dp</dimen>
+    <dimen name="live_dynamic_play_video_w_h">50dp</dimen>
+    <dimen name="live_dialog_join_group_tio_margin_top">10dp</dimen>
+    <dimen name="live_find_item_icon_size">80dp</dimen>
+    <dimen name="live_dynamic_report_man_margin_top">12dp</dimen>
+
+    <dimen name="live_group_switch_txt_size">14sp</dimen>
+
+    <!-- TitleBar -->
+    <dimen name="live_title_bar_height">44dp</dimen>
+    <dimen name="live_title_bar_menu_height">32dp</dimen>
+    <!-- list item -->
+    <dimen name="live_item_margin_left">15dp</dimen>
+    <dimen name="live_item_margin_top">5dp</dimen>
+    <dimen name="live_item_margin_right">15dp</dimen>
+    <dimen name="live_item_padding">15dp</dimen>
+    <!-- image -->
+    <dimen name="live_image_80">80dp</dimen>
+    <dimen name="live_image_60">60dp</dimen>
+    <dimen name="live_image_tip_8">8dp</dimen>
+    <dimen name="live_image_tip_14">14dp</dimen>
+    <!-- btn -->
+    <dimen name="live_btn_corners_2.5">2.5dp</dimen>
+    <!-- wallet -->
+    <dimen name="live_wallet_line_height65">65dp</dimen>
+    <dimen name="live_wallet_top_up_icon_size">32dp</dimen>
+    <dimen name="live_btn_border_width">1dp</dimen>
+    <dimen name="live_wallet_top_up_btn_margin">20dp</dimen>
+    <dimen name="live_wallet_top_up_icon_pwd_cell">36dp</dimen>
+    <dimen name="live_wallet_top_up_oval">2dp</dimen>
+    <dimen name="live_wallet_top_up_oval_cell">10dp</dimen>
+
+    <dimen name="title_bar_height">44dp</dimen>
+    <dimen name="top_snack_bar_height">34dp</dimen>
+    <dimen name="dynamic_head_margin_top">54dp</dimen>
+
+    <dimen name="live_dnamic_item_msg_size">16sp</dimen>
+
+    <dimen name="live_dnamic_item_menu_height">50dp</dimen>
+
+    <dimen name="live_particle_adjust_value">50dp</dimen>
+    <dimen name="live_particle_adjust_value_max">80dp</dimen>
+    <dimen name="live_chat_adjust_value">60dp</dimen>
+    <dimen name="live_news_list_delete_txt">12sp</dimen>
+    <dimen name="live_chat_adapter_icon_h_w">50dp</dimen>
+    <dimen name="live_chat_item_menu_pop_pos_adjust_value">50dp</dimen>
+    <dimen name="live_chat_item_admin_web_width_short">130dp</dimen>
+    <!--第三方库-->
+    <!-- 顶部按钮栏高度 -->
+    <dimen name="pickerview_topbar_height">44dp</dimen>
+    <!-- 顶部按钮paddingLeft -->
+    <dimen name="pickerview_topbar_paddingleft">10dp</dimen>
+    <!-- 顶部按钮paddingRight -->
+    <dimen name="pickerview_topbar_paddingright">30dp</dimen>
+    <!-- 顶部按钮文字大小 -->
+    <dimen name="pickerview_topbar_btn_textsize">18sp</dimen>
+    <dimen name="pickerview_topbar_title_textsize">21sp</dimen>
+    <!-- 选项文字大小 需要配合 bools.xml 的 pickerview_customTextSize 为 true 才有效果-->
+    <dimen name="pickerview_textsize">14sp</dimen>
+
+    <!--SwitchButton-->
+    <dimen name="ksw_md_thumb_ripple_size">42dp</dimen>
+    <dimen name="ksw_md_thumb_solid_inset">11dp</dimen>
+    <dimen name="ksw_md_thumb_shadow_inset">11dp</dimen>
+    <dimen name="ksw_md_thumb_shadow_inset_top">11dp</dimen>
+    <dimen name="ksw_md_thumb_shadow_inset_bottom">10dp</dimen>
+    <dimen name="ksw_md_thumb_solid_size">20dp</dimen>
+    <dimen name="ksw_md_thumb_shadow_size">21dp</dimen>
+    <dimen name="ksw_md_thumb_shadow_offset">2dp</dimen>
+
+    <!--直播相关-->
+    <dimen name="av_height_pos">150dp</dimen>
+    <dimen name="av_width_pos">108dp</dimen>
+    <dimen name="av_top_left_pos">12dp</dimen>
+    <!--av_width_pos + av_top_left_pos + 5-->
+    <dimen name="av_follow_left_pos">160dp</dimen>
+    <dimen name="av_follow_left_pos_new">128dp</dimen>
+
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+    <dimen name="folder_cover_size">72dp</dimen>
+
 </resources>

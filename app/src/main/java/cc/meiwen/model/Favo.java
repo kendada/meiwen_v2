@@ -1,8 +1,5 @@
 package cc.meiwen.model;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -12,23 +9,18 @@ import cn.bmob.v3.BmobObject;
  * Version 1.0
  */
 
-@DatabaseTable(tableName = "tab_favo")
 public class Favo extends BmobObject {
 
-    @DatabaseField(generatedId = true)
     private int id;
 
     private User user;
 
-    @DatabaseField
     private String userId;
 
     private Post post;
 
-    @DatabaseField
     private String postId;
 
-    @DatabaseField
     private String favoId;
 
     public Favo(){

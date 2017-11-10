@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorF2"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/ad_layout"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:visibility="visible"
+        >
+        <cc.meiwen.adapter.AdViewPager
+            android:id="@+id/ad_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/black"
+            android:alpha="0.6"
+            android:textColor="@color/white"
+            android:id="@+id/title_view"
+            android:layout_alignParentBottom="true"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/living_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/ad_layout"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white"
+        >
+        <TextView
+            android:id="@+id/user_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:text="@string/live_status_live"
+            android:textColor="@color/color5A"
+            android:textSize="14sp"
+            />
+
+        <ImageView
+            android:id="@+id/right_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/live_skip"
+            />
+
+        <cc.meiwen.view.FindSearchUserLiveLayout
+            android:id="@+id/find_search_user_live_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/right_skip"
+            android:layout_toRightOf="@id/user_status"
+            android:gravity="center_vertical|right"
+            app:user_count="7"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="0dp"
+        android:textColor="@color/color5A"
+        android:text="今日推荐"
+        />
+
+</LinearLayout>

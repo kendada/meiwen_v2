@@ -1,16 +1,15 @@
 package cc.meiwen.ui.fragment;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
+
+import com.koudai.kbase.widget.dialog.KTipDialog;
 
 import java.util.List;
 
@@ -19,7 +18,6 @@ import cc.meiwen.adapter.PostTypeAdapter;
 import cc.meiwen.model.Datas;
 import cc.meiwen.model.PostType;
 import cc.meiwen.ui.activity.PostTypeActivity;
-import cc.meiwen.view.LoadingDialog;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 
@@ -33,14 +31,13 @@ import cn.bmob.v3.listener.FindListener;
 public class PostTypeFragment extends BaseFragment {
 
     private SwipeRefreshLayout refresh_layout;
-    private GridView grid_view;
+    private ListView list_view;
 
     private PostTypeAdapter adapter;
 
     private List<PostType> mList;
 
-    private LoadingDialog loadingDialog;
-    private Dialog dialog;
+    private KTipDialog loadingDialog;
 
     private boolean isVisibleToUI = true; //默认可见
 
@@ -48,8 +45,10 @@ public class PostTypeFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        loadingDialog = new LoadingDialog(getContext());
-        dialog = loadingDialog.createLoadingDialog("正在获取数据");
+        loadingDialog = new KTipDialog.Builder(getActivity())
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在刷新")
+                .create();
         View rootView = inflater.inflate(R.layout.fragment_post_type__layout, container, false);
         return rootView;
     }
@@ -87,7 +86,7 @@ public class PostTypeFragment extends BaseFragment {
         if(datas!=null && datas.getTypeList()!=null){
             mList = datas.getTypeList();
             adapter = new PostTypeAdapter(getContext(), mList);
-            grid_view.setAdapter(adapter);
+            list_view.setAdapter(adapter);
         } else {
             if(isVisibleToUI){
                 //获取分类
@@ -105,7 +104,7 @@ public class PostTypeFragment extends BaseFragment {
     public void initViews(View view) {
         refresh_layout = (SwipeRefreshLayout)view.findViewById(R.id.refresh_layout);
         refresh_layout.setColorSchemeResources(R.color.darkPrimaryColor, R.color.primaryColor, R.color.lightPrimaryColor);
-        grid_view = (GridView)view.findViewById(R.id.grid_view);
+        list_view = (ListView) view.findViewById(R.id.list_view);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class PostTypeFragment extends BaseFragment {
             }
         });
 
-        grid_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(), PostTypeActivity.class);
@@ -137,16 +136,14 @@ public class PostTypeFragment extends BaseFragment {
         query.findObjects(getContext(), new FindListener<PostType>() {
             @Override
             public void onStart() {
-                loadingDialog.setText("正在获取数据");
-                dialog.show();
-                loadingDialog.startAnim();
+                loadingDialog.show();
             }
 
             @Override
             public void onSuccess(List<PostType> list) {
                 mList = list;
                 adapter = new PostTypeAdapter(getContext(), mList);
-                grid_view.setAdapter(adapter);
+                list_view.setAdapter(adapter);
             }
 
             @Override
@@ -156,7 +153,7 @@ public class PostTypeFragment extends BaseFragment {
 
             @Override
             public void onFinish() {
-                dialog.dismiss();
+                loadingDialog.dismiss();
                 refresh_layout.setRefreshing(false);
             }
         });

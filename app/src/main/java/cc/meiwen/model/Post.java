@@ -1,10 +1,5 @@
 package cc.meiwen.model;
 
-import android.util.Log;
-
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.datatype.BmobRelation;
@@ -16,51 +11,38 @@ import cn.bmob.v3.datatype.BmobRelation;
  * Version 1.0
  */
 
-@DatabaseTable(tableName = "tab_post")
 public class Post extends BmobObject {
 
-    @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField
     private String postId;
 
-    @DatabaseField
     private String title;        //帖子标题
 
-    @DatabaseField
     private String content;      // 帖子内容
 
     private User user;         //帖子的发布者，这里体现的是一对一的关系，该帖子属于某个用户
 
-    @DatabaseField
     private String userId;
 
     private BmobFile conImg;      //帖子图片
 
-    @DatabaseField
     private String conImgUrl;
 
     private BmobRelation likes;  //多对多关系：用于存储喜欢该帖子的所有用户
 
     private PostType postType;
 
-    @DatabaseField
     private String postTypeId;
 
-    @DatabaseField
     private String contentImg;
 
-    @DatabaseField
     private boolean isFavo; //当前登录用户是否已经收藏
 
-    @DatabaseField
     private String favoId;
 
-    @DatabaseField
     private boolean isShow; //用户发表帖子是否通过审核
 
-    @DatabaseField
     private String createdAtDate; //创建时间
 
     private String tag = Post.class.getSimpleName();
@@ -229,6 +211,24 @@ public class Post extends BmobObject {
 
     @Override
     public String toString() {
-        return "**"+isFavo+"**";
+        return "Post{" +
+                "id=" + id +
+                ", postId='" + postId + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", user=" + user +
+                ", userId='" + userId + '\'' +
+                ", conImg=" + conImg +
+                ", conImgUrl='" + conImgUrl + '\'' +
+                ", likes=" + likes +
+                ", postType=" + postType +
+                ", postTypeId='" + postTypeId + '\'' +
+                ", contentImg='" + contentImg + '\'' +
+                ", isFavo=" + isFavo +
+                ", favoId='" + favoId + '\'' +
+                ", isShow=" + isShow +
+                ", createdAtDate='" + createdAtDate + '\'' +
+                ", tag='" + tag + '\'' +
+                '}';
     }
 }

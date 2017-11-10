@@ -1,11 +1,10 @@
 package cc.meiwen.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.ClipboardManager;
 import android.widget.Toast;
-
-import cc.emm.AppConnect;
 
 /**
  * 复制操作<br />
@@ -18,6 +17,7 @@ public class CopyUtil {
 	private SharedPreferences spf;
 	private int copyCount = -1; //复制美文的次数
 
+	@SuppressLint("WrongConstant")
 	public CopyUtil(Context context){
 		mContext = context;
 		spf = mContext.getSharedPreferences("ad", Context.MODE_ENABLE_WRITE_AHEAD_LOGGING);
@@ -33,7 +33,6 @@ public class CopyUtil {
 		if(copyCount>100){
 			ed.putInt("c_count", -1);
 			ed.commit();
-			AppConnect.getInstance(mContext).showPopAd(mContext);
 		} else {
 			copyCount += 1;
 			ed.putInt("c_count", copyCount);

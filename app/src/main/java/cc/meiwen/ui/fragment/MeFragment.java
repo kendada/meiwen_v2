@@ -17,10 +17,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import cc.emm.AppConnect;
 import cc.meiwen.R;
 import cc.meiwen.adapter.MeFragmentAdapter;
-import cc.meiwen.db.PostDao;
 import cc.meiwen.model.Datas;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.User;
@@ -61,7 +59,6 @@ public class MeFragment extends BaseFragment {
     private boolean isFinish = true; //是否加载完成
 
     private List<Post> favoPosts;
-    private PostDao postDao;
 
     private ThreadPoolManager threadPoolManager;
 
@@ -85,7 +82,6 @@ public class MeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
-        postDao = new PostDao(getContext());
         bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
         initViews(view);
     }
@@ -144,7 +140,6 @@ public class MeFragment extends BaseFragment {
         text = (TextView)footerView.findViewById(R.id.text);
         //万普广告
         LinearLayout adlayout =(LinearLayout)footerView.findViewById(R.id.AdLinearLayout);
-        AppConnect.getInstance(getContext()).showBannerAd(getContext(), adlayout);
 
         list_view.addFooterView(footerView);
         footerView.setOnClickListener(new View.OnClickListener() {
@@ -216,7 +211,6 @@ public class MeFragment extends BaseFragment {
 
             @Override
             public Object loadData() {
-                favoPosts = postDao.getAllDatas();
                 return null;
             }
         };

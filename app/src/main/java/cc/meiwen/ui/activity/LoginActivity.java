@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koudai.kbase.widget.dialog.KTipDialog;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
@@ -31,7 +32,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     private String tag = LoginActivity.class.getSimpleName();
 
-    private Button regis_btn, login_btn, no_pass_btn;
+    private TextView login_btn;
+    private Button regis_btn, no_pass_btn;
     private EditText edit_name, edit_pass;
 
     //第三方登录
@@ -39,11 +41,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
     private Tencent mTencent;
 
+    private KTipDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
 
+        loadingDialog = new KTipDialog.Builder(this)
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在登录")
+                .create();
 
         initViews();
 
@@ -56,10 +64,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public void initViews(){
         no_pass_btn = (Button)findViewById(R.id.no_pass_btn);
         regis_btn = (Button)findViewById(R.id.regis_btn);
-        login_btn = (Button)findViewById(R.id.login_btn);
+        login_btn = (TextView) findViewById(R.id.login_btn);
         edit_name = (EditText)findViewById(R.id.edit_name);
         edit_pass = (EditText)findViewById(R.id.edit_pass);
         qq_login_btn = (TextView)findViewById(R.id.qq_login_btn);
+
     }
 
     public void initData(){
@@ -203,16 +212,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         user.login(getContext(), new SaveListener() {
             @Override
             public void onStart() {
-                loadingDialog.setText("正在登录");
-                dialog.show();
-                loadingDialog.startAnim();
+                loadingDialog.show();
             }
 
             @Override
             public void onSuccess() {
                 Log.i(tag, "****76****onSuccess()");
                 Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivityV2.class);
                 startActivity(intent);
                 LoginActivity.this.finish();
             }
@@ -225,7 +232,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
             @Override
             public void onFinish() {
-                dialog.dismiss();
+                loadingDialog.dismiss();
             }
         });
     }

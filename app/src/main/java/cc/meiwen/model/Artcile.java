@@ -96,4 +96,16 @@ public class Artcile extends BmobObject {
     public void setThumbUrl(String thumbUrl) {
         this.thumbUrl = thumbUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Artcile{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", original_url='" + original_url + '\'' +
+                ", abstrac='" + abstrac + '\'' +
+                ", thumb=" + thumb +
+                ", thumbUrl='" + thumbUrl + '\'' +
+                '}';
+    }
 }

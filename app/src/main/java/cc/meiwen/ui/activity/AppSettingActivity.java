@@ -17,7 +17,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import cc.emm.AppConnect;
 import cc.meiwen.R;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
@@ -280,7 +279,7 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	 * 跳转到应用推荐界面
 	 * */
 	private void intentToAppRecommed(){
-		AppConnect.getInstance(this).showOffers(this);  //万普广告
+
 	}
 
 	/**

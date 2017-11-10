@@ -1,8 +1,5 @@
 package cc.meiwen.model;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -13,27 +10,23 @@ import cn.bmob.v3.datatype.BmobFile;
  * Version 1.0
  */
 
-@DatabaseTable(tableName = "tab_user")
 public class User extends BmobUser {
 
-    @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField
     private String userId;
 
-    @DatabaseField
     private Integer age; //年龄
 
-    @DatabaseField
     private String sex; //性别
 
     private String iconUrl; //用户头像地址
 
     private BmobFile icon; //用户头像
 
-    @DatabaseField
     private String url;
+
+    private String userInfo; // 用户签名
 
     public User() {
         super();
@@ -101,6 +94,14 @@ public class User extends BmobUser {
     public String getUserId() {
         setUserId(this.getObjectId());
         return userId;
+    }
+
+    public String getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(String userInfo) {
+        this.userInfo = userInfo;
     }
 
     public void setUserId(String userId) {

@@ -1,8 +1,5 @@
 package cc.meiwen.model;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -13,22 +10,16 @@ import cn.bmob.v3.datatype.BmobFile;
  * Version 1.0
  */
 
-@DatabaseTable(tableName = "tab_postType")
 public class PostType extends BmobObject{
 
-    @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField
     private String postTypeId;
 
-    @DatabaseField
     private String type;
 
-    @DatabaseField
     private String title;
 
-    @DatabaseField
     private String iconUrl;
 
     private BmobFile typeBg;
@@ -105,6 +96,13 @@ public class PostType extends BmobObject{
 
     @Override
     public String toString() {
-        return "PostType===="+type;
+        return "PostType{" +
+                "id=" + id +
+                ", postTypeId='" + postTypeId + '\'' +
+                ", type='" + type + '\'' +
+                ", title='" + title + '\'' +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", typeBg=" + typeBg +
+                '}';
     }
 }

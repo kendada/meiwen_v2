@@ -10,7 +10,7 @@
     <color name="all_bg">#eeeeee</color>
 
     <color name="no_color">#00000000</color>
-
+    <color name="colorF2">#F2F2F2</color>
 
     <color name="nightDarkPrimaryColor">#222222</color>
     <color name="nightPrimaryColor">#454545</color>
@@ -19,11 +19,179 @@
     <color name="night_actionbar_color">#3B3B3B</color>
 
 
+    <color name="color00C4AF">#00C4AF</color>
+    <color name="colorB2EBF2">#B2EBF2</color>
+
     <color name="isShow">#009688</color>
     <color name="isNotShow">#E64A19</color>
 
     <color name="tab_bg_green">#00c4af</color>
+    <color name="colot19D5FD">#19D5FD</color>
+    <color name="tab_bg_green1">#19D5FD</color>
+    <color name="item_tab_bg1">#e91e63</color>
 
     <color name="transparent">#00000000</color>
+
+    <color name="colorTitle">#FEFEFF</color>
+    <color name="color66">#666666</color>
+    <color name="color99">#999999</color>
+    <color name="colorEE">#EEEEEE</color>
+    <color name="colorEFF1F3">#EFF1F3</color>
+    <color name="colorD9Divider">#D9D9D9</color>
+    <color name="colorFCEFB9">#FCEFB9</color>
+    <color name="color33">#333333</color>
+    <color name="color4C">#4C4C4C</color>
+    <color name="colorDE">#DEDEDE</color>
+    <color name="color3C">#3C3C3C</color>
+    <color name="colorB2Divider">#B2B2B2</color>
+    <color name="color2FCA89">#2FCA89</color>
+    <color name="color5A">#5A5A5A</color>
+    <color name="color70A13F">#70A13F</color>
+    <color name="colorAA">#AAAAAA</color>
+    <color name="colorCD">#CDCDCD</color>
+    <color name="colorCC">#CCCCCC</color>
+    <color name="colorCenterMeTitle">#8E44AD</color>
+    <color name="color9F">#9F9F9F</color>
+    <color name="colorF7">#F7F7F7</color>
+    <color name="colorFE">#FEFEFE</color>
+    <color name="colorOrange">#F2AD2E</color>
+    <color name="colorlucency">#00000000</color>
+    <color name="colorSimpleDialogContent">#5B5656</color>
+    <color name="colorF8">#F8F8F8</color>
+    <color name="colorRed">#FF0000</color>
+    <color name="color00B87E">#00B87E</color>
+    <color name="white">#FFF</color>
+    <color name="main_bg">#e0e8ea</color>
+    <color name="main_adapter_head_stroke">#c7d1d3</color>
+    <color name="black_light">#99444444</color>
+    <color name="black">#000000</color>
+    <color name="black_trans_half">#7F000000</color>
+    <color name="black_trans_80">#54000000</color>
+    <color name="black_trans_40">#66000000</color>
+    <color name="black_trans_30">#4d000000</color>
+    <color name="colorRedEB">#EB2D39</color>
+    <color name="colorRedH">#9E3836</color>
+    <color name="light_grey">#9b9b9b</color>
+    <color name="spare_user_num_color">#3B91C2</color>
+    <color name="colorACAEB">#acaeb2</color>
+    <color name="colorE5">#e5e5e5</color>
+    <color name="colorE6">#e6e6e6</color>
+    <color name="colorC3C3C5">#c3c3c5</color>
+    <color name="colorF5F5F7">#f5f5f7</color>
+    <color name="colorF54242">#F54242</color>
+    <color name="colorF2AD2E">#F2AD2E</color>
+    <color name="color8737">#FF8737</color>
+    <color name="lightGreen">#42E587</color>
+    <color name="chatName">#96AEB3</color>
+    <color name="colorEB">#EBEBEB</color>
+    <color name="colorC7">#C7C7C7</color>
+    <color name="colorE3">#E3E3E3</color>
+    <color name="black_trans_70">#B2000000</color>
+    <color name="white_trans_10">#19ffffff</color>
+    <color name="white_trans_70">#B2ffffff</color>
+    <color name="color5C">#5C5C5C</color>
+    <color name="colorE7">#E7E7E7</color>
+    <color name="colorE4">#E4E4E4</color>
+    <color name="gender_m">#6CB3FB</color>
+    <color name="gender_f">#FF83E2</color>
+    <color name="colorFF541F">#FF541F</color>
+    <color name="background_black">#2d3132</color>
+    <color name="colordb232f">#db232f</color>
+    <color name="color418a4b">#418a4b</color>
+    <color name="colord06b25">#d06b25</color>
+    <color name="color19D5FD">#19D5FD</color>
+    <color name="item_tab_bg">#e91e63</color>
+
+    <color name="color333333">#333333</color>
+    <color name="color4996E4">#4996E4</color>
+    <color name="color999999">#999999</color>
+    <color name="colorE0E1E2">#E0E1E2</color>
+    <color name="colorF2F2F2">#F2F2F2</color>
+
+    <color name="color64625F">#64625f</color>
+    <color name="color02BD00">#02BD00</color>
+    <color name="colorCF">#CFCFCF</color>
+    <color name="colorF9">#F9F9F9</color>
+    <color name="color73">#737373</color>
+    <color name="colorD3">#d3d3d3</color>
+    <color name="color7f8389">#7f8389</color>
+    <color name="colorADAFB3">#ADAFB3</color>
+    <color name="color_dynamic_content_type_1">#87C1FD</color>
+    <color name="color_dynamic_content_type_2">#9DD790</color>
+    <color name="color_dynamic_content_type_3">#f3AF78</color>
+    <color name="grade_pb_bg">#d12741</color>
+    <color name="grade_avatar_bg">#be1f1f</color>
+    <color name="color32">#323232</color>
+    <color name="colorDC">#DCDCDC</color>
+    <color name="colorClickOrange">#da9b26</color>
+    <color name="color99b2c3">#99b2c3</color>
+    <color name="colorf84f18">#f84f18</color>
+    <color name="color5abe44">#5abe44</color>
+    <color name="colorD5">#d5d5d5</color>
+    <color name="color23d080">#23d080</color>
+    <color name="colorf0">#f0f0f0</color>
+    <color name="colorf3">#f3f3f3</color>
+    <color name="colore82b48">#e82b48</color>
+    <color name="white_trans_30">#4dffffff</color>
+    <color name="color68">#686868</color>
+    <color name="colorb3">#b3b3b3</color>
+    <color name="color45">#454545</color>
+    <color name="colora57309">#a57309</color>
+    <color name="colorc00d0d">#c00d0d</color>
+    <color name="colorfe0000">#fe0000</color>
+    <color name="color75">#757575</color>
+    <color name="color26">#262626</color>
+    <color name="colorEB3333">#eb3333</color>
+    <color name="colorCE9327">#ce9327</color>
+    <color name="color1CB907_trans_80">#cc1cb907</color>
+    <color name="colorEA">#eaeaea</color>
+    <color name="colorC5">#c5c5c5</color>
+
+    <!--覆盖颜色-->
+    <color name="bgColor_overlay">#60000000</color>
+    <color name="sendEnabled">#00B87E</color>
+    <color name="chat_df_bg">#64525252</color>
+
+    <!--第三方库-->
+    <color name="pickerview_timebtn_nor">#057dff</color>
+    <color name="pickerview_timebtn_orange_nor">#F2AD2E</color>
+    <color name="pickerview_timebtn_pre">#c2daf5</color>
+    <color name="pickerview_timebtn_orange_pre">#FFFACE7D</color>
+    <color name="pickerview_bg_topbar">#f5f5f5</color>
+    <color name="pickerview_wheelview_textcolor_out">#a8a8a8</color>
+    <color name="pickerview_wheelview_textcolor_center">#2a2a2a</color>
+    <color name="pickerview_wheelview_textcolor_divider">#d5d5d5</color>
+
+    <!--SwitchButton-->
+    <color name="ksw_md_ripple_normal">#1E000000</color>
+    <color name="ksw_md_ripple_checked">#33019285</color>
+    <color name="ksw_md_solid_shadow">#33000000</color>
+    <color name="ksw_md_solid_normal">#ECECEC</color>
+    <color name="ksw_md_solid_checked">#019285</color>
+    <color name="ksw_md_solid_disable">#FFFFFF</color>
+    <color name="ksw_md_solid_checked_disable">#aaaaaa</color>
+
+    <color name="color354450">#354450</color>
+
+    <!--Whiteboard-->
+    <color name="wbColor1">#FFFFFF</color>
+    <color name="wbColor2">#878787</color>
+    <color name="wbColor3">#000000</color>
+    <color name="wbColor4">#F8477C</color>
+    <color name="wbColor5">#F7320B</color>
+    <color name="wbColor6">#A476E9</color>
+    <color name="wbColor7">#5334D6</color>
+    <color name="wbColor8">#00C0FF</color>
+    <color name="wbColor9">#A3DAFF</color>
+    <color name="wbColor10">#06A135</color>
+    <color name="wbColor11">#F8ED2F</color>
+    <color name="wbColor12">#F8C539</color>
+    <color name="wbColor13">#2643FC</color>
+    <color name="wbColor14">#30FA1A</color>
+    <color name="wbColor15">#FA764C</color>
+    <color name="wbColor16">#78E4E4</color>
+    <color name="wbColor17">#00000000</color>
+
+    <color name="actionbar_color">#21282C</color>
 
 </resources>

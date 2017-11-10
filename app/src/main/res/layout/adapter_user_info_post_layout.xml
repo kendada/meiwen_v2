@@ -37,6 +37,7 @@
                 android:layout_gravity="center"
                 android:id="@+id/post_type_txt"
                 android:textSize="16sp"
+                android:textColor="@color/color00C4AF"
                 android:text="时尚语录"
                 />
             <TextView
@@ -57,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
             android:layout_marginBottom="7dp"
-            android:textSize="17sp"
+            android:textSize="15sp"
+            android:textColor="@color/color33"
             android:id="@+id/post_content_txt"
             android:text="@string/app_name"
             />
