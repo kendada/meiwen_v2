@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/white"
+    >
+
+    <cc.meiwen.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_bar"
+        app:tbTitleText="问题建议反馈"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical"
+        android:background="?attr/theme_save_post_edit_bg"
+        >
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:maxLength="200"
+            android:textSize="14sp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@color/transparent"
+            android:id="@+id/edit_post"
+            android:gravity="left"
+            android:hint="我一直在等你的反馈哦"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/words_number_view"
+            android:text="0/200"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
+        android:background="@drawable/jz_btn_bg_selector"
+        android:textColor="@color/text"
+        android:text="反馈"
+        android:id="@+id/post_btn"
+        />
+
+</LinearLayout>

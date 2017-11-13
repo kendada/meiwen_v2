@@ -1,16 +1,12 @@
 package cc.meiwen.ui.fragment;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -28,10 +24,10 @@ import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.util.CopyUtil;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
-import cc.meiwen.view.LoadingDialog;
 import cc.meiwen.view.StateFrameLayout;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -90,7 +86,8 @@ public class MainFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
-        bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
+        initData();
     }
 
     @Override
@@ -145,8 +142,6 @@ public class MainFragment extends BaseFragment {
         View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.footer_view, null);
         progressBar = (ProgressBar)footerView.findViewById(R.id.progressBar);
         text = (TextView)footerView.findViewById(R.id.text);
-        //万普广告
-        LinearLayout adlayout =(LinearLayout)footerView.findViewById(R.id.AdLinearLayout);
 
         list_view.addFooterView(footerView);
         footerView.setOnClickListener(new View.OnClickListener() {
@@ -169,24 +164,10 @@ public class MainFragment extends BaseFragment {
             }
         });
 
-        list_view.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-            }
-        });
-
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(), PostCommentActivity.class);
-                intent.putExtra("post", mList.get(i));
-                startActivity(intent);
+                PostCommentActivity.start(getContext(), mList.get(i));
             }
         });
 
@@ -242,23 +223,15 @@ public class MainFragment extends BaseFragment {
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
-    //    query.addWhereEqualTo("isShow", true);
+        query.addWhereEqualTo("isShow", true);
         query.setLimit(limit);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onSuccess(List<Post> list) {
+            public void done(List<Post> list, BmobException e) {
                 mList = getNewList(list, favoPosts);
                 adapter = new MainFragmentAdapter(getContext(), mList);
                 list_view.setAdapter(adapter);
-            }
 
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
                 refresh_layout.setRefreshing(false);
             }
         });
@@ -273,29 +246,25 @@ public class MainFragment extends BaseFragment {
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
-    //    query.addWhereEqualTo("isShow", true);
+        query.addWhereEqualTo("isShow", true);
         query.setLimit(limit);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onSuccess(List<Post> list) {
-                if(mList!=null && adapter!=null){
-                    mList.addAll(getNewList(list, favoPosts));
-                    adapter.notifyDataSetChanged();
+            public void done(List<Post> list, BmobException e) {
+                if(e == null){
+                    if(mList!=null && adapter!=null){
+                        mList.addAll(getNewList(list, favoPosts));
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mList = getNewList(list, favoPosts);
+                        adapter = new MainFragmentAdapter(getContext(), mList);
+                        list_view.setAdapter(adapter);
+                    }
                 } else {
-                    mList = getNewList(list, favoPosts);
-                    adapter = new MainFragmentAdapter(getContext(), mList);
-                    list_view.setAdapter(adapter);
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
                 }
-            }
 
-            @Override
-            public void onError(int i, String s) {
-                state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
-            }
-
-            @Override
-            public void onFinish() {
                 state_layout.setViewState(StateFrameLayout.VIEW_STATE_CONTENT);
                 loadingDialog.dismiss();
             }
@@ -304,6 +273,9 @@ public class MainFragment extends BaseFragment {
 
     private void loadMoreData(){
         if(!isFinish) return;
+        isLoading = true;
+        progressBar.setVisibility(View.VISIBLE);
+        text.setText("正在加载");
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
@@ -311,33 +283,22 @@ public class MainFragment extends BaseFragment {
         query.setLimit(limit);
         query.setSkip(limit * page); // 忽略前20*page条数据（即第一页数据结果）
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onStart() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                text.setText("正在加载");
-            }
-
-            @Override
-            public void onSuccess(List<Post> list) {
-                if(list!=null && list.size()>0){
-                    mList.addAll(getNewList(list, favoPosts));
-                    adapter.notifyDataSetChanged();
-                    page++;
-                    isFinish = true;
+            public void done(List<Post> list, BmobException e) {
+                if(e == null){
+                    if(list!=null && list.size()>0){
+                        mList.addAll(getNewList(list, favoPosts));
+                        adapter.notifyDataSetChanged();
+                        page++;
+                        isFinish = true;
+                    } else {
+                        isFinish = false;
+                    }
                 } else {
-                    isFinish = false;
+                    isFinish = true;
                 }
-            }
 
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
                 isLoading = false;
                 progressBar.setVisibility(View.INVISIBLE);
                 if(isFinish){

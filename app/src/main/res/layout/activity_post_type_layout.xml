@@ -7,7 +7,11 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     >
-    <include layout="@layout/toobar_layout" />
+    <cc.meiwen.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_bar"
+        />
     <android.support.v4.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

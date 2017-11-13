@@ -19,6 +19,7 @@ import cc.meiwen.model.Datas;
 import cc.meiwen.model.PostType;
 import cc.meiwen.ui.activity.PostTypeActivity;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -130,29 +131,20 @@ public class PostTypeFragment extends BaseFragment {
      * 获取分类列表
      * */
     private void getType(){
+        loadingDialog.show();
+
         BmobQuery<PostType> query = new BmobQuery<>();
         query.order("-createdAt");
         query.setCachePolicy(BmobQuery.CachePolicy.CACHE_THEN_NETWORK);
-        query.findObjects(getContext(), new FindListener<PostType>() {
+        query.findObjects(new FindListener<PostType>() {
             @Override
-            public void onStart() {
-                loadingDialog.show();
-            }
+            public void done(List<PostType> list, BmobException e) {
+                if(e == null){
+                    mList = list;
+                    adapter = new PostTypeAdapter(getContext(), mList);
+                    list_view.setAdapter(adapter);
+                }
 
-            @Override
-            public void onSuccess(List<PostType> list) {
-                mList = list;
-                adapter = new PostTypeAdapter(getContext(), mList);
-                list_view.setAdapter(adapter);
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
                 loadingDialog.dismiss();
                 refresh_layout.setRefreshing(false);
             }

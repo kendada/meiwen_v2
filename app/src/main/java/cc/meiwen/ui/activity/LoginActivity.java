@@ -18,7 +18,9 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
 import cc.meiwen.R;
+import cc.meiwen.model.User;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -209,25 +211,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         user.setUsername(name);
         user.setPassword(pass);
 
-        user.login(getContext(), new SaveListener() {
+        user.login(new SaveListener<User>() {
             @Override
             public void onStart() {
                 loadingDialog.show();
             }
 
             @Override
-            public void onSuccess() {
-                Log.i(tag, "****76****onSuccess()");
-                Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MainActivityV2.class);
-                startActivity(intent);
-                LoginActivity.this.finish();
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Log.i(tag, "****110****onFailure()***i=" + i + "*****s=" + s);
-                Toast.makeText(getContext(), "登录失败，请重试！", Toast.LENGTH_SHORT).show();
+            public void done(User user, BmobException e) {
+                if(e != null){
+                    Log.i(tag, "****110****onFailure()***e=" + e);
+                    Toast.makeText(getContext(), "登录失败，请重试！", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.i(tag, "****76****onSuccess()");
+                    Toast.makeText(getContext(), "登录成功！", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(LoginActivity.this, MainActivityV2.class);
+                    startActivity(intent);
+                    LoginActivity.this.finish();
+                }
             }
 
             @Override

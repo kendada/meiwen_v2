@@ -32,6 +32,7 @@ import cc.meiwen.util.task.ThreadPoolManager;
 import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
 
@@ -187,14 +188,10 @@ public class MainActivity extends BaseActivity {
             return;
         }
         BmobQuery<PostType> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(getContext(), new FindListener<PostType>() {
+        bmobQuery.findObjects(new FindListener<PostType>() {
             @Override
-            public void onSuccess(List<PostType> list) {
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.i(tag, "------ss=="+s);
+            public void done(List<PostType> list, BmobException e) {
+                Log.i(tag, "------ss=="+e);
             }
         });
 
@@ -204,17 +201,12 @@ public class MainActivity extends BaseActivity {
      * 获取已经收藏的帖子
      * */
     private void saveFavoData(){
-        User user = BmobUser.getCurrentUser(getContext(), User.class);
+        User user = BmobUser.getCurrentUser(User.class);
         BmobQuery<Favo> query = new BmobQuery<>();
         query.addWhereEqualTo("user", user);
-        query.findObjects(getContext(), new FindListener<Favo>() {
+        query.findObjects(new FindListener<Favo>() {
             @Override
-            public void onSuccess(List<Favo> list) {
-                asyncSaveFavoData(list);
-            }
-
-            @Override
-            public void onError(int i, String s) {
+            public void done(List<Favo> list, BmobException e) {
 
             }
         });

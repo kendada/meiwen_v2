@@ -22,6 +22,7 @@ import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.User;
+import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.ui.activity.ShowImageActivity;
 import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
@@ -31,9 +32,10 @@ import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * User: 山野书生(1203596603@qq.com)
@@ -48,13 +50,11 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
 
     private int ph;
 
-    private String url = "http://file.bmob.cn/";
-
     private String tag = MainFragmentAdapter.class.getSimpleName();
 
     public MainFragmentAdapter(Context context, List<Post> datas) {
         super(context, datas);
-        user = BmobUser.getCurrentUser(context, User.class);
+        user = BmobUser.getCurrentUser(User.class);
         ph = MnAppUtil.getPhoneH(mContext)/3;
     }
 
@@ -88,11 +88,11 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
                     content_img.setLayoutParams(llp);
                     String imgUrl = null;
                     if(bmobFile != null){
-                        imgUrl = bmobFile.getUrl();
+                        imgUrl = bmobFile.getFileUrl();
                     } else {
                         imgUrl = post.getConImgUrl();
                     }
-                    ImageLoader.getInstance().displayImage(url + imgUrl, content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    ImageLoader.getInstance().displayImage(imgUrl, content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
                     //长按下载图片
                     content_img.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -103,23 +103,14 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
                             } else {
                                 imgUrl = post.getConImgUrl();
                             }
-                            saveImageToSDCard(url + imgUrl);
+                            saveImageToSDCard(imgUrl);
                             return true;
                         }
                     });
-                    //点击图片查看大图
                     content_img.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            String imgUrl = null;
-                            if(bmobFile != null){
-                                imgUrl = bmobFile.getUrl();
-                            } else {
-                                imgUrl = post.getConImgUrl();
-                            }
-                            Intent intent = new Intent(mContext, ShowImageActivity.class);
-                            intent.putExtra("imgUrl", url + imgUrl);
-                            mContext.startActivity(intent);
+                            PostCommentActivity.start(mContext, post);
                         }
                     });
 
@@ -180,15 +171,14 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
      * */
     private void favoPost(final Post post){
         Favo favo = new Favo(user, post);
-        favo.save(mContext, new SaveListener() {
+        favo.save(new SaveListener<String>() {
             @Override
-            public void onSuccess() {
-                getSaveFavo(post);
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
+            public void done(String s, BmobException e) {
+                if(e != null){
+                    Log.i(tag, "----收藏帖子。。。失败。。。。"+e);
+                } else {
+                    getSaveFavo(post);
+                }
             }
         });
     }
@@ -200,16 +190,15 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
         final Favo favo = new Favo(user, post);
         Log.i(tag, "----post.getFavoId()="+post.getFavoId());
         favo.setObjectId(post.getFavoId());
-        favo.delete(mContext, favo.getObjectId(), new DeleteListener() {
+        favo.delete(favo.getObjectId(), new UpdateListener() {
             @Override
-            public void onSuccess() {
-                Log.i(tag, "---取消收藏帖子。。。--成功。。。。。。");
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Toast.makeText(mContext, "取消收藏帖子失败。。。", Toast.LENGTH_SHORT).show();
-                Log.i(tag, "----取消收藏帖子。。。失败。。。。"+s);
+            public void done(BmobException e) {
+                if(e != null){
+                    Toast.makeText(mContext, "取消收藏帖子失败。。。", Toast.LENGTH_SHORT).show();
+                    Log.i(tag, "----取消收藏帖子。。。失败。。。。"+e);
+                } else {
+                    Log.i(tag, "---取消收藏帖子。。。--成功。。。。。。");
+                }
             }
         });
     }
@@ -219,18 +208,15 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
         query.addWhereEqualTo("user", user);
         query.addWhereEqualTo("post", post);
         query.include("user,post,post.postType,post.user");
-        query.findObjects(mContext, new FindListener<Favo>() {
+        query.findObjects(new FindListener<Favo>() {
             @Override
-            public void onSuccess(List<Favo> list) {
+            public void done(List<Favo> list, BmobException e) {
                 if (list != null && list.size() > 0) {
                     Favo favo = list.get(0);
                     Log.i(tag, "-----234----favo=" + favo.getObjectId());
+                } else {
+                    Log.i(tag, "----245----e="+e);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.i(tag, "----245----sss="+s);
             }
         });
     }

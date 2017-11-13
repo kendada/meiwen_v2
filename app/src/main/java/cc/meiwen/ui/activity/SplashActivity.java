@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobInstallation;
 import cn.bmob.v3.BmobUser;
 
 /**
@@ -22,7 +21,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation(this).save();
+//        BmobInstallation.getCurrentInstallation(this).save();
         // 启动推送服务
         BmobPush.startWork(this, "你的Application Id"); // TODO 你的Application Id
 
@@ -36,7 +35,7 @@ public class SplashActivity extends BaseActivity {
      * 判断用户是否已登录
      * */
     private void isLogined(){
-        BmobUser user = BmobUser.getCurrentUser(getContext());
+        BmobUser user = BmobUser.getCurrentUser();
         if(user != null){
             //已经登录
             Intent intent = new Intent(this, MainActivityV2.class);

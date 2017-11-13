@@ -1,7 +1,6 @@
 package cc.meiwen.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -19,7 +18,6 @@ import cc.meiwen.view.SwipeBackLayout;
 
 public class AboutActivity extends BaseActivity{
 
-    private Toolbar toolbar;
     private SwipeBackLayout swip_back_layout;
     private ScrollView scrollView;
     private TextView qq_btn, how_btn, wx_btn, wx_user_btn;
@@ -38,11 +36,6 @@ public class AboutActivity extends BaseActivity{
                 AboutActivity.this.finish();
             }
         });
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("关于我们");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         qq_btn = (TextView)findViewById(R.id.qq_btn);
         qq_btn.setOnClickListener(new View.OnClickListener() {

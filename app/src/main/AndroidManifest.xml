@@ -67,6 +67,9 @@
 
         <!-- 3.0.0增加 -->
         <activity android:name=".ui.activity.MostBeautifulActivity" />
+        <activity android:name=".ui.activity.MeActivity" />
+        <activity android:name=".ui.activity.FriendListActivity" />
+        <activity android:name=".ui.activity.MessageActivity" />
 
         <!-- 第三方登录：腾讯 -->
         <activity

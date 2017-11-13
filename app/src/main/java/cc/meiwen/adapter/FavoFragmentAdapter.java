@@ -19,13 +19,15 @@ import cc.meiwen.adapter.base.MnBaseAdapter;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
+import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 import cc.meiwen.util.MnDateUtil;
 import cc.meiwen.util.ShareUtil;
 import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * User: 山野书生(1203596603@qq.com)
@@ -37,8 +39,6 @@ import cn.bmob.v3.listener.DeleteListener;
 public class FavoFragmentAdapter extends MnBaseAdapter<Favo>{
 
     private int ph;
-
-    private String url = "http://file.bmob.cn/";
 
     private String tag = FavoFragmentAdapter.class.getSimpleName();
 
@@ -79,13 +79,19 @@ public class FavoFragmentAdapter extends MnBaseAdapter<Favo>{
                     content_img.setVisibility(View.VISIBLE);
                     LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ph);
                     content_img.setLayoutParams(llp);
-                    ImageLoader.getInstance().displayImage(url + bmobFile.getUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
                     //长按下载图片
                     content_img.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View view) {
-                            saveImageToSDCard(url + bmobFile.getUrl());
+                            saveImageToSDCard(bmobFile.getFileUrl());
                             return true;
+                        }
+                    });
+                    content_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PostCommentActivity.start(mContext, post);
                         }
                     });
                 } else {
@@ -124,16 +130,15 @@ public class FavoFragmentAdapter extends MnBaseAdapter<Favo>{
     private void deleteFavo(Favo favo){
         mDatas.remove(favo);
         refreshData();
-        favo.delete(mContext, favo.getObjectId(), new DeleteListener() {
+        favo.delete(favo.getObjectId(), new UpdateListener() {
             @Override
-            public void onSuccess() {
-                Toast.makeText(mContext, "取消收藏", Toast.LENGTH_SHORT).show();
-                Log.i(tag, "----onSuccess()----成功----");
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Log.i(tag, "----onFailure()-------"+s);
+            public void done(BmobException e) {
+                if(e != null){
+                    Log.i(tag, "----done()-------"+e);
+                } else {
+                    Toast.makeText(mContext, "取消收藏", Toast.LENGTH_SHORT).show();
+                    Log.i(tag, "----done()----成功----");
+                }
             }
         });
     }

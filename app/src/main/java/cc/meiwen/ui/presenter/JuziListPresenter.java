@@ -10,6 +10,7 @@ import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.RecommendPost;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -34,52 +35,43 @@ public class JuziListPresenter implements Presenter<JuziListMvpView> {
 
     public void getData(){
         mBmobQuery.setSkip(mvpView.getCount());
-        mBmobQuery.findObjects(mvpView.getContext(), new FindListener<Artcile>() {
+        mBmobQuery.findObjects(new FindListener<Artcile>() {
             @Override
-            public void onSuccess(List<Artcile> list) {
-                Log.d(TAG, "posts = " + list);
-                if(mvpView != null){
-                    mvpView.toResult(list);
+            public void done(List<Artcile> list, BmobException e) {
+                if(e == null){
+                    Log.d(TAG, "posts = " + list);
+                    if(mvpView != null){
+                        mvpView.toResult(list);
+                    }
+                } else {
+                    Log.d(TAG, "e = " + e);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.d(TAG, "s = " + s);
             }
         });
     }
 
     public void getRecommendPost(){
         BmobQuery<RecommendPost> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(mvpView.getContext(), new FindListener<RecommendPost>() {
+        bmobQuery.findObjects(new FindListener<RecommendPost>() {
             @Override
-            public void onSuccess(List<RecommendPost> list) {
+            public void done(List<RecommendPost> list, BmobException e) {
                 if(mvpView != null){
                     mvpView.toResultAd(list);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.d(TAG, "s = " + s);
+                Log.d(TAG, "e = " + e);
             }
         });
     }
 
     public void getPostType(){
         BmobQuery<PostType> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(mvpView.getContext(), new FindListener<PostType>() {
+        bmobQuery.findObjects(new FindListener<PostType>() {
             @Override
-            public void onSuccess(List<PostType> list) {
+            public void done(List<PostType> list, BmobException e) {
                 if(mvpView != null){
                     mvpView.toResultPostType(list);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.d(TAG, "s = " + s);
+                Log.d(TAG, "e = " + e);
             }
         });
     }

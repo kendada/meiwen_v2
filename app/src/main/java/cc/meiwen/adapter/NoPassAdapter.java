@@ -37,13 +37,11 @@ public class NoPassAdapter extends MnBaseAdapter<Post>{
 
     private int ph;
 
-    private String url = "http://file.bmob.cn/";
-
     private String tag = NoPassAdapter.class.getSimpleName();
 
     public NoPassAdapter(Context context, List<Post> datas) {
         super(context, datas);
-        user = BmobUser.getCurrentUser(context, User.class);
+        user = BmobUser.getCurrentUser(User.class);
         ph = MnAppUtil.getPhoneH(mContext)/3;
     }
 
@@ -72,7 +70,7 @@ public class NoPassAdapter extends MnBaseAdapter<Post>{
                     content_img.setVisibility(View.VISIBLE);
                     LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ph);
                     content_img.setLayoutParams(llp);
-                    ImageLoader.getInstance().displayImage(url+bmobFile.getUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
                 } else {
                     content_img.setVisibility(View.GONE);
                 }

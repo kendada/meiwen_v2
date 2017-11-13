@@ -6,7 +6,13 @@
     android:orientation="vertical"
     android:background="?attr/theme_bg"
     >
-    <include layout="@layout/toobar_layout" />
+
+    <cc.meiwen.view.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tbTitleText="我的收藏"
+        />
+
     <cc.meiwen.view.StateFrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

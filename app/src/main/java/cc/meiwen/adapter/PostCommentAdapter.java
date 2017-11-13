@@ -1,12 +1,11 @@
 package cc.meiwen.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ import cc.meiwen.adapter.base.AdapterHolder;
 import cc.meiwen.adapter.base.MnBaseAdapter;
 import cc.meiwen.model.Comment;
 import cc.meiwen.model.User;
-import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnDateUtil;
 import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.datatype.BmobFile;
@@ -29,8 +27,6 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public class PostCommentAdapter extends MnBaseAdapter<Comment>{
 
-    private String url = "http://file.bmob.cn/";
-
     private String tag = PostCommentAdapter.class.getSimpleName();
 
     public PostCommentAdapter(Context context, List<Comment> datas) {
@@ -43,20 +39,19 @@ public class PostCommentAdapter extends MnBaseAdapter<Comment>{
         TextView post_type_txt = adapterHolder.getView(R.id.post_type_txt);
         TextView post_content_txt = adapterHolder.getView(R.id.post_content_txt);
         TextView time_txt = adapterHolder.getView(R.id.time_txt);
-        SelectableRoundedImageView type_icon = adapterHolder.getView(R.id.type_icon);
+        SelectableRoundedImageView user_icon = adapterHolder.getView(R.id.user_icon);
         Comment comment = mDatas.get(i);
         if(comment!=null){
             post_content_txt.setText(comment.getContent());
             time_txt.setText(MnDateUtil.stringByFormat(comment.getCreatedAt(), "MM月dd日 HH:mm"));
 
             User user = comment.getUser();
-            Log.i(tag, "---47---"+user);
             if(user!=null){
                 post_type_txt.setText(user.getUsername());
 
                 BmobFile iconBmobFile = user.getIcon();
                 if(iconBmobFile!=null){
-                    ImageLoader.getInstance().displayImage(url+iconBmobFile.getUrl(), type_icon, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(mContext).load(iconBmobFile.getFileUrl()).asBitmap().into(user_icon);
                 }
             }
 

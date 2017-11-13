@@ -29,6 +29,7 @@ import cc.meiwen.view.LoadingDialog;
 import cc.meiwen.view.StateFrameLayout;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -75,7 +76,7 @@ public class FavoFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
         initViews(view);
         initData();
     }
@@ -156,9 +157,7 @@ public class FavoFragment extends BaseFragment {
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(), PostCommentActivity.class);
-                intent.putExtra("post", mList.get(i).getPost());
-                startActivity(intent);
+                PostCommentActivity.start(getContext(), mList.get(i).getPost());
             }
         });
 
@@ -180,16 +179,10 @@ public class FavoFragment extends BaseFragment {
         query.order("-createdAt");
         query.include("user,post,post.postType,post.user");
         query.setLimit(limit);
-        query.findObjects(getContext(), new FindListener<Favo>() {
+        query.findObjects(new FindListener<Favo>() {
             @Override
-            public void onSuccess(List<Favo> list) {
+            public void done(List<Favo> list, BmobException e) {
                 mList = list;
-
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
 
             @Override
@@ -210,30 +203,28 @@ public class FavoFragment extends BaseFragment {
         query.include("user,post,post.postType,post.user");
         query.setLimit(limit);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Favo>() {
+        query.findObjects(new FindListener<Favo>() {
+            @Override
+            public void done(List<Favo> list, BmobException e) {
+                if(e == null){
+                    if(mList!=null && adapter!=null){
+                        mList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mList = list;
+                        adapter = new FavoFragmentAdapter(getContext(), mList);
+                        list_view.setAdapter(adapter);
+                    }
+                } else {
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR);
+                }
+            }
+
             @Override
             public void onStart() {
                 loadingDialog.setText("正在获取数据");
                 dialog.show();
                 loadingDialog.startAnim();
-            }
-
-            @Override
-            public void onSuccess(List<Favo> list) {
-                if(mList!=null && adapter!=null){
-                    mList.addAll(list);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    mList = list;
-                    adapter = new FavoFragmentAdapter(getContext(), mList);
-                    list_view.setAdapter(adapter);
-                }
-
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR);
             }
 
             @Override
@@ -253,16 +244,9 @@ public class FavoFragment extends BaseFragment {
         query.setLimit(limit);
         query.setSkip(limit * page); // 忽略前20*page条数据（即第一页数据结果）
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Favo>() {
+        query.findObjects(new FindListener<Favo>() {
             @Override
-            public void onStart() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                text.setText("正在加载");
-            }
-
-            @Override
-            public void onSuccess(List<Favo> list) {
+            public void done(List<Favo> list, BmobException e) {
                 if(list!=null && list.size()>0){
                     mList.addAll(list);
                     adapter.notifyDataSetChanged();
@@ -274,8 +258,10 @@ public class FavoFragment extends BaseFragment {
             }
 
             @Override
-            public void onError(int i, String s) {
-
+            public void onStart() {
+                isLoading = true;
+                progressBar.setVisibility(View.VISIBLE);
+                text.setText("正在加载");
             }
 
             @Override

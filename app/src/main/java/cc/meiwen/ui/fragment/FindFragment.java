@@ -116,6 +116,7 @@ public class FindFragment extends BaseFragment implements JuziListMvpView, View.
 
     @Override
     public void toResultAd(final List<RecommendPost> list) {
+        if(list == null || list.size() == 0) return;
         FindAdAdapter mAdAdapter = new FindAdAdapter(getContext(), list);
         mViewPagerAd.setAdapter(mAdAdapter);
 

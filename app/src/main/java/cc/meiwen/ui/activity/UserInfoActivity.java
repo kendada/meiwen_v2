@@ -21,6 +21,7 @@ import cc.meiwen.util.task.ThreadPoolManager;
 import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.CountListener;
 
 /**
@@ -91,7 +92,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
      * 获取用户信息
      * */
     private void getInfo(){
-        bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
         if(bmobUser!=null){
             name.setText(bmobUser.getUsername());
             //获取登录用户发布帖子的数量
@@ -105,15 +106,10 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
     private void getPostCount(){
         BmobQuery<Post> query = new BmobQuery<>();
         query.addWhereEqualTo("user", bmobUser.getObjectId());
-        query.count(getContext(), Post.class, new CountListener() {
+        query.count(Post.class, new CountListener() {
             @Override
-            public void onSuccess(int i) {
-                post_count.setText(String.valueOf(i));
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
+            public void done(Integer integer, BmobException e) {
+                post_count.setText(String.valueOf(integer));
             }
         });
     }
@@ -151,7 +147,7 @@ public class UserInfoActivity extends BaseActivity implements View.OnClickListen
 
             @Override
             public Object loadData() {
-                BmobUser.logOut(getContext());
+                BmobUser.logOut();
                 application.finishAllActivity(); //退出app
                 clearSetting(); //清除配置信息
                 return null;

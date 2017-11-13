@@ -1,6 +1,7 @@
 package cc.meiwen.ui.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,13 +18,14 @@ import java.io.File;
 import java.util.List;
 
 import cc.meiwen.R;
-import cc.meiwen.model.JZBmobFile;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.User;
+import cc.meiwen.util.OnTextChangeListener;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -39,14 +41,15 @@ import cn.bmob.v3.listener.UploadFileListener;
 public class SavePostActivity extends BaseImageSelectActivity implements View.OnClickListener{
 
     private PostType postType;
+    private List<PostType> postTypeList;
     private User bmobUser;
 
-    private TextView post_btn;
+    private TextView post_btn, words_number_view;
     private EditText edit_post;
-    private ImageView image_picker_view;
+    private ImageView image_picker_view, image_view;
     private LinearLayout image_picker_layout;
 
-    private JZBmobFile bmobFile;
+    private BmobFile bmobFile;
 
     private KTipDialog loadingDialog;
 
@@ -81,6 +84,8 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
         post_btn = (TextView) findViewById(R.id.post_btn);
         image_picker_view = (ImageView) findViewById(R.id.image_picker_view);
         image_picker_layout = (LinearLayout) findViewById(R.id.image_picker_layout);
+        words_number_view = (TextView) findViewById(R.id.words_number_view);
+        image_view = (ImageView) findViewById(R.id.image_view);
     }
 
     /**
@@ -89,13 +94,21 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
     public void initData(){
         post_btn.setOnClickListener(this);
         image_picker_view.setOnClickListener(this);
+        image_view.setOnClickListener(this);
+
+        edit_post.addTextChangedListener(new OnTextChangeListener() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                words_number_view.setText(s.length() + "/200");
+            }
+        });
     }
 
     /**
      * 获取用户信息
      * */
     private void getUser(){
-        bmobUser = BmobUser.getCurrentUser(this, User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
     }
 
     /**
@@ -103,17 +116,14 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
      * */
     private void getPostType(){
         BmobQuery<PostType> query = new BmobQuery<>();
-        query.findObjects(this, new FindListener<PostType>() {
+        query.findObjects(new FindListener<PostType>() {
             @Override
-            public void onSuccess(List<PostType> list) {
+            public void done(List<PostType> list, BmobException e) {
+                postTypeList = list;
                 if(list!=null && list.size()>0){
                     postType = list.get(0);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                Log.i(tag, "----"+s);
+                Log.i(tag, "----"+e);
             }
         });
     }
@@ -126,6 +136,22 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
             Toast.makeText(this, "美文内容为空", Toast.LENGTH_SHORT).show();
             return;
         }
+        loadingDialog.show();
+        bmobFile.uploadblock(new UploadFileListener() {
+            @Override
+            public void done(BmobException e) {
+                if(e != null){
+                    loadingDialog.dismiss();
+                    Log.d(tag, "上传文章配图，异常e = " + e);
+                } else {
+                    Log.d(tag, "上传文章配图，成功 = " + bmobFile.getFileUrl());
+                    postJz();
+                }
+            }
+        });
+    }
+
+    private void postJz(){
         //创建帖子信息
         Post post = new Post();
         post.setContent(edit_post.getText().toString());
@@ -135,24 +161,20 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
             post.setConImg(bmobFile);
         }
 
-        post.save(getContext(), new SaveListener() {
-            @Override
-            public void onStart() {
-                loadingDialog.show();
-            }
+        post.save(new SaveListener<String>() {
 
             @Override
-            public void onSuccess() {
-                Log.i(tag, "***onSuccess()***");
-                Toast.makeText(getContext(), "帖子发布成功，管理员会尽快审核！", Toast.LENGTH_SHORT).show();
-                SavePostActivity.this.finish();
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Log.i(tag, "***onFailure()***i=" + i + "****s=" + s);
-                Toast.makeText(getContext(), "上传失败：" + s, Toast.LENGTH_SHORT).show();
+            public void done(String s, BmobException e) {
                 loadingDialog.dismiss();
+                if(e != null){
+                    Log.i(tag, "***onFailure()***e=" + e);
+                    Toast.makeText(getContext(), "上传失败：" + s, Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.i(tag, "***onSuccess()***");
+                    Toast.makeText(getContext(), "帖子发布成功，管理员会尽快审核！", Toast.LENGTH_SHORT).show();
+                    SavePostActivity.this.finish();
+
+                }
             }
         });
     }
@@ -165,28 +187,10 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
     @Override
     protected void onImageSelected(String path) {
         Log.i(tag, "path = " + path);
-
         File file = new File(path);
-        bmobFile = new JZBmobFile(file);
-        bmobFile.setFilename(file.getName());
-        bmobFile.uploadblock(this, new UploadFileListener() {
-            @Override
-            public void onProgress(Integer value) {
-                Log.i(tag, "progress = " + value);
-            }
-
-            @Override
-            public void onSuccess() {
-                Log.i(tag, "onSuccess()");
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Log.i(tag, "onFailure , s = " + s + ", i = " + i);
-            }
-        });
-
-        Glide.with(this).load(path).asBitmap().into(image_picker_view);
+        if (!file.exists()) return;
+        bmobFile = new BmobFile(file);
+        Glide.with(this).load(path).asBitmap().into(image_view);
     }
 
     @Override
@@ -197,6 +201,7 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
                 break;
             case R.id.image_picker_view:
             case R.id.image_picker_layout:
+            case R.id.image_view:
                 openImageAlbum(true);
                 break;
         }

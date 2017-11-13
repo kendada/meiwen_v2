@@ -27,7 +27,6 @@ public class JuziListAdapter extends BaseQuickAdapter<Artcile, BaseViewHolder> {
 
     private String TAG = JuziListAdapter.class.getSimpleName();
 
-    private String url = "http://file.bmob.cn/";
     private int pw = 480;
 
 
@@ -51,7 +50,7 @@ public class JuziListAdapter extends BaseQuickAdapter<Artcile, BaseViewHolder> {
             BmobFile bmobFile = artcile.getThumb();
             if(bmobFile != null){
                 conImageView.setVisibility(View.VISIBLE);
-                ImageLoader.getInstance().displayImage(url + bmobFile.getUrl(),
+                ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(),
                         conImageView, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
             } else {
                 conImageView.setVisibility(View.GONE);

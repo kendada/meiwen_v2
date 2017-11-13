@@ -2,7 +2,6 @@ package cc.meiwen.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
@@ -11,6 +10,8 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.koudai.kbase.widget.dialog.KTipDialog;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ import cc.meiwen.util.task.ThreadPoolManager;
 import cc.meiwen.view.StateFrameLayout;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -35,7 +37,6 @@ import cn.bmob.v3.listener.FindListener;
 
 public class NoPassActivity extends BaseActivity {
 
-    private Toolbar toolbar;
     private StateFrameLayout state_layout;
     private SwipeRefreshLayout refresh_layout;
     private ListView list_view;
@@ -57,6 +58,8 @@ public class NoPassActivity extends BaseActivity {
 
     private ThreadPoolManager threadPoolManager;
 
+    private KTipDialog loadingDialog;
+
     private String tag = NoPassActivity.class.getSimpleName();
 
 
@@ -65,19 +68,20 @@ public class NoPassActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_pass_layout);
 
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         initViews();
 
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
-        bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
         initData();
         getDBFavo();
     }
 
     public void initViews() {
+        loadingDialog = new KTipDialog.Builder(getContext())
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在刷新")
+                .create();
+
         state_layout = (StateFrameLayout)findViewById(R.id.state_layout);
         refresh_layout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
         refresh_layout.setColorSchemeResources(R.color.darkPrimaryColor, R.color.primaryColor, R.color.lightPrimaryColor);
@@ -165,18 +169,12 @@ public class NoPassActivity extends BaseActivity {
         query.include("user,postType");
         query.addWhereEqualTo("isShow", true);
         query.setLimit(limit);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onSuccess(List<Post> list) {
+            public void done(List<Post> list, BmobException e) {
                 mList = list;
                 adapter = new NoPassAdapter(getContext(), mList);
                 list_view.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
 
             @Override
@@ -191,41 +189,31 @@ public class NoPassActivity extends BaseActivity {
      * 获取已经发布帖子
      * */
     private void getPostData(){
+        loadingDialog.show();
+
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
         query.addWhereEqualTo("isShow", true);
         query.setLimit(limit);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onStart() {
-                loadingDialog.setText("正在获取数据");
-                dialog.show();
-                loadingDialog.startAnim();
-            }
-
-            @Override
-            public void onSuccess(List<Post> list) {
-                if(mList!=null && adapter!=null){
-                    mList.addAll(list);
-                    adapter.notifyDataSetChanged();
+            public void done(List<Post> list, BmobException e) {
+                if (e == null){
+                    if(mList!=null && adapter!=null){
+                        mList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mList = list;
+                        adapter = new NoPassAdapter(getContext(), mList);
+                        list_view.setAdapter(adapter);
+                    }
                 } else {
-                    mList = list;
-                    adapter = new NoPassAdapter(getContext(), mList);
-                    list_view.setAdapter(adapter);
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
                 }
 
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
-            }
-
-            @Override
-            public void onFinish() {
-                dialog.dismiss();
+                loadingDialog.dismiss();
                 state_layout.setViewState(StateFrameLayout.VIEW_STATE_CONTENT);
             }
         });
@@ -233,6 +221,11 @@ public class NoPassActivity extends BaseActivity {
 
     private void loadMoreData(){
         if(!isFinish) return;
+
+        isLoading = true;
+        progressBar.setVisibility(View.VISIBLE);
+        text.setText("正在加载");
+
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
@@ -240,33 +233,22 @@ public class NoPassActivity extends BaseActivity {
         query.setLimit(limit);
         query.setSkip(limit * page); // 忽略前20*page条数据（即第一页数据结果）
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onStart() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                text.setText("正在加载");
-            }
-
-            @Override
-            public void onSuccess(List<Post> list) {
-                if(list!=null && list.size()>0){
-                    mList.addAll(list);
-                    adapter.notifyDataSetChanged();
-                    page++;
-                    isFinish = true;
+            public void done(List<Post> list, BmobException e) {
+                if(e == null){
+                    if(list!=null && list.size()>0){
+                        mList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                        page++;
+                        isFinish = true;
+                    } else {
+                        isFinish = false;
+                    }
                 } else {
-                    isFinish = false;
+                    isFinish = true;
                 }
-            }
 
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
                 isLoading = false;
                 progressBar.setVisibility(View.INVISIBLE);
                 if(isFinish){

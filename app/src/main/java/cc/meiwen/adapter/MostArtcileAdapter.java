@@ -28,8 +28,6 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public class MostArtcileAdapter extends MnBaseAdapter<Artcile>{
 
-    private String url = "http://file.bmob.cn/";
-
     private int pw = 480;
 
     public MostArtcileAdapter(Context context, List<Artcile> datas) {
@@ -56,7 +54,7 @@ public class MostArtcileAdapter extends MnBaseAdapter<Artcile>{
             BmobFile bmobFile = artcile.getThumb();
             if(bmobFile != null){
                 conImageView.setVisibility(View.VISIBLE);
-                ImageLoader.getInstance().displayImage(url + bmobFile.getUrl(),
+                ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(),
                         conImageView, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
             } else {
                 conImageView.setVisibility(View.GONE);

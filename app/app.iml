@@ -76,15 +76,23 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/build/.DS_Store" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.0.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/23.0.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/cardview-v7/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/design/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.github.CymChad/BaseRecyclerViewAdapterHelper/2.9.30/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.jakewharton/butterknife/8.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.makeramen/roundedimageview/2.3.0/jars" />
@@ -102,24 +110,37 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 23 Platform" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 24 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="com.android.support:support-v4-23.1.1" level="project" />
-    <orderEntry type="library" exported="" name="com.jakewharton:butterknife-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/umeng-analytics-v5.6.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.makeramen:roundedimageview-2.3.0" level="project" />
-    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/universal-image-loader-1.9.4.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/gson-2.6.2.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-annotations:24.2.1@jar" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/rxandroid-1.2.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/open_sdk_r5509.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.jakewharton:butterknife-annotations:8.4.0@jar" level="project" />
-    <orderEntry type="library" exported="" name="com.android.support:appcompat-v7-23.1.1" level="project" />
     <orderEntry type="library" exported="" name="kbase-release:@aar" level="project" />
-    <orderEntry type="library" exported="" name="com.android.support:cardview-v7-23.0.0" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-fragment-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-v4-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/rxjava-1.1.6.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:cardview-v7-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:animated-vector-drawable-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:design-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/BmobSDK_3.5.8_20171013.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.jakewharton:butterknife-8.4.0" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:recyclerview-v7-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/universal-image-loader-1.9.4.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/org.apache.http.legacy.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-media-compat-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/okio-1.12.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/BmobSDK_V3.4.4_0930.jar:unspecified@jar" level="project" />
-    <orderEntry type="library" exported="" name="com.android.support:design-23.0.0" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-vector-drawable-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/Bmob_Push_V0.6beta_20150408.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-core-utils-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.github.CymChad:BaseRecyclerViewAdapterHelper-2.9.30" level="project" />
-    <orderEntry type="library" exported="" name="com.android.support:support-annotations:24.1.0@jar" level="project" />
-    <orderEntry type="library" exported="" name="com.android.support:recyclerview-v7-23.1.1" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:appcompat-v7-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-core-ui-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.github.bumptech.glide:glide:3.7.0@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.android.support:support-compat-24.2.1" level="project" />
   </component>
 </module>

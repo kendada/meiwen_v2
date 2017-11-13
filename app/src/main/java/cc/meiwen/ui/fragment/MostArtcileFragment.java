@@ -29,6 +29,7 @@ import cc.meiwen.view.LoadingDialog;
 import cc.meiwen.view.StateFrameLayout;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -86,7 +87,7 @@ public class MostArtcileFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         initViews(view);
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
-        bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
         initData();
 
     }
@@ -218,17 +219,12 @@ public class MostArtcileFragment extends BaseFragment {
      //   query.include("user,postType");
      //   query.addWhereEqualTo("isShow", true);
         query.setLimit(limit);
-        query.findObjects(getContext(), new FindListener<Artcile>() {
+        query.findObjects(new FindListener<Artcile>() {
             @Override
-            public void onSuccess(List<Artcile> list) {
+            public void done(List<Artcile> list, BmobException e) {
                 mList = list;
                 adapter = new MostArtcileAdapter(getContext(), list);
                 list_view.setAdapter(adapter);
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
 
             @Override
@@ -252,23 +248,21 @@ public class MostArtcileFragment extends BaseFragment {
      //   query.addWhereEqualTo("isShow", true);
         query.setLimit(limit);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Artcile>() {
+        query.findObjects(new FindListener<Artcile>() {
             @Override
-            public void onSuccess(List<Artcile> list) {
-                if(mList!=null && adapter!=null){
-                    mList.addAll(list);
-                    adapter.notifyDataSetChanged();
+            public void done(List<Artcile> list, BmobException e) {
+                if(e == null){
+                    if(mList!=null && adapter!=null){
+                        mList.addAll(list);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mList = list;
+                        adapter = new MostArtcileAdapter(getContext(), mList);
+                        list_view.setAdapter(adapter);
+                    }
                 } else {
-                    mList = list;
-                    adapter = new MostArtcileAdapter(getContext(), mList);
-                    list_view.setAdapter(adapter);
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
                 }
-
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
             }
 
             @Override
@@ -288,16 +282,9 @@ public class MostArtcileFragment extends BaseFragment {
         query.setLimit(limit);
         query.setSkip(limit * page); // 忽略前20*page条数据（即第一页数据结果）
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Artcile>() {
+        query.findObjects(new FindListener<Artcile>() {
             @Override
-            public void onStart() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                text.setText("正在加载");
-            }
-
-            @Override
-            public void onSuccess(List<Artcile> list) {
+            public void done(List<Artcile> list, BmobException e) {
                 if(list!=null && list.size()>0){
                     mList.addAll(list);
                     adapter.notifyDataSetChanged();
@@ -309,8 +296,10 @@ public class MostArtcileFragment extends BaseFragment {
             }
 
             @Override
-            public void onError(int i, String s) {
-
+            public void onStart() {
+                isLoading = true;
+                progressBar.setVisibility(View.VISIBLE);
+                text.setText("正在加载");
             }
 
             @Override

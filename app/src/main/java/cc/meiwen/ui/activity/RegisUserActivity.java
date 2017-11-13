@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import cc.meiwen.R;
 import cc.meiwen.model.User;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -92,16 +93,15 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
         user.setSex("男");
        // user.setIconUrl("");
 
-        user.signUp(getContext(), new SaveListener() {
+        user.signUp(new SaveListener<String>() {
             @Override
-            public void onSuccess() {
-                Log.i(tag, "****76****onSuccess()");
-                loginUser();
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-                Log.i(tag, "****81****onFailure()***i=" + i + "*****s=" + s);
+            public void done(String s, BmobException e) {
+                if(e == null){
+                    Log.i(tag, "****76****onSuccess()");
+                    loginUser();
+                } else {
+                    Log.i(tag, "****81****onFailure()***e=" + e);
+                }
             }
         });
     }

@@ -1,19 +1,17 @@
 package cc.meiwen.ui.fragment;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.koudai.kbase.widget.dialog.KTipDialog;
 
 import java.util.List;
 
@@ -26,10 +24,10 @@ import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.util.CopyUtil;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
-import cc.meiwen.view.LoadingDialog;
 import cc.meiwen.view.StateFrameLayout;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -62,18 +60,18 @@ public class MeFragment extends BaseFragment {
 
     private ThreadPoolManager threadPoolManager;
 
-    private LoadingDialog loadingDialog;
-
-    private Dialog dialog;
-
     private boolean isVisibleToUI = true; //默认可见
+
+    private KTipDialog loadingDialog;
 
     private String tag = MeFragment.class.getSimpleName();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        loadingDialog = new LoadingDialog(getContext());
-        dialog = loadingDialog.createLoadingDialog("正在获取数据");
+        loadingDialog = new KTipDialog.Builder(getContext())
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在刷新")
+                .create();
         View rootView = inflater.inflate(R.layout.fragment_main_layout, container, false);
         return rootView;
     }
@@ -82,7 +80,7 @@ public class MeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
-        bmobUser = BmobUser.getCurrentUser(getContext(), User.class);
+        bmobUser = BmobUser.getCurrentUser(User.class);
         initViews(view);
     }
 
@@ -138,8 +136,6 @@ public class MeFragment extends BaseFragment {
         View footerView = LayoutInflater.from(getActivity()).inflate(R.layout.footer_view, null);
         progressBar = (ProgressBar)footerView.findViewById(R.id.progressBar);
         text = (TextView)footerView.findViewById(R.id.text);
-        //万普广告
-        LinearLayout adlayout =(LinearLayout)footerView.findViewById(R.id.AdLinearLayout);
 
         list_view.addFooterView(footerView);
         footerView.setOnClickListener(new View.OnClickListener() {
@@ -162,26 +158,12 @@ public class MeFragment extends BaseFragment {
             }
         });
 
-        list_view.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-            }
-        });
-
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Post post = mList.get(i);
                 if(post!=null && post.isShow()){
-                    Intent intent = new Intent(getContext(), PostCommentActivity.class);
-                    intent.putExtra("post", post);
-                    startActivity(intent);
+                    PostCommentActivity.start(getContext(), post);
                 } else {
                     Toast.makeText(getContext(), "正在审核的帖子，无法进行操作！", Toast.LENGTH_SHORT).show();
                 }
@@ -227,22 +209,15 @@ public class MeFragment extends BaseFragment {
         query.addWhereEqualTo("user", bmobUser);
         query.include("user,postType");
         query.setLimit(limit);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onSuccess(List<Post> list) {
-                mList = getNewList(list, favoPosts);
-                adapter = new MeFragmentAdapter(getContext(), mList);
-                list_view.setAdapter(adapter);
+            public void done(List<Post> list, BmobException e) {
+                if(e == null){
+                    mList = getNewList(list, favoPosts);
+                    adapter = new MeFragmentAdapter(getContext(), mList);
+                    list_view.setAdapter(adapter);
+                }
 
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
                 refresh_layout.setRefreshing(false);
             }
         });
@@ -253,41 +228,31 @@ public class MeFragment extends BaseFragment {
      * 获取已经发布帖子
      * */
     private void getPostData(){
+        loadingDialog.show();
+
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
         query.addWhereEqualTo("user", bmobUser);
         query.setLimit(limit);
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onStart() {
-                loadingDialog.setText("正在获取数据");
-                dialog.show();
-                loadingDialog.startAnim();
-            }
-
-            @Override
-            public void onSuccess(List<Post> list) {
-                if(mList!=null && adapter!=null){
-                    mList.addAll(getNewList(list, favoPosts));
-                    adapter.notifyDataSetChanged();
+            public void done(List<Post> list, BmobException e) {
+                if(e == null){
+                    if(mList!=null && adapter!=null){
+                        mList.addAll(getNewList(list, favoPosts));
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mList = getNewList(list, favoPosts);
+                        adapter = new MeFragmentAdapter(getContext(), mList);
+                        list_view.setAdapter(adapter);
+                    }
                 } else {
-                    mList = getNewList(list, favoPosts);
-                    adapter = new MeFragmentAdapter(getContext(), mList);
-                    list_view.setAdapter(adapter);
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
                 }
 
-            }
-
-            @Override
-            public void onError(int i, String s) {
-                state_layout.setViewState(StateFrameLayout.VIEW_STATE_ERROR); //加载错误
-            }
-
-            @Override
-            public void onFinish() {
-                dialog.dismiss();
+                loadingDialog.dismiss();
                 state_layout.setViewState(StateFrameLayout.VIEW_STATE_CONTENT);
             }
         });
@@ -295,6 +260,11 @@ public class MeFragment extends BaseFragment {
 
     private void loadMoreData(){
         if(!isFinish) return;
+
+        isLoading = true;
+        progressBar.setVisibility(View.VISIBLE);
+        text.setText("正在加载");
+
         BmobQuery<Post> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user,postType");
@@ -302,33 +272,22 @@ public class MeFragment extends BaseFragment {
         query.setLimit(limit);
         query.setSkip(limit * page); // 忽略前20*page条数据（即第一页数据结果）
         query.setCachePolicy(BmobQuery.CachePolicy.NETWORK_ELSE_CACHE);
-        query.findObjects(getContext(), new FindListener<Post>() {
+        query.findObjects(new FindListener<Post>() {
             @Override
-            public void onStart() {
-                isLoading = true;
-                progressBar.setVisibility(View.VISIBLE);
-                text.setText("正在加载");
-            }
-
-            @Override
-            public void onSuccess(List<Post> list) {
-                if(list!=null && list.size()>0){
-                    mList.addAll(getNewList(list, favoPosts));
-                    adapter.notifyDataSetChanged();
-                    page++;
-                    isFinish = true;
+            public void done(List<Post> list, BmobException e) {
+                if(e == null){
+                    if(list!=null && list.size()>0){
+                        mList.addAll(getNewList(list, favoPosts));
+                        adapter.notifyDataSetChanged();
+                        page++;
+                        isFinish = true;
+                    } else {
+                        isFinish = false;
+                    }
                 } else {
-                    isFinish = false;
+                    isFinish = true;
                 }
-            }
 
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
                 isLoading = false;
                 progressBar.setVisibility(View.INVISIBLE);
                 if(isFinish){

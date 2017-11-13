@@ -18,6 +18,7 @@ import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.User;
+import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 import cc.meiwen.util.MnDateUtil;
@@ -25,9 +26,10 @@ import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.DeleteListener;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * User: 山野书生(1203596603@qq.com)
@@ -42,13 +44,11 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
 
     private int ph;
 
-    private String url = "http://file.bmob.cn/";
-
     private String tag = MeFragmentAdapter.class.getSimpleName();
 
     public MeFragmentAdapter(Context context, List<Post> datas) {
         super(context, datas);
-        user = BmobUser.getCurrentUser(context, User.class);
+        user = BmobUser.getCurrentUser(User.class);
         ph = MnAppUtil.getPhoneH(mContext)/3;
     }
 
@@ -89,13 +89,19 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
                     content_img.setVisibility(View.VISIBLE);
                     LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ph);
                     content_img.setLayoutParams(llp);
-                    ImageLoader.getInstance().displayImage(url + bmobFile.getUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
                     //长按下载图片
                     content_img.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View view) {
-                            saveImageToSDCard(url + bmobFile.getUrl());
+                            saveImageToSDCard(bmobFile.getFileUrl());
                             return true;
+                        }
+                    });
+                    content_img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PostCommentActivity.start(mContext, post);
                         }
                     });
                 } else {
@@ -147,15 +153,14 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
      * */
     private void favoPost(final Post post){
         Favo favo = new Favo(user, post);
-        favo.save(mContext, new SaveListener() {
+        favo.save(new SaveListener<String>() {
             @Override
-            public void onSuccess() {
-                getSaveFavo(post);
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
+            public void done(String s, BmobException e) {
+                if(e != null){
+// TODO: 2017/11/11 收藏帖子失败
+                } else {
+                    getSaveFavo(post);
+                }
             }
         });
     }
@@ -166,14 +171,10 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
     private void deletePost(Post post){
         final Favo favo = new Favo(user, post);
         favo.setObjectId(post.getFavoId());
-        favo.delete(mContext, favo.getObjectId(), new DeleteListener() {
+        favo.delete(favo.getObjectId(), new UpdateListener() {
             @Override
-            public void onSuccess() {
-            }
-
-            @Override
-            public void onFailure(int i, String s) {
-
+            public void done(BmobException e) {
+                // TODO: 2017/11/11 取消收藏帖子失败
             }
         });
     }
@@ -183,17 +184,12 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
         query.addWhereEqualTo("user", user);
         query.addWhereEqualTo("post", post);
         query.include("user,post,post.postType,post.user");
-        query.findObjects(mContext, new FindListener<Favo>() {
+        query.findObjects(new FindListener<Favo>() {
             @Override
-            public void onSuccess(List<Favo> list) {
+            public void done(List<Favo> list, BmobException e) {
                 if(list!=null && list.size()>0){
                     Favo favo = list.get(0);
                 }
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
             }
         });
     }

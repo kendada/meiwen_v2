@@ -1,9 +1,9 @@
 package cc.meiwen.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koudai.kbase.widget.dialog.KTipDialog;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -37,6 +38,7 @@ import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 
@@ -49,7 +51,12 @@ import cn.bmob.v3.listener.SaveListener;
 
 public class PostCommentActivity extends BaseActivity{
 
-    private Toolbar toolbar;
+    public static void start(Context context, Post post){
+        Intent intent = new Intent(context, PostCommentActivity.class);
+        intent.putExtra("post", post);
+        context.startActivity(intent);
+    }
+
     private SwipeRefreshLayout refresh_layout;
     private ListView list_view;
     private EditText edit_comment;
@@ -71,8 +78,6 @@ public class PostCommentActivity extends BaseActivity{
 
     private int ph;
 
-    private String url = "http://file.bmob.cn/";
-
     private Post post;
 
     private User user;
@@ -82,6 +87,8 @@ public class PostCommentActivity extends BaseActivity{
     private boolean isLoading = false; //是否正在加载
     private boolean isFinish = true; //是否加载完成
 
+    private KTipDialog loadingDialog;
+
     private String tag = PostCommentActivity.class.getSimpleName();
 
     @Override
@@ -89,16 +96,11 @@ public class PostCommentActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_comment_layout);
 
-        user = BmobUser.getCurrentUser(this, User.class);
+        user = BmobUser.getCurrentUser(User.class);
 
         isLoadImg = getAppSettingSharedPre().getBoolean(APP_SETTING_ISLOADIMG, true);
 
         ph = MnAppUtil.getPhoneH(this)/3;
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("帖子正文");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getIntentData();
         initViews();
@@ -109,6 +111,11 @@ public class PostCommentActivity extends BaseActivity{
     }
 
     private void initViews(){
+        loadingDialog = new KTipDialog.Builder(getContext())
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在刷新")
+                .create();
+
         refresh_layout = (SwipeRefreshLayout)findViewById(R.id.refresh_layout);
         refresh_layout.setColorSchemeResources(R.color.darkPrimaryColor, R.color.primaryColor, R.color.lightPrimaryColor);
         list_view = (ListView)findViewById(R.id.list_view);
@@ -124,18 +131,18 @@ public class PostCommentActivity extends BaseActivity{
         String cc = edit_comment.getText().toString();
         if(!TextUtils.isEmpty(cc)){
             final Comment comment = new Comment(cc ,user, post, post.getObjectId());
-            comment.save(this, new SaveListener() {
+            edit_comment.setText("");
+            comment.save(new SaveListener<String>() {
                 @Override
-                public void onSuccess() {
-                    Log.i(tag, "----onSuccess()----");
-                    edit_comment.setText(""); //清除评论内容
-                    mList.add(0, comment);
-                    adapter.refreshData();
-                }
-
-                @Override
-                public void onFailure(int i, String s) {
-                    Log.i(tag, "----onFailure()----"+s);
+                public void done(String s, BmobException e) {
+                    if(e == null){
+                        Log.i(tag, "----done()----");
+                        edit_comment.setText(""); //清除评论内容
+                        mList.add(0, comment);
+                        adapter.refreshData();
+                    } else {
+                        Log.i(tag, "----done()----"+e);
+                    }
                 }
             });
         } else {
@@ -161,8 +168,6 @@ public class PostCommentActivity extends BaseActivity{
 
         progressBar = (MnProgressBar)footerView.findViewById(R.id.progressBar);
         text = (TextView)footerView.findViewById(R.id.text);
-        //万普广告
-        LinearLayout adlayout =(LinearLayout)footerView.findViewById(R.id.AdLinearLayout);
 
         list_view.addFooterView(footerView);
 
@@ -182,7 +187,7 @@ public class PostCommentActivity extends BaseActivity{
                     content_img.setVisibility(View.VISIBLE);
                     LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ph);
                     content_img.setLayoutParams(llp);
-                    ImageLoader.getInstance().displayImage(url+bmobFile.getUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
                 } else {
                     content_img.setVisibility(View.GONE);
                 }
@@ -245,34 +250,23 @@ public class PostCommentActivity extends BaseActivity{
      * 获取帖子的评论
      * */
     private void getComment(){
+        loadingDialog.show();
+
         BmobQuery<Comment> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user");
         query.setLimit(limit);
         query.addWhereEqualTo("postId", post.getObjectId());
-        query.findObjects(getContext(), new FindListener<Comment>() {
+        query.findObjects(new FindListener<Comment>() {
             @Override
-            public void onStart() {
-                loadingDialog.setText("正在获取数据");
-                dialog.show();
-                loadingDialog.startAnim();
-            }
+            public void done(List<Comment> list, BmobException e) {
+                if(e == null){
+                    mList = list;
+                    adapter = new PostCommentAdapter(getContext(), mList);
+                    list_view.setAdapter(adapter);
+                }
 
-            @Override
-            public void onSuccess(List<Comment> list) {
-                mList = list;
-                adapter = new PostCommentAdapter(getContext(), mList);
-                list_view.setAdapter(adapter);
-            }
-
-            @Override
-            public void onError(int i, String s) {
-
-            }
-
-            @Override
-            public void onFinish() {
-                dialog.dismiss();
+                loadingDialog.dismiss();
                 refresh_layout.setRefreshing(false);
             }
         });
@@ -283,38 +277,32 @@ public class PostCommentActivity extends BaseActivity{
      * */
     private void loadMoreComment(){
         if(!isFinish) return;
+
+        text.setText("正在加载更多");
+        progressBar.setVisibility(View.VISIBLE);
+
         BmobQuery<Comment> query = new BmobQuery<>();
         query.order("-createdAt");
         query.include("user");
         query.addWhereEqualTo("postId", post.getObjectId());
         query.setLimit(limit);
         query.setSkip(limit * page); // 忽略前10*page条数据（即第一页数据结果）
-        query.findObjects(getContext(), new FindListener<Comment>() {
+        query.findObjects(new FindListener<Comment>() {
             @Override
-            public void onStart() {
-                text.setText("正在加载更多");
-                progressBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onSuccess(List<Comment> list) {
-                if(list!=null && list.size()>0){
-                    page++;
-                    mList.addAll(list);
-                    adapter.refreshData();
-                    isFinish = true;
+            public void done(List<Comment> list, BmobException e) {
+                if(e == null){
+                    if(list!=null && list.size()>0){
+                        page++;
+                        mList.addAll(list);
+                        adapter.refreshData();
+                        isFinish = true;
+                    } else {
+                        isFinish = false;
+                    }
                 } else {
-                    isFinish = false;
+                    isFinish = true;
                 }
-            }
 
-            @Override
-            public void onError(int i, String s) {
-                Log.i(tag, "---onError()----"+s);
-            }
-
-            @Override
-            public void onFinish() {
                 progressBar.setVisibility(View.GONE);
                 if(isFinish){
                     text.setText("加载更多");

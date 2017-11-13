@@ -13,5 +13,6 @@
 	<string name="BMIgnore">忽略该版</string>
 	<string name="BMToast_IsUpdating">正在更新中....</string>
 	<string name="BMDialog_InstallAPK">最新版本已下载，是否安装？</string>
+	
 	<string name="BMUpdateCheck">v3.1.4Beta</string>
 </resources>

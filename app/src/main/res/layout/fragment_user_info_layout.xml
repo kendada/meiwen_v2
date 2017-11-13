@@ -78,29 +78,30 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             >
+
                             <LinearLayout
+                                android:id="@+id/post_count_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:orientation="vertical"
-                                >
+                                android:orientation="vertical">
+
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:id="@+id/post_count"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/primaryColor"
-                                    android:text="0"
-                                    />
-                                <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="@color/primaryColor"
+                                    android:textSize="15sp" />
+
+                                <TextView
                                     android:id="@+id/post_count_txt"
-                                    android:textSize="15sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
                                     android:text="发布"
-                                    />
+                                    android:textSize="15sp" />
                             </LinearLayout>
                         </RelativeLayout>
                         <RelativeLayout
@@ -108,29 +109,30 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             >
+
                             <LinearLayout
+                                android:id="@+id/user_friend_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:orientation="vertical"
-                                >
+                                android:orientation="vertical">
+
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
                                     android:id="@+id/friends_count"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/primaryColor"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
                                     android:text="0"
-                                    />
+                                    android:textColor="@color/primaryColor"
+                                    android:textSize="15sp" />
+
                                 <TextView
+                                    android:id="@+id/friends_count_txt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:id="@+id/friends_count_txt"
-                                    android:textSize="15sp"
                                     android:text="好友"
-                                    />
+                                    android:textSize="15sp" />
                             </LinearLayout>
                         </RelativeLayout>
                         <RelativeLayout
@@ -138,29 +140,30 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             >
+
                             <LinearLayout
+                                android:id="@+id/message_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:orientation="vertical"
-                                >
+                                android:orientation="vertical">
+
                                 <TextView
+                                    android:id="@+id/message_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:id="@+id/message_count"
-                                    android:textSize="15sp"
-                                    android:textColor="@color/primaryColor"
                                     android:text="0"
-                                    />
+                                    android:textColor="@color/primaryColor"
+                                    android:textSize="15sp" />
+
                                 <TextView
+                                    android:id="@+id/message_count_txt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
-                                    android:id="@+id/message_count_txt"
-                                    android:textSize="15sp"
                                     android:text="消息"
-                                    />
+                                    android:textSize="15sp" />
                             </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>

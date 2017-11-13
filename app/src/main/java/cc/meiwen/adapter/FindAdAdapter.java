@@ -60,7 +60,7 @@ public class FindAdAdapter extends PagerAdapter {
         BmobFile imgFile = item.imgFile;
         if(imgFile != null){
             Glide.with(mContext)
-                    .load(item.imgFile.getFileUrl(mContext))
+                    .load(item.imgFile.getFileUrl())
                     .into(view);
         }
         view.setOnClickListener(new View.OnClickListener() {

@@ -2,11 +2,9 @@ package cc.meiwen.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -48,8 +46,6 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	private AlertDialog deleteDialog = null; //清除缓存对话框
 	private AlertDialog fontSizeDialog = null; //选择字体大小
 	
-	private Toolbar toolbar = null;
-
 	private Editor editor;
 
 	private SwipeBackLayout swip_back_layout;
@@ -71,12 +67,6 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 				AppSettingActivity.this.finish();
 			}
 		});
-
-		toolbar = (Toolbar)findViewById(R.id.toolbar);
-		toolbar.setTitle("设置");
-		setSupportActionBar(toolbar);
-		
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 5);
 		//初始化控件
@@ -235,7 +225,7 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 
 			@Override
 			public Object loadData() {
-				BmobUser.logOut(getContext());
+				BmobUser.logOut();
 				application.finishAllActivity(); //退出app
 				clearSetting(); //清除配置信息
 				return null;

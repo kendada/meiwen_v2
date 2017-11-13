@@ -11,7 +11,7 @@
         <item name="theme_toolbar_menu">@style/tooBarMenuStyle</item>
 
         <item name="theme_setting_item_bg">@drawable/setting_item_bg_no</item>
-        <item name="theme_save_post_edit_bg">@drawable/setting_item_bg_no</item>
+        <item name="theme_save_post_edit_bg">@drawable/bank_radius_problem_edit_bg</item>
         <item name="theme_save_post_btn_bg">@color/primaryColor</item>
 
         <item name="theme_comment_item_bg">@color/text</item>
