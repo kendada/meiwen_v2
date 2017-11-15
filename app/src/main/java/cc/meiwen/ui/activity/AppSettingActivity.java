@@ -138,8 +138,8 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	@Override
 	public void onClick(View v) {
 		switch(v.getId()){
-		case R.id.user_share_layout: //分享绑定
-			userShare();
+		case R.id.user_share_layout: // 退出登录
+			logout();
 			break;
 		case R.id.push_news_layout: //新闻推送
 			setIsPush();
@@ -213,6 +213,27 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	}
 
 	/**
+	 * 退出登录
+	 * */
+	private void logout(){
+		AlertDialog.Builder mBuilder = new AlertDialog.Builder(this)
+						.setMessage("确定要退出吗？")
+						.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								userShare();
+							}
+						})
+						.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+
+							}
+						});
+		mBuilder.create().show();
+	}
+
+	/**
 	 * 退出
 	 * */
 	private void userShare(){
@@ -220,6 +241,7 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 			@Override
 			public void updata(Object obj) {
 				Toast.makeText(getContext(), "已经退出", Toast.LENGTH_SHORT).show();
+				startActivity(new Intent(getContext(), LoginActivity.class));
 				AppSettingActivity.this.finish();
 			}
 

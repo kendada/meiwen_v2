@@ -253,7 +253,11 @@ public class MeFragment extends BaseFragment {
                 }
 
                 loadingDialog.dismiss();
-                state_layout.setViewState(StateFrameLayout.VIEW_STATE_CONTENT);
+                if(list == null || list.size() == 0){
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_EMPTY);
+                } else {
+                    state_layout.setViewState(StateFrameLayout.VIEW_STATE_CONTENT);
+                }
             }
         });
     }

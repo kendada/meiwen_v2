@@ -19,6 +19,19 @@
 
     </style>
 
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <!-- 更换背景图片实现全透明 -->
+        <item name="android:windowBackground">@color/colorlucency</item>
+        <!-- 屏幕背景不变暗 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 隐藏标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--边框-->
+        <item name="android:windowFrame">@null</item>
+
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <style name="AppTheme" parent="BaseAppTheme">
 
     </style>

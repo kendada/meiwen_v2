@@ -17,7 +17,12 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import cc.meiwen.R;
+import cc.meiwen.event.SignUpEvent;
 import cc.meiwen.model.User;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -49,6 +54,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
+        EventBus.getDefault().register(this);
 
         loadingDialog = new KTipDialog.Builder(this)
                 .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
@@ -236,5 +242,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 loadingDialog.dismiss();
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSignUpEvent(SignUpEvent event){
+        if(event.isSuccess) finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

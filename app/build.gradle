@@ -7,7 +7,7 @@ android {
         applicationId "cc.meiwen"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 19
+        versionCode 20
         versionName '3.0.0'
     }
     buildTypes {
@@ -38,8 +38,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile files('libs/Bmob_Push_V0.6beta_20150408.jar')
-    compile files('libs/BmobSDK_V3.4.4_0930.jar')
+
     compile 'com.android.support:design:24.2.1'
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile files('libs/umeng-analytics-v5.6.1.jar')
@@ -52,7 +51,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'com.android.support:cardview-v7:24.2.1'
     compile(name:'kbase-release',ext:'aar')
-
+    compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 }

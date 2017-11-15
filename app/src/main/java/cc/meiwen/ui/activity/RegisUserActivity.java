@@ -1,7 +1,7 @@
 package cc.meiwen.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -9,7 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.koudai.kbase.widget.dialog.KTipDialog;
+
+import org.greenrobot.eventbus.EventBus;
+
 import cc.meiwen.R;
+import cc.meiwen.event.SignUpEvent;
 import cc.meiwen.model.User;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -25,19 +30,15 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
 
     private String tag = RegisUserActivity.class.getSimpleName();
 
-    private Toolbar toolbar;
     private Button regis_btn, login_btn;
     private EditText edit_name, edit_email, edit_pass;
+
+    private KTipDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regis_layout);
-
-        toolbar = (Toolbar)findViewById(R.id.toolbar);
-        toolbar.setTitle("游客注册");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //初始化控件
         initViews();
@@ -47,6 +48,11 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
     }
 
     public void initViews(){
+        loadingDialog = new KTipDialog.Builder(getContext())
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在注册")
+                .create();
+
         regis_btn = (Button)findViewById(R.id.regis_btn);
         login_btn = (Button)findViewById(R.id.login_btn);
         edit_name = (EditText)findViewById(R.id.edit_name);
@@ -84,18 +90,17 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
             return;
         }
 
+        loadingDialog.show();
+
         User user = new User();
         user.setUsername(name);
         user.setPassword(pass);
         user.setEmail(email);
 
-        user.setAge(22);
-        user.setSex("男");
-       // user.setIconUrl("");
-
-        user.signUp(new SaveListener<String>() {
+        user.signUp(new SaveListener<User>() {
             @Override
-            public void done(String s, BmobException e) {
+            public void done(User user, BmobException e) {
+                loadingDialog.dismiss();
                 if(e == null){
                     Log.i(tag, "****76****onSuccess()");
                     loginUser();
@@ -107,6 +112,8 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
     }
 
     public void loginUser(){
+        startActivity(new Intent(getContext(), MainActivityV2.class));
+        EventBus.getDefault().post(new SignUpEvent(true));
         RegisUserActivity.this.finish();
     }
 }

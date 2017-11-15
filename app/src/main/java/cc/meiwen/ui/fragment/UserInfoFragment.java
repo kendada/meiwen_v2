@@ -9,14 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 
 import cc.meiwen.R;
+import cc.meiwen.event.UserInfoEvent;
 import cc.meiwen.model.Comment;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.User;
@@ -26,6 +32,7 @@ import cc.meiwen.ui.activity.FriendListActivity;
 import cc.meiwen.ui.activity.MeActivity;
 import cc.meiwen.ui.activity.MessageActivity;
 import cc.meiwen.ui.activity.SavePostActivity;
+import cc.meiwen.ui.activity.UpdateUserInfoActivity;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
 import cn.bmob.v3.BmobQuery;
@@ -49,6 +56,7 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     private TextView name, post_count, friends_count, message_count, user_explain_view;
     private LinearLayout favo_btn, more_setting_btn, publish_layout,
             post_count_layout, user_friend_layout, message_layout;
+    private RelativeLayout user_info_root_layout;
 
     private User bmobUser;
 
@@ -65,6 +73,7 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        EventBus.getDefault().register(this);
         threadPoolManager = new ThreadPoolManager(ThreadPoolManager.TYPE_FIFO, 10);
         //初始化控件
         initViews(view);
@@ -73,6 +82,8 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     }
 
     public void initViews(View view){
+        user_info_root_layout = (RelativeLayout) view.findViewById(R.id.user_info_root_layout);
+        user_info_root_layout.setOnClickListener(this);
         user_icon = (ImageView)view.findViewById(R.id.user_icon);
         user_icon.setOnClickListener(this);
         name = (TextView)view.findViewById(R.id.name);
@@ -170,6 +181,9 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.user_info_root_layout: // 编辑签名
+                startActivity(new Intent(getContext(), UpdateUserInfoActivity.class));
+                break;
             case R.id.message_layout:
                 MessageActivity.start(getContext());
                 break;
@@ -196,6 +210,13 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
             case R.id.publish_layout: //  发布美文
                 startActivity(new Intent(getContext(), SavePostActivity.class));
                 break;
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserInfoEvent(UserInfoEvent event){
+        if(!TextUtils.isEmpty(event.content)){
+            user_explain_view.setText(event.content);
         }
     }
 
@@ -255,4 +276,11 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
             }
         });
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        EventBus.getDefault().unregister(this);
+    }
+
 }

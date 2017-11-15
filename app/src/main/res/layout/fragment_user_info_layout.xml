@@ -16,44 +16,45 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+
             <RelativeLayout
+                android:id="@+id/user_info_root_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:padding="12dp"
-                android:orientation="horizontal"
                 android:background="@color/text"
-                >
+                android:orientation="horizontal"
+                android:padding="12dp">
+
                 <ImageView
+                    android:id="@+id/user_icon"
                     android:layout_width="@dimen/act_user_info_icon_height"
                     android:layout_height="@dimen/act_user_info_icon_height"
                     android:layout_gravity="center|bottom"
-                    android:id="@+id/user_icon"
                     android:scaleType="centerCrop"
-                    android:src="@mipmap/banner"
-                    />
+                    android:src="@mipmap/banner" />
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/user_icon"
-                    android:layout_marginLeft="11dp"
-                    android:layout_gravity="center"
-                    android:textSize="16sp"
-                    android:text="未登录"
                     android:id="@+id/name"
-                    />
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="11dp"
                     android:layout_toRightOf="@id/user_icon"
+                    android:text="未登录"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/user_explain_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@id/name"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="11dp"
                     android:layout_marginTop="10dp"
-                    android:layout_gravity="center"
-                    android:textSize="14sp"
+                    android:layout_toRightOf="@id/user_icon"
                     android:text="@string/jz_hen_lan_txt"
-                    android:id="@+id/user_explain_view"
-                    />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <LinearLayout

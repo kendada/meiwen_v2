@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/text"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/content_layout"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/jezuml4"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:id="@+id/content_image_view"
+            android:contentDescription="TODO" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/text"
+            android:layout_alignParentBottom="true"
+            android:textSize="12sp"
+            android:text="《素媛》 2013"
+            android:id="@+id/title_view"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/text"
+            android:layout_above="@id/title_view"
+            android:textSize="13sp"
+            android:text="让该接受惩罚的人，接受惩罚"
+            android:id="@+id/message_view"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/text"
+            android:layout_above="@id/message_view"
+            android:textSize="14sp"
+            android:text="我相信人，但不相信人性"
+            android:id="@+id/content_view"
+            />
+    </RelativeLayout>
+</LinearLayout>

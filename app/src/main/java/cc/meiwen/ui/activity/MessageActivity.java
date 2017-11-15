@@ -20,6 +20,7 @@ import cc.meiwen.model.Comment;
 import cc.meiwen.model.User;
 import cc.meiwen.ui.presenter.MessageMvpView;
 import cc.meiwen.ui.presenter.MessagePresenter;
+import cc.meiwen.view.EmptyView;
 import cc.meiwen.view.TitleBar;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -84,6 +85,7 @@ public class MessageActivity extends BaseActivity implements MessageMvpView{
                 mMessagePresenter.getData();
             }
         }, recyclerView);
+        mAdapter.setEmptyView(new EmptyView(this));
     }
 
     private void initData(){

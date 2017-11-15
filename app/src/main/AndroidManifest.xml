@@ -70,6 +70,7 @@
         <activity android:name=".ui.activity.MeActivity" />
         <activity android:name=".ui.activity.FriendListActivity" />
         <activity android:name=".ui.activity.MessageActivity" />
+        <activity android:name=".ui.activity.UpdateUserInfoActivity" />
 
         <!-- 第三方登录：腾讯 -->
         <activity
@@ -114,7 +115,7 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".MyPushMessageReceiver" >
+        <receiver android:name=".BmobPushMessageReceiver" >
             <intent-filter >
                 <action android:name="cn.bmob.push.action.MESSAGE" />
             </intent-filter>

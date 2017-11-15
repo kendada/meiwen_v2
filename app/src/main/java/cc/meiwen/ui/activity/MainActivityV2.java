@@ -14,6 +14,7 @@ import cc.meiwen.R;
 import cc.meiwen.ui.fragment.FindFragment;
 import cc.meiwen.ui.fragment.MainFragment;
 import cc.meiwen.ui.fragment.PostTypeFragment;
+import cc.meiwen.ui.fragment.TipsDialog;
 import cc.meiwen.ui.fragment.UserInfoFragment;
 import cc.meiwen.view.tab.MnTabGroupLayout;
 import cc.meiwen.view.tab.MnTabLayout;
@@ -81,7 +82,7 @@ public class MainActivityV2 extends BaseActivity implements MnTabGroupLayout.OnI
                 }
             }
         });
-
+        onTest();
     }
 
 
@@ -114,6 +115,11 @@ public class MainActivityV2 extends BaseActivity implements MnTabGroupLayout.OnI
         int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onTest(){
+        TipsDialog mTipsDialog = new TipsDialog();
+        mTipsDialog.show(getSupportFragmentManager());
     }
 
 }

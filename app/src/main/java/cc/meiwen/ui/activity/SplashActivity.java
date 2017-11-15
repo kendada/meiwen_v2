@@ -3,8 +3,6 @@ package cc.meiwen.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import cn.bmob.push.BmobPush;
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 
 /**
@@ -20,13 +18,6 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 使用推送服务时的初始化操作
-//        BmobInstallation.getCurrentInstallation(this).save();
-        // 启动推送服务
-        BmobPush.startWork(this, "你的Application Id"); // TODO 你的Application Id
-
-        //初始化Bmob
-        Bmob.initialize(this, "aee6e001a4a2cdd86a45363b771755e8");
         //判断用户是否登录
         isLogined();
     }

@@ -7,13 +7,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.json.JSONObject;
 
 import cc.meiwen.ui.activity.BaseActivity;
 import cc.meiwen.ui.activity.MainActivity;
+import cc.meiwen.ui.activity.MainActivityV2;
 
 
 /**
@@ -23,9 +24,9 @@ import cc.meiwen.ui.activity.MainActivity;
  * Version 1.0
  */
 
-public class MyPushMessageReceiver extends BroadcastReceiver{
+public class BmobPushMessageReceiver extends BroadcastReceiver{
 
-    private String tag = MyPushMessageReceiver.class.getSimpleName();
+    private String tag = BmobPushMessageReceiver.class.getSimpleName();
 
     private static int NOTIFY_ID = 1000;
 
@@ -33,7 +34,7 @@ public class MyPushMessageReceiver extends BroadcastReceiver{
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        SharedPreferences spf = context.getSharedPreferences(BaseActivity.APP_SETTING_NAME, Context.MODE_ENABLE_WRITE_AHEAD_LOGGING);
+        SharedPreferences spf = context.getSharedPreferences(BaseActivity.APP_SETTING_NAME, Context.MODE_PRIVATE);
         boolean isPush = spf.getBoolean(BaseActivity.APP_SETTING_PUSH, true);
         if(isPush) {
             if(intent.getAction().equals(action)){
@@ -42,7 +43,8 @@ public class MyPushMessageReceiver extends BroadcastReceiver{
                 try {
                     JSONObject object = new JSONObject(msg);
                     String alert = object.optString("alert");
-                    sendNotification(context, alert);
+//                    sendNotification(context, alert);
+                    sendNotification(context, alert, NOTIFY_ID);
                 } catch (Exception e){
                     e.printStackTrace();
                 }
@@ -66,6 +68,23 @@ public class MyPushMessageReceiver extends BroadcastReceiver{
                 .build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notifyMgr.notify(NOTIFY_ID, notification);
+    }
+
+    private void sendNotification(Context context, String message, int pushId){
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        Intent notificationIntent = new Intent(context, MainActivityV2.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP| Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent intent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        mBuilder.setContentTitle("天天美文")//设置通知栏标题
+                .setContentText(message)
+                .setContentIntent(intent) //设置通知栏点击意图
+                .setWhen(System.currentTimeMillis())//通知产生的时间，会在通知信息里显示，一般是系统获取到的时间
+                .setDefaults(Notification.DEFAULT_ALL)//向通知添加声音、闪灯和振动效果的最简单、最一致的方式是使用当前的用户默认设置，使用defaults属性，可以组合
+                .setSmallIcon(R.mipmap.ic_launcher);//设置通知小ICON
+        Notification notify = mBuilder.build();
+        notify.flags |= Notification.FLAG_AUTO_CANCEL;
+        mNotificationManager.notify(pushId, notify);
     }
 
 }
