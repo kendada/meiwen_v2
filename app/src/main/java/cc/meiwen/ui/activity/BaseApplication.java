@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.meiwen.BuildConfig;
+import cc.meiwen.util.AppUtils;
 import cc.meiwen.util.GlideImageLoader;
 import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
@@ -40,6 +41,8 @@ public class BaseApplication extends Application {
 		activities = new ArrayList<>();
 		instance = this;
 		initImageLoader(getApplicationContext());
+
+		AppUtils.application = this;
 
 		//初始化Bmob
 		Bmob.initialize(this, "aee6e001a4a2cdd86a45363b771755e8");

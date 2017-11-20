@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,13 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.meiwen.R;
+import cc.meiwen.constant.Constant;
+import cc.meiwen.model.calendarSign;
 import cc.meiwen.ui.fragment.FindFragment;
 import cc.meiwen.ui.fragment.MainFragment;
 import cc.meiwen.ui.fragment.PostTypeFragment;
 import cc.meiwen.ui.fragment.TipsDialog;
 import cc.meiwen.ui.fragment.UserInfoFragment;
+import cc.meiwen.util.SharedPreferencesUtils;
 import cc.meiwen.view.tab.MnTabGroupLayout;
 import cc.meiwen.view.tab.MnTabLayout;
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 
 /**
  * User: 山野书生(1203596603@qq.com)
@@ -82,7 +89,7 @@ public class MainActivityV2 extends BaseActivity implements MnTabGroupLayout.OnI
                 }
             }
         });
-        onTest();
+        getSign();
     }
 
 
@@ -117,8 +124,29 @@ public class MainActivityV2 extends BaseActivity implements MnTabGroupLayout.OnI
         return super.onOptionsItemSelected(item);
     }
 
-    private void onTest(){
+    private void getSign(){
+        BmobQuery<calendarSign> query = new BmobQuery<>();
+        query.addWhereEqualTo("isShow", true);
+        query.order("-createdAt");
+        query.setLimit(1);
+        query.findObjects(new FindListener<calendarSign>() {
+            @Override
+            public void done(List<calendarSign> list, BmobException e) {
+                Log.d(tag, "e = " + e);
+                if(list == null || list.size() == 0) return;
+                onShow(list.get(0));
+            }
+        });
+    }
+
+    private void onShow(calendarSign sign){
+        if(sign == null) return;
+        String objectId = SharedPreferencesUtils.getString(Constant.ShareKey.OBJECT_ID);
+        if(objectId.equals(sign.getObjectId())){
+            return;
+        }
         TipsDialog mTipsDialog = new TipsDialog();
+        mTipsDialog.setCalendarSign(sign);
         mTipsDialog.show(getSupportFragmentManager());
     }
 

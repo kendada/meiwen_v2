@@ -1,10 +1,13 @@
 package cc.meiwen.ui.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
@@ -15,6 +18,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.umeng.analytics.MobclickAgent;
 
@@ -43,10 +49,9 @@ public class BaseActivity extends AppCompatActivity implements IBaseActivity {
     public LoadingDialog loadingDialog;
     public Dialog dialog;
 
-    public boolean isSystemBar = true; //是否改变状态颜色
-
     private String tag = "BaseActivity";
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
@@ -66,11 +71,36 @@ public class BaseActivity extends AppCompatActivity implements IBaseActivity {
 
     }
 
+    public void enableTranslucentStatusbar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
+            // Translucent status bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // Translucent navigation bar
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
+    }
+
     /**
      * 改变系统状态栏颜色
      * */
-    public void setSystemBarColor(){
-        if(!isSystemBar) return;
+    protected void setSystemBarColor(){
+        if(!isSystemBar()) return;
         //设定状态栏的颜色，当版本大于4.4，小于5.0时起作用
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT<Build.VERSION_CODES.LOLLIPOP) {
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -82,6 +112,13 @@ public class BaseActivity extends AppCompatActivity implements IBaseActivity {
             tintManager.setNavigationBarTintResource(R.color.primaryColor);
 
         }
+    }
+
+    /**
+     * 是否改变状态颜色
+     * */
+    protected boolean isSystemBar(){
+        return true;
     }
 
     @Override

@@ -3,16 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/text"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     >
 
-    <cc.meiwen.view.TitleBar
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tbTitleText="用户注册"
-        />
+        android:orientation="vertical"
+        >
+        <cc.meiwen.view.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tbShowReturn="true"
+            app:tbTitleText="注册"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/topbg_3"
+            />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,79 +39,128 @@
         android:paddingRight="5dp"
         android:paddingTop="7dp"
         android:orientation="vertical"
-        android:background="@drawable/circle_bg"
         >
-        <android.support.design.widget.TextInputLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:id="@+id/textInpuName"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
             >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color33"
+                android:textSize="13sp"
+                android:text="用户昵称"
+                />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@color/transparent"
+                android:textSize="13sp"
                 android:singleLine="true"
                 android:hint="用户昵称"
                 android:id="@+id/edit_name"
                 />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+        </LinearLayout>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:id="@+id/textInpuEmail"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="0.5dp"
+            android:background="@color/colorF0F1F2"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
             >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/color33"
+                android:textSize="13sp"
+                android:text="邮箱"
+                />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="13sp"
+                android:background="@color/transparent"
                 android:singleLine="true"
                 android:hint="邮箱"
                 android:id="@+id/edit_email"
                 />
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+        </LinearLayout>
+        <View
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:id="@+id/textInpuPass"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="0.5dp"
+            android:background="@color/colorF0F1F2"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
             >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/color33"
+                android:textSize="13sp"
+                android:text="密码"
+                />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:layout_marginLeft="50dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/transparent"
                 android:singleLine="true"
                 android:inputType="textPassword"
                 android:hint="密码"
                 android:id="@+id/edit_pass"
                 />
-        </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorF0F1F2"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
         android:gravity="right"
         >
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/zc_str"
             android:id="@+id/regis_btn"
-            android:background="@color/primaryColor"
+            android:background="@drawable/jz_btn_bg_selector"
             android:layout_marginRight="11dp"
             android:textColor="@color/text"
             />
 
-        <Button
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/dl_str"
             android:id="@+id/login_btn"
-            android:background="@color/primaryColor"
+            android:background="@drawable/jz_btn_bg_selector"
             android:textColor="@color/text"
             />
     </LinearLayout>

@@ -4,53 +4,105 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/text"
+    android:id="@+id/root_layout"
     >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:id="@+id/content_layout"
+        android:id="@+id/root_content_layout"
         >
-        <ImageView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@mipmap/jezuml4"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"
-            android:id="@+id/content_image_view"
-            android:contentDescription="TODO" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/text"
+            android:layout_height="@dimen/tool_layout_hw"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:textSize="12sp"
-            android:text="《素媛》 2013"
-            android:id="@+id/title_view"
-            />
-        <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tool_layout"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_dailycard_share"
+                android:id="@+id/share_p_btn"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_dailycard_download"
+                android:layout_toLeftOf="@id/share_p_btn"
+                android:id="@+id/download_p_btn"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_dailycard_history"
+                android:layout_toLeftOf="@id/download_p_btn"
+                android:id="@+id/history_p_btn"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/text"
-            android:layout_above="@id/title_view"
-            android:textSize="13sp"
-            android:text="让该接受惩罚的人，接受惩罚"
-            android:id="@+id/message_view"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/text"
-            android:layout_above="@id/message_view"
-            android:textSize="14sp"
-            android:text="我相信人，但不相信人性"
-            android:id="@+id/content_view"
-            />
+            android:layout_above="@id/tool_layout"
+            android:background="@color/text"
+            android:padding="8dp"
+            android:id="@+id/content_layout"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:id="@+id/content_image_view"
+                android:contentDescription="TODO" />
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/qrcode_258"
+                android:id="@+id/wx_icon_view"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/text"
+                android:layout_alignBottom="@id/content_image_view"
+                android:textSize="12sp"
+                android:text="《素媛》 2013"
+                android:id="@+id/title_view"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/text"
+                android:layout_above="@id/title_view"
+                android:textSize="13sp"
+                android:text="让该接受惩罚的人，接受惩罚"
+                android:id="@+id/message_view"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/text"
+                android:layout_above="@id/message_view"
+                android:textSize="14sp"
+                android:text="我相信人，但不相信人性"
+                android:id="@+id/content_view"
+                />
+        </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

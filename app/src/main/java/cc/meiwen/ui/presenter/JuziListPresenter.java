@@ -6,9 +6,8 @@ import android.util.Log;
 import java.util.List;
 
 import cc.meiwen.model.Artcile;
-import cc.meiwen.model.Post;
-import cc.meiwen.model.PostType;
 import cc.meiwen.model.RecommendPost;
+import cc.meiwen.model.calendarSign;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -64,10 +63,11 @@ public class JuziListPresenter implements Presenter<JuziListMvpView> {
     }
 
     public void getPostType(){
-        BmobQuery<PostType> bmobQuery = new BmobQuery<>();
-        bmobQuery.findObjects(new FindListener<PostType>() {
+        BmobQuery<calendarSign> bmobQuery = new BmobQuery<>();
+        bmobQuery.setLimit(7);
+        bmobQuery.findObjects(new FindListener<calendarSign>() {
             @Override
-            public void done(List<PostType> list, BmobException e) {
+            public void done(List<calendarSign> list, BmobException e) {
                 if(mvpView != null){
                     mvpView.toResultPostType(list);
                 }

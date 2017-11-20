@@ -31,6 +31,7 @@ import cc.meiwen.ui.activity.FavoActivity;
 import cc.meiwen.ui.activity.FriendListActivity;
 import cc.meiwen.ui.activity.MeActivity;
 import cc.meiwen.ui.activity.MessageActivity;
+import cc.meiwen.ui.activity.ReviewedPostActivity;
 import cc.meiwen.ui.activity.SavePostActivity;
 import cc.meiwen.ui.activity.UpdateUserInfoActivity;
 import cc.meiwen.util.task.AsyncTask;
@@ -55,7 +56,7 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     private ImageView user_icon; //用户头像
     private TextView name, post_count, friends_count, message_count, user_explain_view;
     private LinearLayout favo_btn, more_setting_btn, publish_layout,
-            post_count_layout, user_friend_layout, message_layout;
+            post_count_layout, user_friend_layout, message_layout, reviewed_layout;
     private RelativeLayout user_info_root_layout;
 
     private User bmobUser;
@@ -107,6 +108,9 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
         publish_layout = (LinearLayout)view.findViewById(R.id.publish_layout);
         publish_layout.setOnClickListener(this);
 
+        reviewed_layout = (LinearLayout) view.findViewById(R.id.reviewed_layout);
+        reviewed_layout.setOnClickListener(this);
+
     }
 
     public void initData(){
@@ -121,6 +125,11 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     private void getInfo(){
         bmobUser = BmobUser.getCurrentUser(User.class);
         if(bmobUser!=null){
+            if(bmobUser.isAdmin()){
+                reviewed_layout.setVisibility(View.VISIBLE);
+            } else {
+                reviewed_layout.setVisibility(View.GONE);
+            }
             name.setText(bmobUser.getUsername());
             if(!TextUtils.isEmpty(bmobUser.getUserInfo())){
                 user_explain_view.setText(bmobUser.getUserInfo());
@@ -209,6 +218,9 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
                 break;
             case R.id.publish_layout: //  发布美文
                 startActivity(new Intent(getContext(), SavePostActivity.class));
+                break;
+            case R.id.reviewed_layout:
+                startActivity(new Intent(getContext(), ReviewedPostActivity.class));
                 break;
         }
     }

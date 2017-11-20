@@ -71,7 +71,14 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
                 is_show_txt.setText("已通过审核");
                 favo_btn.setVisibility(View.VISIBLE);
                 share_btn.setVisibility(View.VISIBLE);
-            } else {
+            }
+            else if(post.isReviewed() && (!post.isShow())){
+                is_show_txt.setTextColor(mContext.getResources().getColor(R.color.isNotShow));
+                is_show_txt.setText("审核不通过");
+                favo_btn.setVisibility(View.GONE);
+                share_btn.setVisibility(View.GONE);
+            }
+            else {
                 is_show_txt.setTextColor(mContext.getResources().getColor(R.color.isNotShow));
                 is_show_txt.setText("正在审核");
                 favo_btn.setVisibility(View.GONE);

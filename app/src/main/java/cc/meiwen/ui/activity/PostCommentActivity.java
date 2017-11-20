@@ -159,6 +159,16 @@ public class PostCommentActivity extends BaseActivity{
         type_icon = (SelectableRoundedImageView)headView.findViewById(R.id.type_icon);
         content_img = (ImageView)headView.findViewById(R.id.content_img);
 
+        content_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BmobFile bmobFile = post.getConImg();
+                if(bmobFile != null && !TextUtils.isEmpty(bmobFile.getFileUrl())){
+                    ShowImageActivity.start(getContext(), bmobFile.getFileUrl());
+                }
+            }
+        });
+
         list_view.addHeaderView(headView);
 
     }

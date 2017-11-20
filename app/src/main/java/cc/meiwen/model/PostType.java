@@ -12,8 +12,6 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public class PostType extends BmobObject{
 
-    private int id;
-
     private String postTypeId;
 
     private String type;
@@ -77,14 +75,6 @@ public class PostType extends BmobObject{
         this.title = title;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getPostTypeId() {
         setPostTypeId(this.getObjectId());
         return postTypeId;
@@ -96,13 +86,6 @@ public class PostType extends BmobObject{
 
     @Override
     public String toString() {
-        return "PostType{" +
-                "id=" + id +
-                ", postTypeId='" + postTypeId + '\'' +
-                ", type='" + type + '\'' +
-                ", title='" + title + '\'' +
-                ", iconUrl='" + iconUrl + '\'' +
-                ", typeBg=" + typeBg +
-                '}';
+        return type;
     }
 }

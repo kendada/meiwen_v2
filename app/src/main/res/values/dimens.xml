@@ -6,6 +6,8 @@
     <dimen name="act_user_info_height">205dp</dimen>
     <dimen name="act_user_info_icon_height">70dp</dimen>
 
+    <dimen name="tool_layout_hw">35dp</dimen>
+
     <dimen name="setting_item_h">45dp</dimen>
     <dimen name="setting_item_m10">10dp</dimen>
     <dimen name="setting_item_m19">19dp</dimen>

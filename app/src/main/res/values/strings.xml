@@ -8,7 +8,7 @@
 
     <string name="zc_str">注册</string>
     <string name="dl_str">登录</string>
-    <string name="yk_str">游客访问</string>
+    <string name="yk_str">随便看看</string>
 
     <string name="live_cancel">取消</string>
 
@@ -25,6 +25,15 @@
     <string name="setting_refresh_txt">检查更新</string>
     <string name="setting_opinion_txt">意见反馈</string>
     <string name="setting_recommend_txt">应用推荐</string>
+
+    <string name="pickerview_cancel">取消</string>
+    <string name="pickerview_submit">确定</string>
+    <string name="pickerview_year">年</string>
+    <string name="pickerview_month">月</string>
+    <string name="pickerview_day">日</string>
+    <string name="pickerview_hours">时</string>
+    <string name="pickerview_minutes">分</string>
+    <string name="pickerview_seconds">秒</string>
 
     <string name="about_info">天天美文是专注于佳句美句的发布收藏和分享的家园。在这里，您可以轻松发布和收藏您喜欢的句子，和同好谈论感兴趣的佳句妙语、诗词歌赋。在每一句感动你我的文字后面，有着我们真挚的情感和故事，有着我们一起的倾诉和聆听。</string>
 

@@ -23,7 +23,6 @@ import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.User;
 import cc.meiwen.ui.activity.PostCommentActivity;
-import cc.meiwen.ui.activity.ShowImageActivity;
 import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 import cc.meiwen.util.MnDateUtil;

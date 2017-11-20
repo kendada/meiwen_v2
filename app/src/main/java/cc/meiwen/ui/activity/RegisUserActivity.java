@@ -1,20 +1,16 @@
 package cc.meiwen.ui.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koudai.kbase.widget.dialog.KTipDialog;
 
-import org.greenrobot.eventbus.EventBus;
-
 import cc.meiwen.R;
-import cc.meiwen.event.SignUpEvent;
 import cc.meiwen.model.User;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -30,7 +26,7 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
 
     private String tag = RegisUserActivity.class.getSimpleName();
 
-    private Button regis_btn, login_btn;
+    private TextView regis_btn, login_btn;
     private EditText edit_name, edit_email, edit_pass;
 
     private KTipDialog loadingDialog;
@@ -53,8 +49,8 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
                 .setTipWord("正在注册")
                 .create();
 
-        regis_btn = (Button)findViewById(R.id.regis_btn);
-        login_btn = (Button)findViewById(R.id.login_btn);
+        regis_btn = (TextView)findViewById(R.id.regis_btn);
+        login_btn = (TextView)findViewById(R.id.login_btn);
         edit_name = (EditText)findViewById(R.id.edit_name);
         edit_email = (EditText)findViewById(R.id.edit_email);
         edit_pass = (EditText)findViewById(R.id.edit_pass);
@@ -112,8 +108,6 @@ public class RegisUserActivity extends BaseActivity implements View.OnClickListe
     }
 
     public void loginUser(){
-        startActivity(new Intent(getContext(), MainActivityV2.class));
-        EventBus.getDefault().post(new SignUpEvent(true));
         RegisUserActivity.this.finish();
     }
 }

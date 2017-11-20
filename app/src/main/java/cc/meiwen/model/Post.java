@@ -45,6 +45,8 @@ public class Post extends BmobObject {
 
     private String createdAtDate; //创建时间
 
+    private boolean isReviewed; // 是否已经审核
+
     private String tag = Post.class.getSimpleName();
 
     public Post(){
@@ -207,6 +209,14 @@ public class Post extends BmobObject {
 
     public void setCreatedAtDate(String createdAtDate) {
         this.createdAtDate = createdAtDate;
+    }
+
+    public boolean isReviewed() {
+        return isReviewed;
+    }
+
+    public void setReviewed(boolean reviewed) {
+        isReviewed = reviewed;
     }
 
     @Override

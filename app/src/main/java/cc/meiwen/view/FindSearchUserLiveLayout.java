@@ -13,7 +13,8 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import cc.meiwen.R;
-import cc.meiwen.model.PostType;
+import cc.meiwen.model.calendarSign;
+import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Date: 2017-11-03
@@ -66,7 +67,7 @@ public class FindSearchUserLiveLayout extends RelativeLayout {
     /**
      * 设置数据：直播数据3.0版
      * */
-    public void setData(List<PostType> mLiveList){
+    public void setData(List<calendarSign> mLiveList){
         if(mLiveList == null || mLiveList.size() == 0){
             this.setVisibility(View.GONE);
         } else {
@@ -86,10 +87,13 @@ public class FindSearchUserLiveLayout extends RelativeLayout {
                 ImageView user_icon = (ImageView) childView.findViewById(R.id.user_icon);
                 if(childView != null){
                     childView.setVisibility(View.VISIBLE);
-                    Glide.with(mContext)
-                            .load(mLiveList.get(i).getIconUrl())
-                            .asBitmap()
-                            .into(new CirculImageViewTarget(user_icon));
+                    BmobFile bmobFile = mLiveList.get(i).getContentImage();
+                    if(bmobFile != null) {
+                        Glide.with(mContext)
+                                .load(bmobFile.getFileUrl())
+                                .asBitmap()
+                                .into(new CirculImageViewTarget(user_icon));
+                    }
                 }
             }
         }

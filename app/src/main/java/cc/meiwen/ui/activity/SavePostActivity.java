@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.koudai.kbase.widget.dialog.KTipDialog;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import cc.meiwen.R;
@@ -22,6 +23,7 @@ import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
 import cc.meiwen.model.User;
 import cc.meiwen.util.OnTextChangeListener;
+import cc.meiwen.view.pickerview.OptionsPickerView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
@@ -38,13 +40,13 @@ import cn.bmob.v3.listener.UploadFileListener;
  * Info 发布帖子
  */
 
-public class SavePostActivity extends BaseImageSelectActivity implements View.OnClickListener{
+public class SavePostActivity extends BaseImageSelectActivity implements
+        View.OnClickListener, OptionsPickerView.OnOptionsSelectListener {
 
     private PostType postType;
-    private List<PostType> postTypeList;
     private User bmobUser;
 
-    private TextView post_btn, words_number_view;
+    private TextView post_btn, words_number_view, chooce_type_btn;
     private EditText edit_post;
     private ImageView image_picker_view, image_view;
     private LinearLayout image_picker_layout;
@@ -52,6 +54,9 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
     private BmobFile bmobFile;
 
     private KTipDialog loadingDialog;
+
+    private OptionsPickerView mOpv;
+    private ArrayList<PostType> postTypeList = new ArrayList<>();
 
     private String tag = SavePostActivity.class.getSimpleName();
 
@@ -81,6 +86,7 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
      * */
     public void initViews(){
         edit_post = (EditText)findViewById(R.id.edit_post);
+        chooce_type_btn = (TextView) findViewById(R.id.chooce_type_btn);
         post_btn = (TextView) findViewById(R.id.post_btn);
         image_picker_view = (ImageView) findViewById(R.id.image_picker_view);
         image_picker_layout = (LinearLayout) findViewById(R.id.image_picker_layout);
@@ -93,6 +99,7 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
      * */
     public void initData(){
         post_btn.setOnClickListener(this);
+        chooce_type_btn.setOnClickListener(this);
         image_picker_view.setOnClickListener(this);
         image_view.setOnClickListener(this);
 
@@ -116,16 +123,27 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
      * */
     private void getPostType(){
         BmobQuery<PostType> query = new BmobQuery<>();
+        query.order("-createdAt");
+        query.setCachePolicy(BmobQuery.CachePolicy.CACHE_THEN_NETWORK);
         query.findObjects(new FindListener<PostType>() {
             @Override
             public void done(List<PostType> list, BmobException e) {
-                postTypeList = list;
                 if(list!=null && list.size()>0){
+                    postTypeList.addAll(list);
                     postType = list.get(0);
+                    createPickerView(postTypeList);
                 }
-                Log.i(tag, "----"+e);
+                Log.i(tag, "----|||||||----"+e);
             }
         });
+    }
+
+    public void createPickerView(ArrayList<PostType> list){
+        mOpv = new OptionsPickerView(this);
+        mOpv.setOnoptionsSelectListener(this);
+        mOpv.setPicker(list);
+        mOpv.setCyclic(false);
+        mOpv.setCancelable(true);
     }
 
     /**
@@ -137,18 +155,22 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
             return;
         }
         loadingDialog.show();
-        bmobFile.uploadblock(new UploadFileListener() {
-            @Override
-            public void done(BmobException e) {
-                if(e != null){
-                    loadingDialog.dismiss();
-                    Log.d(tag, "上传文章配图，异常e = " + e);
-                } else {
-                    Log.d(tag, "上传文章配图，成功 = " + bmobFile.getFileUrl());
-                    postJz();
+        if(bmobFile != null){
+            bmobFile.uploadblock(new UploadFileListener() {
+                @Override
+                public void done(BmobException e) {
+                    if(e != null){
+                        loadingDialog.dismiss();
+                        Log.d(tag, "上传文章配图，异常e = " + e);
+                    } else {
+                        Log.d(tag, "上传文章配图，成功 = " + bmobFile.getFileUrl());
+                        postJz();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            postJz();
+        }
     }
 
     private void postJz(){
@@ -199,11 +221,24 @@ public class SavePostActivity extends BaseImageSelectActivity implements View.On
             case R.id.post_btn:
                 postData();
                 break;
+            case R.id.chooce_type_btn:
+                if(mOpv != null){
+                    mOpv.show();
+                }
+                break;
             case R.id.image_picker_view:
             case R.id.image_picker_layout:
             case R.id.image_view:
                 openImageAlbum(true);
                 break;
+        }
+    }
+
+    @Override
+    public void onOptionsSelect(int options1, int option2, int options3) {
+        if(options1 < postTypeList.size()){
+            postType = postTypeList.get(options1);
+            chooce_type_btn.setText(postType.getType());
         }
     }
 }

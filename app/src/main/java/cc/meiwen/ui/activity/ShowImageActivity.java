@@ -1,5 +1,6 @@
 package cc.meiwen.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -24,6 +25,12 @@ import cc.meiwen.util.MnAppUtil;
 
 public class ShowImageActivity extends BaseActivity {
 
+    public static void start(Context context, String imgUrl){
+        Intent intent = new Intent(context, ShowImageActivity.class);
+        intent.putExtra("imgUrl", imgUrl);
+        context.startActivity(intent);
+    }
+
     private ImageView image_view;
 
     private String imgUrl;
@@ -32,7 +39,6 @@ public class ShowImageActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        isSystemBar = false; //不改变状态栏颜色
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image_layout);
         getIntentData();
@@ -44,6 +50,11 @@ public class ShowImageActivity extends BaseActivity {
         setImageToBitmap();
     }
 
+    @Override
+    protected boolean isSystemBar() {
+        return false;
+    }
+
     private void getIntentData(){
         Intent intent = getIntent();
         imgUrl = intent.getStringExtra("imgUrl");
@@ -51,7 +62,7 @@ public class ShowImageActivity extends BaseActivity {
 
     private void setImageToBitmap(){
         Bitmap bitmap = ImageLoader.getInstance().loadImageSync(imgUrl);
-        int w = 0, h = 0;
+        int w = 1, h = 1;
         if(bitmap!=null){
             w = bitmap.getWidth();
             h = bitmap.getHeight();

@@ -28,6 +28,8 @@ public class User extends BmobUser {
 
     private String userInfo; // 用户签名
 
+    private boolean isAdmin; // 是否是管理员，管理员可以参与审核帖子
+
     public User() {
         super();
     }
@@ -106,6 +108,14 @@ public class User extends BmobUser {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     @Override

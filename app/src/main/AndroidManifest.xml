@@ -28,7 +28,9 @@
         >
         <activity
             android:name=".ui.activity.SplashActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -37,40 +39,42 @@
         </activity>
 
         <!-- 登录 -->
-        <activity android:name=".ui.activity.LoginActivity" />
+        <activity android:name=".ui.activity.LoginActivity" android:screenOrientation="portrait" />
         <!-- 首页 -->
-        <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.MainActivityV2" />
+        <activity android:name=".ui.activity.MainActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.MainActivityV2" android:screenOrientation="portrait" />
         <!-- 注册 -->
-        <activity android:name=".ui.activity.RegisUserActivity" />
+        <activity android:name=".ui.activity.RegisUserActivity" android:screenOrientation="portrait" />
         <!-- 用户信息 -->
-        <activity android:name=".ui.activity.UserInfoActivity" />
+        <activity android:name=".ui.activity.UserInfoActivity" android:screenOrientation="portrait" />
         <!-- app设置界面 -->
-        <activity android:name=".ui.activity.AppSettingActivity" android:theme="@style/translucent" />
+        <activity android:name=".ui.activity.AppSettingActivity" android:theme="@style/translucent" android:screenOrientation="portrait" />
         <!-- 发表帖子 -->
-        <activity android:name=".ui.activity.SavePostActivity" />
+        <activity android:name=".ui.activity.SavePostActivity" android:screenOrientation="portrait" />
         <!-- 帖子分类 -->
-        <activity android:name=".ui.activity.PostTypeActivity" />
+        <activity android:name=".ui.activity.PostTypeActivity" android:screenOrientation="portrait" />
         <!-- 帖子详细信息和评论 -->
-        <activity android:name=".ui.activity.PostCommentActivity" />
+        <activity android:name=".ui.activity.PostCommentActivity" android:screenOrientation="portrait" />
         <!-- 游客查看帖子 -->
-        <activity android:name=".ui.activity.NoPassActivity" />
+        <activity android:name=".ui.activity.NoPassActivity" android:screenOrientation="portrait" />
         <!-- 关于我们 -->
-        <activity android:name=".ui.activity.AboutActivity" android:theme="@style/translucent" />
+        <activity android:name=".ui.activity.AboutActivity" android:theme="@style/translucent" android:screenOrientation="portrait" />
         <!-- 用户反馈 -->
-        <activity android:name=".ui.activity.FeedbackActivity" />
+        <activity android:name=".ui.activity.FeedbackActivity" android:screenOrientation="portrait" />
 
         <!-- 2.8.66增加 -->
-        <activity android:name=".ui.activity.ShowImageActivity" />
-        <activity android:name=".ui.activity.FavoActivity" />
+        <activity android:name=".ui.activity.ShowImageActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.FavoActivity" android:screenOrientation="portrait" />
         <!-- 2.8.0增加 -->
 
         <!-- 3.0.0增加 -->
-        <activity android:name=".ui.activity.MostBeautifulActivity" />
-        <activity android:name=".ui.activity.MeActivity" />
-        <activity android:name=".ui.activity.FriendListActivity" />
-        <activity android:name=".ui.activity.MessageActivity" />
-        <activity android:name=".ui.activity.UpdateUserInfoActivity" />
+        <activity android:name=".ui.activity.MostBeautifulActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.MeActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.FriendListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.MessageActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.UpdateUserInfoActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.ReviewedPostActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.HistorySignActivity" android:screenOrientation="portrait" />
 
         <!-- 第三方登录：腾讯 -->
         <activity

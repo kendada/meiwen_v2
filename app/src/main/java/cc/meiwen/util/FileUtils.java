@@ -106,9 +106,9 @@ public class FileUtils {
     /**
      * 保存图片到SD卡，或者手机目录
      * */
-    public void saveBitmap(String fileName, Bitmap bitmap) throws IOException {
+    public String saveBitmap(String fileName, Bitmap bitmap) throws IOException {
         if(bitmap == null){
-            return;
+            return null;
         }
         String path = getStorageDirectory();
         File folderFile = new File(path);
@@ -129,6 +129,8 @@ public class FileUtils {
 
         fos.flush();
         fos.close();
+
+        return file.getPath();
     }
 
     /**

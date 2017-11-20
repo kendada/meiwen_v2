@@ -22,9 +22,9 @@ import cc.meiwen.adapter.AdViewPager;
 import cc.meiwen.adapter.FindAdAdapter;
 import cc.meiwen.adapter.JuziListAdapter;
 import cc.meiwen.model.Artcile;
-import cc.meiwen.model.Post;
-import cc.meiwen.model.PostType;
 import cc.meiwen.model.RecommendPost;
+import cc.meiwen.model.calendarSign;
+import cc.meiwen.ui.activity.HistorySignActivity;
 import cc.meiwen.ui.activity.MostBeautifulActivity;
 import cc.meiwen.ui.presenter.JuziListMvpView;
 import cc.meiwen.ui.presenter.JuziListPresenter;
@@ -148,7 +148,7 @@ public class FindFragment extends BaseFragment implements JuziListMvpView, View.
     }
 
     @Override
-    public void toResultPostType(List<PostType> list) {
+    public void toResultPostType(List<calendarSign> list) {
         mSearchUserLiveLayoutFind.setData(list);
     }
 
@@ -165,6 +165,13 @@ public class FindFragment extends BaseFragment implements JuziListMvpView, View.
         mSearchUserLiveLayoutFind = (FindSearchUserLiveLayout) headView.findViewById(R.id.find_search_user_live_layout);
 
         mAdapter.addHeaderView(headView);
+
+        mSearchUserLiveLayoutFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HistorySignActivity.start(getContext());
+            }
+        });
     }
 
     @Override

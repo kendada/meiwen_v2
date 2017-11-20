@@ -211,6 +211,26 @@
                         android:id="@+id/publish_btn"
                         />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/text"
+                    android:layout_marginTop="1dp"
+                    android:id="@+id/reviewed_layout"
+                    android:visibility="gone"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/icon_arrow"
+                        android:layout_margin="15dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/color00C4AF"
+                        android:text="审核美文"
+                        android:id="@+id/reviewed_btn"
+                        />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

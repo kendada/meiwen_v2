@@ -8,47 +8,102 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     >
-    <cc.meiwen.view.TitleBar
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tbTitleText="登录"
-        app:tbShowReturn="false"
-        />
+        android:orientation="vertical"
+        >
+        <cc.meiwen.view.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tbShowReturn="false"
+            app:tbTitleText="登录"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/topbg_3"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="11dp"
         android:layout_marginRight="11dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="10dp"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="7dp"
         android:orientation="vertical"
         android:background="@drawable/circle_bg"
         >
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:singleLine="true"
-            android:hint="用户昵称或邮箱"
-            android:id="@+id/edit_name"
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color33"
+                android:textSize="13sp"
+                android:text="用户昵称或邮箱"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:background="@color/transparent"
+                android:textSize="13sp"
+                android:singleLine="true"
+                android:hint="例：2012525109@qq.com"
+                android:id="@+id/edit_name"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorF0F1F2"
             />
-
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="13sp"
-            android:layout_below="@id/edit_name"
-            android:inputType="textPassword"
-            android:hint="密码"
-            android:id="@+id/edit_pass"
+            android:layout_height="30dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color33"
+                android:textSize="13sp"
+                android:text="密码"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:background="@color/transparent"
+                android:singleLine="true"
+                android:textSize="13sp"
+                android:layout_below="@id/edit_name"
+                android:inputType="textPassword"
+                android:hint="(数字+字母)"
+                android:id="@+id/edit_pass"
+                />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorF0F1F2"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
