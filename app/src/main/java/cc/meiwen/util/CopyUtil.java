@@ -40,6 +40,22 @@ public class CopyUtil {
 		}
 	}
 
+	public void copy(String text, String tips){
+		ClipboardManager cm = (ClipboardManager) mContext.getSystemService(
+				Context.CLIPBOARD_SERVICE);
+		cm.setText(text.trim());
+		Toast.makeText(mContext, tips, Toast.LENGTH_SHORT).show();
+		SharedPreferences.Editor ed = spf.edit();
+		if(copyCount>100){
+			ed.putInt("c_count", -1);
+			ed.commit();
+		} else {
+			copyCount += 1;
+			ed.putInt("c_count", copyCount);
+			ed.commit();
+		}
+	}
+
 	public String Paste(Context context){
 		ClipboardManager clipboard =
 				(ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);

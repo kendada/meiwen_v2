@@ -16,6 +16,7 @@ import java.util.List;
 import cc.meiwen.R;
 import cc.meiwen.adapter.base.AdapterHolder;
 import cc.meiwen.adapter.base.MnBaseAdapter;
+import cc.meiwen.adapter.base.MnFavoAdapter;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
@@ -23,7 +24,6 @@ import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 import cc.meiwen.util.MnDateUtil;
-import cc.meiwen.util.ShareUtil;
 import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
@@ -36,7 +36,7 @@ import cn.bmob.v3.listener.UpdateListener;
  * Version 1.0
  */
 
-public class FavoFragmentAdapter extends MnBaseAdapter<Favo>{
+public class FavoFragmentAdapter extends MnFavoAdapter{
 
     private int ph;
 
@@ -68,7 +68,7 @@ public class FavoFragmentAdapter extends MnBaseAdapter<Favo>{
             share_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ShareUtil.shareMsg(mContext, "", "天天美文", post.getContent(), "");
+                    showShare(favo);
                 }
             });
 

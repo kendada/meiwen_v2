@@ -1,7 +1,6 @@
 package cc.meiwen.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +17,7 @@ import java.util.List;
 import cc.meiwen.R;
 import cc.meiwen.adapter.base.AdapterHolder;
 import cc.meiwen.adapter.base.MnBaseAdapter;
+import cc.meiwen.adapter.base.MnPostAdapter;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.PostType;
@@ -26,7 +26,6 @@ import cc.meiwen.ui.activity.PostCommentActivity;
 import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 import cc.meiwen.util.MnDateUtil;
-import cc.meiwen.util.ShareUtil;
 import cc.meiwen.view.SelectableRoundedImageView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -43,11 +42,12 @@ import cn.bmob.v3.listener.UpdateListener;
  * Version 1.0
  */
 
-public class MainFragmentAdapter extends MnBaseAdapter<Post>{
+public class MainFragmentAdapter extends MnPostAdapter{
 
     private User user = null;
 
     private int ph;
+
 
     private String tag = MainFragmentAdapter.class.getSimpleName();
 
@@ -157,7 +157,7 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
             share_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ShareUtil.shareMsg(mContext, "", "天天美文", post.getContent(), "");
+                    showShare(post);
                 }
             });
 
@@ -219,5 +219,4 @@ public class MainFragmentAdapter extends MnBaseAdapter<Post>{
             }
         });
     }
-
 }

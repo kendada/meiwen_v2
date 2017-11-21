@@ -6,6 +6,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.koudai.kbase.imageselector.ImagePicker;
+import com.mob.MobSDK;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -43,6 +44,8 @@ public class BaseApplication extends Application {
 		initImageLoader(getApplicationContext());
 
 		AppUtils.application = this;
+
+		MobSDK.init(this, "227cfb2575d2b", "bdf016ba828f60d4ebec51b46960cfae");
 
 		//初始化Bmob
 		Bmob.initialize(this, "aee6e001a4a2cdd86a45363b771755e8");

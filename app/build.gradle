@@ -9,10 +9,34 @@ android {
         targetSdkVersion 22
         versionCode 20
         versionName '3.0.0'
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a'
+        }
+    }
+    signingConfigs {
+
+        release {
+            storeFile file('/Users/abc/Downloads/android.keystore')
+            storePassword "bchd0769"
+            keyAlias "android.keystore"
+            keyPassword "bchd0769"
+            v2SigningEnabled false
+        }
     }
     buildTypes {
+        debug {
+            debuggable true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+        }
+
         release {
+            debuggable false
+            zipAlignEnabled true
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

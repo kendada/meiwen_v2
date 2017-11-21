@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.io.IOException;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,8 +28,6 @@ import cc.meiwen.constant.Constant;
 import cc.meiwen.model.calendarSign;
 import cc.meiwen.util.FileUtils;
 import cc.meiwen.util.MnAppUtil;
-import cc.meiwen.util.MnDateUtil;
-import cc.meiwen.util.ShareUtil;
 import cc.meiwen.util.SharedPreferencesUtils;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -141,7 +138,7 @@ public class TipsDialog extends DialogFragment {
         switch (view.getId()) {
             case R.id.share_p_btn:
                 if(mSign != null){
-                    ShareUtil.shareMsg(getContext(), "", mSign.getTitle(), mSign.getMessage(), saveBitmap(false));
+//                    ShareUtil.shareMsg(getContext(), "", mSign.getTitle(), mSign.getMessage(), saveBitmap(false));
                 }
                 dismiss();
                 break;
