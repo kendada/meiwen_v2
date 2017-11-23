@@ -166,7 +166,7 @@ public class MWShare implements PlatformActionListener{
     public void setImagePath(String imagePath) {
         this.mImagePath = imagePath;
         if(pParams != null && !TextUtils.isEmpty(mImagePath)){
-//            pParams.setImagePath(mImagePath);
+            pParams.setImagePath(mImagePath);
         }
     }
 

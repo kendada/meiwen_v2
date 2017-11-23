@@ -244,6 +244,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:id="@+id/good_layout"
+                    >
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableRight="@mipmap/icon_arrow"
+                        android:layout_margin="15dp"
+                        android:textSize="15sp"
+                        android:text="给好评"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:id="@+id/more_setting_btn"
                     >
                     <TextView

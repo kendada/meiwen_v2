@@ -116,11 +116,13 @@
     <orderEntry type="library" exported="" name="com.makeramen:roundedimageview-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/MobCommons-2017.1024.1907.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/gson-2.6.2.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.squareup.okhttp3:logging-interceptor:3.4.1@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-annotations:24.2.1@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-Wechat-Core-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/rxandroid-1.2.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/open_sdk_r5509.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.jakewharton:butterknife-annotations:8.4.0@jar" level="project" />
+    <orderEntry type="library" exported="" name="com.alibaba:fastjson:1.1.60.android@jar" level="project" />
     <orderEntry type="library" exported="" name="kbase-release:@aar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/MobTools-2017.1024.1907.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-fragment-24.2.1" level="project" />
@@ -128,17 +130,18 @@
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/rxjava-1.1.6.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:cardview-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:animated-vector-drawable-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="com.squareup.okio:okio:1.13.0@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:design-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-Wechat-Moments-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/BmobSDK_3.5.8_20171013.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.jakewharton:butterknife-8.4.0" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-SinaWeibo-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:recyclerview-v7-24.2.1" level="project" />
+    <orderEntry type="library" exported="" name="com.squareup.okhttp3:okhttp:3.9.1@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/universal-image-loader-1.9.4.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-Core-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/org.apache.http.legacy.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-media-compat-24.2.1" level="project" />
-    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/okio-1.12.0.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-Wechat-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-vector-drawable-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-core-utils-24.2.1" level="project" />

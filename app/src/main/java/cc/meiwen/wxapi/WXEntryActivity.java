@@ -9,6 +9,7 @@
 package cc.meiwen.wxapi;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 import cn.sharesdk.wechat.utils.WXAppExtendObject;
 import cn.sharesdk.wechat.utils.WXMediaMessage;
@@ -16,6 +17,8 @@ import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 
 /** 微信客户端回调activity示例 */
 public class WXEntryActivity extends WechatHandlerActivity {
+
+	private String TAG = WXEntryActivity.class.getSimpleName();
 
 	/**
 	 * 处理微信发出的向第三方应用请求app message
@@ -29,6 +32,7 @@ public class WXEntryActivity extends WechatHandlerActivity {
 			Intent iLaunchMyself = getPackageManager().getLaunchIntentForPackage(getPackageName());
 			startActivity(iLaunchMyself);
 		}
+		Log.d(TAG, "onGetMessageFromWXReq()");
 	}
 
 	/**
@@ -47,6 +51,7 @@ public class WXEntryActivity extends WechatHandlerActivity {
 			WXAppExtendObject obj = (WXAppExtendObject) msg.mediaObject;
 			Toast.makeText(this, obj.extInfo, Toast.LENGTH_SHORT).show();
 		}
+		Log.d(TAG, "onShowMessageFromWXReq()");
 	}
 
 }

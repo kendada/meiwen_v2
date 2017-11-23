@@ -28,6 +28,9 @@ public class User extends BmobUser {
 
     private String userInfo; // 用户签名
 
+    private String loginType; // 登录平台
+    private String snsUserUrl; // 地址
+
     private boolean isAdmin; // 是否是管理员，管理员可以参与审核帖子
 
     public User() {
@@ -43,6 +46,22 @@ public class User extends BmobUser {
 
         setUserId(this.getObjectId());
         setIconUrl(icon.getUrl());
+    }
+
+    public String getSnsUserUrl() {
+        return snsUserUrl;
+    }
+
+    public void setSnsUserUrl(String snsUserUrl) {
+        this.snsUserUrl = snsUserUrl;
+    }
+
+    public String getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(String loginType) {
+        this.loginType = loginType;
     }
 
     public Integer getAge() {

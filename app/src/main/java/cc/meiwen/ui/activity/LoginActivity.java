@@ -11,22 +11,28 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.koudai.kbase.widget.dialog.KTipDialog;
-import com.tencent.connect.UserInfo;
-import com.tencent.connect.common.Constants;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import cc.meiwen.R;
 import cc.meiwen.event.SignUpEvent;
 import cc.meiwen.model.User;
+import cc.meiwen.util.AppUtils;
+import cc.meiwen.util.weibo.AccessTokenKeeper;
+import cc.meiwen.util.weibo.Oauth2AccessToken;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
 
 /**
  * User: 山野书生(1203596603@qq.com)
@@ -44,9 +50,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private EditText edit_name, edit_pass;
 
     //第三方登录
-    private TextView qq_login_btn;
-
-    private Tencent mTencent;
+    private TextView weibo_btn;
 
     private KTipDialog loadingDialog;
 
@@ -64,9 +68,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         initViews();
 
         initData();
-
-        initTencent(); //腾讯
-
     }
 
     public void initViews(){
@@ -75,7 +76,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         login_btn = (TextView) findViewById(R.id.login_btn);
         edit_name = (EditText)findViewById(R.id.edit_name);
         edit_pass = (EditText)findViewById(R.id.edit_pass);
-        qq_login_btn = (TextView)findViewById(R.id.qq_login_btn);
+        weibo_btn = (TextView) findViewById(R.id.weibo_btn);
 
     }
 
@@ -83,88 +84,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         regis_btn.setOnClickListener(this);
         login_btn.setOnClickListener(this);
         no_pass_btn.setOnClickListener(this);
-        qq_login_btn.setOnClickListener(this);
-    }
-
-    /**
-     * 初始化第三方登录
-     * */
-    private void initTencent(){
-        mTencent = Tencent.createInstance("1104956192", this);
-    }
-
-    /**
-     * 腾讯登录
-     * */
-    private void tencentLogin(){
-        //判断qq用户是否已经登录
-        if(mTencent.isSessionValid() && mTencent.getOpenId() != null){
-            Log.i(tag, "已经登录。。。");
-        } else {
-            Log.i(tag, "没有登录。。。");
-            mTencent.login(this, "all", new IUiListener() {
-                @Override
-                public void onComplete(Object o) {
-                    Log.i(tag, "---83----" + o);
-                }
-
-                @Override
-                public void onError(UiError uiError) {
-                    Log.i(tag, "----88---" + uiError);
-                }
-
-                @Override
-                public void onCancel() {
-                    Log.i(tag, "---93----onCancel()");
-                }
-            });
-        }
-
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == Constants.REQUEST_LOGIN) {
-            Tencent.onActivityResultData(requestCode, resultCode, data, new IUiListener() {
-                @Override
-                public void onComplete(Object o) {
-                    Log.i(tag, "---112----" + o);
-
-
-                    getTencentUserInfo();
-                }
-
-                @Override
-                public void onError(UiError uiError) {
-                    Log.i(tag, "----117---" + uiError);
-                }
-
-                @Override
-                public void onCancel() {
-                    Log.i(tag, "---122----onCancel()");
-                }
-            });
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void getTencentUserInfo(){
-        UserInfo info = new UserInfo(this, mTencent.getQQToken());
-        info.getUserInfo(new IUiListener() {
-            @Override
-            public void onComplete(Object o) {
-                Log.i(tag, "----138---"+o);
-            }
-
-            @Override
-            public void onError(UiError uiError) {
-                Log.i(tag, "----143---"+uiError);
-            }
-
-            @Override
-            public void onCancel() {
-                Log.i(tag, "---148---onCancel()---");
-            }
-        });
+        weibo_btn.setOnClickListener(this);
     }
 
     @Override
@@ -179,10 +99,97 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             case R.id.no_pass_btn: //游客模式
                 noPassGo();
                 break;
-            case R.id.qq_login_btn: //QQ 登录
-                tencentLogin();
+            case R.id.weibo_btn: // 微博 登录
+                weiboLogin();
                 break;
         }
+    }
+
+    private void weiboLogin(){
+        loadingDialog.show();
+        Platform weibo = ShareSDK.getPlatform(SinaWeibo.NAME);
+        weibo.setPlatformActionListener(new PlatformActionListener() {
+
+            @Override
+            public void onError(Platform arg0, int arg1, Throwable arg2) {
+                Log.d(tag, "arg0 = " + arg0 + ", arg1 = " + arg1 + ", arg2 = " + arg2);
+                dissmisDialog(1);
+            }
+
+            @Override
+            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                //输出所有授权信息
+                String result = arg0.getDb().exportData();
+                Log.d(tag, "result = " + result);
+                try {
+                    JSONObject jsonObject = new JSONObject(result);
+                    String nickname = jsonObject.optString("nickname");
+                    String userID = jsonObject.optString("userID");
+                    String resume = jsonObject.optString("resume");
+                    String icon = jsonObject.optString("icon");
+                    String snsUserUrl = jsonObject.optString("snsUserUrl");
+
+                    String token = jsonObject.optString("token");
+                    String expiresTime = jsonObject.optString("expiresTime");
+
+                    Oauth2AccessToken oauth2AccessToken = new Oauth2AccessToken();
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("uid", userID);
+                    mBundle.putString("access_token", token);
+                    mBundle.putString("expires_in", expiresTime);
+                    oauth2AccessToken = Oauth2AccessToken.parseAccessToken(mBundle);
+                    AccessTokenKeeper.writeAccessToken(AppUtils.getCtx(), oauth2AccessToken);
+
+                    weiboUserLogin(nickname, userID, resume, icon, snsUserUrl);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                Log.d(tag, "arg0 = " + arg0 + ", arg1 = " + arg1);
+                dissmisDialog(2);
+            }
+        });
+        weibo.authorize();
+    }
+
+    private void dissmisDialog(final int type){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadingDialog.dismiss();
+                String text = "";
+                switch (type){
+                    case 1:
+                        text = "登录微博发生异常，请重试！";
+                        break;
+                    case 2:
+                        text = "你已取消微博登录";
+                        break;
+                }
+                Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void weiboUserLogin(String nickname, String userId, String resume, String iconUrl, String snsUserUrl){
+        final User user = new User();
+        user.setUsername(nickname);
+        user.setPassword(userId);
+        user.setUserInfo(resume);
+        user.setIconUrl(iconUrl);
+        user.setSnsUserUrl(snsUserUrl);
+        user.setLoginType("WEIBO");
+
+        user.signUp(new SaveListener<User>() {
+            @Override
+            public void done(User user1, BmobException e) {
+                Log.d(tag, "e = " + e);
+                doLogin(user);
+            }
+        });
     }
 
     /**
@@ -213,16 +220,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             return;
         }
 
+        loadingDialog.show();
         BmobUser user = new BmobUser();
         user.setUsername(name);
         user.setPassword(pass);
 
-        user.login(new SaveListener<User>() {
-            @Override
-            public void onStart() {
-                loadingDialog.show();
-            }
+        doLogin(user);
+    }
 
+    private void doLogin(BmobUser user){
+        user.login(new SaveListener<User>() {
             @Override
             public void done(User user, BmobException e) {
                 if(e != null){
@@ -235,10 +242,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                     startActivity(intent);
                     LoginActivity.this.finish();
                 }
-            }
-
-            @Override
-            public void onFinish() {
                 loadingDialog.dismiss();
             }
         });

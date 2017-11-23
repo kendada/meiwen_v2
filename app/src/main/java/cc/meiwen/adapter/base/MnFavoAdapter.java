@@ -42,6 +42,15 @@ public abstract class MnFavoAdapter extends MnBaseAdapter<Favo>{
         if (favo == null) return;
         Post post = favo.getPost();
         if(post == null) return;
+        if(mwShare != null){
+            mwShare.setTitle(post.getContent());
+            mwShare.setText(post.getContent());
+            BmobFile bmobFile = post.getConImg();
+            if(bmobFile != null){
+                mwShare.setImageUrl(bmobFile.getFileUrl());
+            }
+            mwShare.onShare(MWShare.SHARE_TYPE_2);
+        }
     }
 
     @Override
@@ -49,6 +58,15 @@ public abstract class MnFavoAdapter extends MnBaseAdapter<Favo>{
         if (favo == null) return;
         Post post = favo.getPost();
         if(post == null) return;
+        if(mwShare != null){
+            mwShare.setText(post.getContent());
+            mwShare.setTitle(post.getContent());
+            BmobFile bmobFile = post.getConImg();
+            if(bmobFile != null){
+                mwShare.setImageUrl(bmobFile.getFileUrl());
+            }
+            mwShare.onShare(MWShare.SHARE_TYPE_1);
+        }
     }
 
     @Override

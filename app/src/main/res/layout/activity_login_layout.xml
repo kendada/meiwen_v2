@@ -144,89 +144,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginTop="21dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="7dp"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
         android:orientation="vertical"
-        android:background="@drawable/circle_bg"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:drawableTop="@mipmap/login_weibo"
+            android:drawablePadding="5dp"
+            android:layout_marginBottom="8dp"
             android:layout_gravity="center"
-            android:textSize="21sp"
+            android:textSize="12sp"
             android:textColor="@color/primaryText"
-            android:text="社交账号登录"
+            android:text="新浪微博登录"
+            android:id="@+id/weibo_btn"
             />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="5dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:drawableLeft="@mipmap/t_qq_icon"
-                    android:textSize="17sp"
-                    android:drawablePadding="7dp"
-                    android:paddingTop="11dp"
-                    android:gravity="center"
-                    android:text="QQ"
-                    android:id="@+id/qq_login_btn" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/t_ren_ren_icon"
-                    android:layout_gravity="center"
-                    android:textSize="17sp"
-                    android:drawablePadding="7dp"
-                    android:paddingTop="11dp"
-                    android:gravity="center"
-                    android:text="人人"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@mipmap/t_wei_bo_icon"
-                    android:textSize="17sp"
-                    android:drawablePadding="7dp"
-                    android:paddingTop="11dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="微博"
-                    />
-            </LinearLayout>
-        </LinearLayout>
 
     </LinearLayout>
 

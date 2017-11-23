@@ -1,9 +1,11 @@
 package cc.meiwen.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
+import cc.meiwen.BuildConfig;
 import cc.meiwen.R;
 import cc.meiwen.event.UserInfoEvent;
 import cc.meiwen.model.Comment;
@@ -55,7 +58,7 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
 
     private ImageView user_icon; //用户头像
     private TextView name, post_count, friends_count, message_count, user_explain_view;
-    private LinearLayout favo_btn, more_setting_btn, publish_layout,
+    private LinearLayout favo_btn, more_setting_btn, publish_layout, good_layout,
             post_count_layout, user_friend_layout, message_layout, reviewed_layout;
     private RelativeLayout user_info_root_layout;
 
@@ -83,6 +86,8 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
     }
 
     public void initViews(View view){
+        good_layout = (LinearLayout) view.findViewById(R.id.good_layout);
+        good_layout.setOnClickListener(this);
         user_info_root_layout = (RelativeLayout) view.findViewById(R.id.user_info_root_layout);
         user_info_root_layout.setOnClickListener(this);
         user_icon = (ImageView)view.findViewById(R.id.user_icon);
@@ -137,6 +142,10 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
             BmobFile iconBmobFile = bmobUser.getIcon();
             if(iconBmobFile != null){
                 Glide.with(this).load(iconBmobFile.getFileUrl()).asBitmap().into(user_icon);
+            } else {
+                if(!TextUtils.isEmpty(bmobUser.getIconUrl())){
+                    Glide.with(this).load(bmobUser.getIconUrl()).asBitmap().into(user_icon);
+                }
             }
             //获取登录用户发布帖子的数量
             getPostCount();
@@ -212,6 +221,9 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
                 Intent fIntent = new Intent(getContext(), FavoActivity.class);
                 startActivity(fIntent);
                 break;
+            case R.id.good_layout: // 给好评
+                goToMarket();
+                break;
             case R.id.more_setting_btn: // 更多设置
                 Intent mIntent = new Intent(getContext(), AppSettingActivity.class);
                 startActivity(mIntent);
@@ -222,6 +234,16 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
             case R.id.reviewed_layout:
                 startActivity(new Intent(getContext(), ReviewedPostActivity.class));
                 break;
+        }
+    }
+
+    private void goToMarket(){
+        try {
+            Uri mUri = Uri.parse("market://details?id="+ BuildConfig.APPLICATION_ID);
+            Intent mIntent = new Intent(Intent.ACTION_VIEW, mUri);
+            startActivity(mIntent);
+        } catch (Exception e){
+            Toast.makeText(getContext(), "未安装手机应用市场！", Toast.LENGTH_SHORT).show();
         }
     }
 

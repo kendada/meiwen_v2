@@ -13,7 +13,10 @@
     <cc.meiwen.view.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tbShowEvent="true"
+        app:tbRightEventText="分享"
         app:tbTitleText="关于我们"
+        android:id="@+id/title_bar"
         />
 
     <ScrollView
@@ -43,7 +46,7 @@
                 android:layout_marginTop="11dp"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
-                android:text="天天美文V3.0.0"
+                android:text="天天美文V3.1.1"
                 />
 
             <TextView

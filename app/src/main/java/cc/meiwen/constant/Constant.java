@@ -6,6 +6,10 @@ package cc.meiwen.constant;
 
 public interface Constant {
 
+    interface URL {
+        String url = "https://api.weibo.com/2/";
+    }
+
     interface WeiBo {
         String APP_KEY = "350257351";
         String REDIRECT_URL = "https://api.weibo.com/oauth2/default.html";

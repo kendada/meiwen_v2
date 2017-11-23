@@ -133,6 +133,14 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 				setIsPush(isChecked);
 			}
 		});
+
+		user_share_layout.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				startActivity(new Intent(getContext(), WeiBoListActivity.class));
+				return true;
+			}
+		});
 	}
 
 	@Override
