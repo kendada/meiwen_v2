@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import cc.meiwen.R;
+import cc.meiwen.constant.Constant;
 import cc.meiwen.event.SignUpEvent;
 import cc.meiwen.model.User;
 import cc.meiwen.util.AppUtils;
@@ -181,7 +182,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         user.setUserInfo(resume);
         user.setIconUrl(iconUrl);
         user.setSnsUserUrl(snsUserUrl);
-        user.setLoginType("WEIBO");
+        user.setLoginType(Constant.WeiBo.LOGIN_WEIBO);
 
         user.signUp(new SaveListener<User>() {
             @Override

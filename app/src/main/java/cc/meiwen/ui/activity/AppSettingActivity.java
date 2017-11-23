@@ -16,8 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import cc.meiwen.R;
+import cc.meiwen.constant.Constant;
+import cc.meiwen.model.User;
+import cc.meiwen.util.SharedPreferencesUtils;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
+import cc.meiwen.util.weibo.AccessTokenKeeper;
 import cc.meiwen.view.SwipeBackLayout;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.update.BmobUpdateAgent;
@@ -52,11 +56,15 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	private ScrollView scrollView;
 
 	private ThreadPoolManager threadPoolManager;
+
+	private User mUser;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_seting);
+
+		mUser = BmobUser.getCurrentUser(User.class);
 
 		scrollView = (ScrollView)findViewById(R.id.scrollView);
 		swip_back_layout = (SwipeBackLayout)findViewById(R.id.swip_back_layout);
@@ -137,10 +145,16 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 		user_share_layout.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
-				startActivity(new Intent(getContext(), WeiBoListActivity.class));
+				postWeibo();
 				return true;
 			}
 		});
+	}
+
+	private void postWeibo(){
+		if(mUser != null && mUser.isAdmin() && Constant.WeiBo.LOGIN_WEIBO.equals(mUser.getLoginType())){
+			startActivity(new Intent(getContext(), WeiBoListActivity.class));
+		}
 	}
 
 	@Override
@@ -256,6 +270,8 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 			@Override
 			public Object loadData() {
 				BmobUser.logOut();
+				AccessTokenKeeper.clear(getContext());
+				SharedPreferencesUtils.putString(Constant.ShareKey.OBJECT_ID, "");
 				application.finishAllActivity(); //退出app
 				clearSetting(); //清除配置信息
 				return null;

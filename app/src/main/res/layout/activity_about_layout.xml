@@ -46,7 +46,8 @@
                 android:layout_marginTop="11dp"
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
-                android:text="天天美文V3.1.1"
+                android:id="@+id/app_name_version_view"
+                android:text="天天美文"
                 />
 
             <TextView

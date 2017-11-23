@@ -49,10 +49,12 @@ public class WeiBoListAdapter extends BaseQuickAdapter<FriendsTimelineStatusesBO
     private KTipDialog loadingDialog;
 
     private PostType mPostType;
+    private User mUser;
 
     public WeiBoListAdapter(@Nullable List<FriendsTimelineStatusesBO> data, Context context) {
         super(R.layout.adapter_weibo_list_item_layout, data);
         this.context = context;
+        mUser = BmobUser.getCurrentUser(User.class);
         fileUtils = new FileUtils(context);
         loadingDialog = new KTipDialog.Builder(context)
                 .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
@@ -149,7 +151,9 @@ public class WeiBoListAdapter extends BaseQuickAdapter<FriendsTimelineStatusesBO
         mPost.setContent(text);
         mPost.setPostType(mPostType);
         mPost.setConImg(bmobFile);
-
+        if(mUser != null){
+            mPost.setIsShow(mUser.isAdmin()); // 如果是管理员发布美文，则不用审核
+        }
         mPost.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {

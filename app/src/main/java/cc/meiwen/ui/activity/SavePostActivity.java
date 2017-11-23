@@ -111,11 +111,16 @@ public class SavePostActivity extends BaseImageSelectActivity implements
         });
     }
 
+    private boolean isAdmin;
+
     /**
      * 获取用户信息
      * */
     private void getUser(){
         bmobUser = BmobUser.getCurrentUser(User.class);
+        if(bmobUser != null){
+            isAdmin = bmobUser.isAdmin();
+        }
     }
 
     /**
@@ -179,6 +184,7 @@ public class SavePostActivity extends BaseImageSelectActivity implements
         post.setContent(edit_post.getText().toString());
         post.setUser(bmobUser);
         post.setPostType(postType);
+        post.setIsShow(isAdmin); // 管理员发布美文，则不用审核
         if(bmobFile != null){
             post.setConImg(bmobFile);
         }
@@ -193,7 +199,13 @@ public class SavePostActivity extends BaseImageSelectActivity implements
                     Toast.makeText(getContext(), "上传失败：" + s, Toast.LENGTH_SHORT).show();
                 } else {
                     Log.i(tag, "***onSuccess()***");
-                    Toast.makeText(getContext(), "帖子发布成功，管理员会尽快审核！", Toast.LENGTH_SHORT).show();
+                    String tipsStr = "";
+                    if(isAdmin){
+                        tipsStr = "帖子发布成功!";
+                    } else {
+                        tipsStr = "帖子发布成功，管理员会尽快审核！";
+                    }
+                    Toast.makeText(getContext(), tipsStr, Toast.LENGTH_SHORT).show();
                     SavePostActivity.this.finish();
 
                 }

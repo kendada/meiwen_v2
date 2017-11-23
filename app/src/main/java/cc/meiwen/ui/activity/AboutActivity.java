@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.koudai.kbase.widget.dialog.KBottomSheet;
 
+import cc.meiwen.BuildConfig;
 import cc.meiwen.R;
 import cc.meiwen.util.CopyUtil;
 import cc.meiwen.util.MWShare;
@@ -20,25 +21,27 @@ import cc.meiwen.view.TitleBar;
  * Version 1.0
  */
 
-public class AboutActivity extends BaseActivity{
+public class AboutActivity extends BaseActivity {
 
     private TitleBar mTitleBar;
     private SwipeBackLayout swip_back_layout;
     private ScrollView scrollView;
-    private TextView qq_btn, how_btn, wx_btn, wx_user_btn;
+    private TextView qq_btn, how_btn, wx_btn, wx_user_btn, app_name_version_view;
+    private TextView mNameVersionViewApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_layout);
+        initView();
 
         mwShare = new MWShare();
         mwShare.setUrl(url);
         mwShare.setTitleUrl(url);
         mwShare.setImageData();
 
-        scrollView = (ScrollView)findViewById(R.id.scrollView);
-        swip_back_layout = (SwipeBackLayout)findViewById(R.id.swip_back_layout);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
+        swip_back_layout = (SwipeBackLayout) findViewById(R.id.swip_back_layout);
         swip_back_layout.setTouchView(scrollView);
         swip_back_layout.setOnSwipeBackListener(new SwipeBackLayout.OnSwipeBackListener() {
             @Override
@@ -55,7 +58,7 @@ public class AboutActivity extends BaseActivity{
             }
         });
 
-        qq_btn = (TextView)findViewById(R.id.qq_btn);
+        qq_btn = (TextView) findViewById(R.id.qq_btn);
         qq_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,13 +79,19 @@ public class AboutActivity extends BaseActivity{
                 new CopyUtil(getContext()).copy("vqh1314");
             }
         });
-        how_btn = (TextView)findViewById(R.id.how_btn);
+        how_btn = (TextView) findViewById(R.id.how_btn);
         how_btn.setText("使用说明：\r\n" +
                 "1. 每条美文长按可复制；\r\n" +
                 "2. 用户可收藏美文，同步到云端，永不丢失；\r\n" +
                 "3. 用户发布美文，将会通过管理员审核；【为了保证美文的质量】\r\n" +
                 "4. 用户可申请做管理员，请添加QQ群联系群主；");
 
+    }
+
+    private void initView() {
+        mNameVersionViewApp = (TextView) findViewById(R.id.app_name_version_view);
+
+        mNameVersionViewApp.setText("天天美文V"+ BuildConfig.VERSION_NAME);
     }
 
     final int TAG_SHARE_WECHAT_FRIEND = 0;
@@ -129,9 +138,9 @@ public class AboutActivity extends BaseActivity{
 
     /**
      * 分享到微博
-     * */
-    public void shareWeiBo(String text){
-        if(mwShare != null){
+     */
+    public void shareWeiBo(String text) {
+        if (mwShare != null) {
             mwShare.setText(text);
             mwShare.onShare(MWShare.SHARE_TYPE_0);
         }
@@ -139,9 +148,9 @@ public class AboutActivity extends BaseActivity{
 
     /**
      * 分享到朋友圈
-     * */
-    public void shareWeChatMoment(String text){
-        if(mwShare != null){
+     */
+    public void shareWeChatMoment(String text) {
+        if (mwShare != null) {
             mwShare.setTitle(text);
             mwShare.setText(text);
             mwShare.onShare(MWShare.SHARE_TYPE_2);
@@ -150,9 +159,9 @@ public class AboutActivity extends BaseActivity{
 
     /**
      * 分享到微信
-     * */
-    public void shareWeChatFriend(String text){
-        if(mwShare != null){
+     */
+    public void shareWeChatFriend(String text) {
+        if (mwShare != null) {
             mwShare.setText(text);
             mwShare.setTitle(text);
             mwShare.onShare(MWShare.SHARE_TYPE_1);
@@ -161,9 +170,9 @@ public class AboutActivity extends BaseActivity{
 
     /**
      * 分析到短信
-     * */
-    public void shareShortMessage(String text){
-        if(mwShare != null){
+     */
+    public void shareShortMessage(String text) {
+        if (mwShare != null) {
             mwShare.setText(text);
             mwShare.onShare(MWShare.SHARE_TYPE_5);
         }
@@ -171,8 +180,9 @@ public class AboutActivity extends BaseActivity{
 
     /**
      * 保存图片到SD卡
-     * */
-    public void saveImage(String text){}
+     */
+    public void saveImage(String text) {
+    }
 
 
 }
