@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -54,8 +54,7 @@ public class MostArtcileAdapter extends MnBaseAdapter<Artcile>{
             BmobFile bmobFile = artcile.getThumb();
             if(bmobFile != null){
                 conImageView.setVisibility(View.VISIBLE);
-                ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(),
-                        conImageView, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                Glide.with(mContext).load(bmobFile.getFileUrl()).asBitmap().into(conImageView);
             } else {
                 conImageView.setVisibility(View.GONE);
             }

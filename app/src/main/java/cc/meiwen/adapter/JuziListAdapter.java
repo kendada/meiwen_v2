@@ -7,15 +7,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 import cc.meiwen.R;
 import cc.meiwen.model.Artcile;
-import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 import cn.bmob.v3.datatype.BmobFile;
 
@@ -29,10 +28,12 @@ public class JuziListAdapter extends BaseQuickAdapter<Artcile, BaseViewHolder> {
 
     private int pw = 480;
 
+    private Context context;
 
     public JuziListAdapter(@Nullable List<Artcile> data, Context context) {
         super(R.layout.adapter_most_artcile_layout, data);
         pw = MnAppUtil.getPhoneW(context)/4;
+        this.context = context;
     }
 
     @Override
@@ -50,8 +51,7 @@ public class JuziListAdapter extends BaseQuickAdapter<Artcile, BaseViewHolder> {
             BmobFile bmobFile = artcile.getThumb();
             if(bmobFile != null){
                 conImageView.setVisibility(View.VISIBLE);
-                ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(),
-                        conImageView, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                Glide.with(context).load(bmobFile.getFileUrl()).asBitmap().into(conImageView);
             } else {
                 conImageView.setVisibility(View.GONE);
             }

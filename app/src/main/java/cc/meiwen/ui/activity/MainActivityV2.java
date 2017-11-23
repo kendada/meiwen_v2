@@ -13,6 +13,7 @@ import java.util.List;
 
 import cc.meiwen.R;
 import cc.meiwen.constant.Constant;
+import cc.meiwen.model.User;
 import cc.meiwen.model.calendarSign;
 import cc.meiwen.ui.fragment.FindFragment;
 import cc.meiwen.ui.fragment.MainFragment;
@@ -23,8 +24,10 @@ import cc.meiwen.util.SharedPreferencesUtils;
 import cc.meiwen.view.tab.MnTabGroupLayout;
 import cc.meiwen.view.tab.MnTabLayout;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * User: 山野书生(1203596603@qq.com)
@@ -90,6 +93,7 @@ public class MainActivityV2 extends BaseActivity implements MnTabGroupLayout.OnI
             }
         });
         getSign();
+//        refreshUser();
     }
 
 
@@ -150,4 +154,16 @@ public class MainActivityV2 extends BaseActivity implements MnTabGroupLayout.OnI
         mTipsDialog.show(getSupportFragmentManager());
     }
 
+    /**
+     * 刷新用户信息
+     * */
+    private void refreshUser(){
+        User mUser = BmobUser.getCurrentUser(User.class);
+        mUser.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                Log.d(tag, "刷新用户信息：e = " + e);
+            }
+        });
+    }
 }

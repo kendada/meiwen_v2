@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.koudai.kbase.widget.dialog.KTipDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,8 @@ public class HistorySignActivity extends BaseActivity {
     private List<calendarSign> mList = new ArrayList<>();
     private HistorySignAdapter mAdapter;
 
+    private KTipDialog loadingDialog;
+
     private String TAG = HistorySignActivity.class.getSimpleName();
 
     @Override
@@ -57,6 +60,11 @@ public class HistorySignActivity extends BaseActivity {
     }
 
     private void initViews(){
+        loadingDialog = new KTipDialog.Builder(this)
+                .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在加载")
+                .create();
+
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
         mAdapter = new HistorySignAdapter(mList, this);
@@ -79,6 +87,7 @@ public class HistorySignActivity extends BaseActivity {
     }
 
     private void getData() {
+        loadingDialog.show();
         BmobQuery<calendarSign> query = new BmobQuery<>();
         query.order("-createdAt");
         query.findObjects(new FindListener<calendarSign>() {
@@ -89,6 +98,7 @@ public class HistorySignActivity extends BaseActivity {
                     mList.addAll(list);
                     mAdapter.notifyDataSetChanged();
                 }
+                loadingDialog.dismiss();
             }
         });
     }

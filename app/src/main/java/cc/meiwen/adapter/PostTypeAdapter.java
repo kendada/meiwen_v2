@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class PostTypeAdapter extends MnBaseAdapter<PostType>{
                 imageView.setVisibility(View.VISIBLE);
                 String iconUrl = pt.getIconUrl(); //分类图片地址
                 if(!TextUtils.isEmpty(iconUrl)){
-                    ImageLoader.getInstance().displayImage(iconUrl, imageView, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(mContext).load(iconUrl).asBitmap().into(imageView);
                 }
             } else {
                 imageView.setVisibility(View.GONE);

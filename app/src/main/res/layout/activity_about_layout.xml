@@ -47,9 +47,18 @@
                 android:layout_marginLeft="11dp"
                 android:layout_marginRight="11dp"
                 android:id="@+id/app_name_version_view"
-                android:text="天天美文"
+                android:text="版本1.0.0"
                 />
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="15sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="11dp"
+                android:layout_marginRight="11dp"
+                android:text="最卑贱不过感情，最凉不过人心"
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,17 +84,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:layout_margin="11dp"
+                android:layout_marginLeft="11dp"
                 android:text="QQ群：287292031【点击可复制】"
                 android:id="@+id/qq_btn"
-                android:textColor="@color/color00C4AF"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:layout_margin="11dp"
+                android:layout_marginLeft="11dp"
                 android:text="微信公众账号：图说微情话【点击可复制】"
                 android:id="@+id/wx_btn"
                 android:textColor="@color/color00C4AF"
@@ -95,10 +103,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
-                android:layout_margin="11dp"
+                android:layout_marginLeft="11dp"
                 android:text="小编微信：vqh1314【点击可复制】"
                 android:id="@+id/wx_user_btn"
-                android:textColor="@color/color00C4AF"
                 />
 
         </LinearLayout>

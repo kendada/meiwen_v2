@@ -138,7 +138,6 @@
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-SinaWeibo-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:recyclerview-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.squareup.okhttp3:okhttp:3.9.1@jar" level="project" />
-    <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/universal-image-loader-1.9.4.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-Core-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/org.apache.http.legacy.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-media-compat-24.2.1" level="project" />

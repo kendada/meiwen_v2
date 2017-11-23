@@ -26,7 +26,7 @@ public class AboutActivity extends BaseActivity {
     private TitleBar mTitleBar;
     private SwipeBackLayout swip_back_layout;
     private ScrollView scrollView;
-    private TextView qq_btn, how_btn, wx_btn, wx_user_btn, app_name_version_view;
+    private TextView qq_btn, how_btn, wx_btn, wx_user_btn;
     private TextView mNameVersionViewApp;
 
     @Override
@@ -91,14 +91,13 @@ public class AboutActivity extends BaseActivity {
     private void initView() {
         mNameVersionViewApp = (TextView) findViewById(R.id.app_name_version_view);
 
-        mNameVersionViewApp.setText("天天美文V"+ BuildConfig.VERSION_NAME);
+        mNameVersionViewApp.setText("版本V"+ BuildConfig.VERSION_NAME);
     }
 
     final int TAG_SHARE_WECHAT_FRIEND = 0;
     final int TAG_SHARE_WECHAT_MOMENT = 1;
     final int TAG_SHARE_WEIBO = 2;
     final int TAG_SHARE_CHAT = 3;
-    final int TAG_SHARE_LOCAL = 4;
 
     public void showShare(final String text) {
         KBottomSheet.BottomGridSheetBuilder builder = new KBottomSheet.BottomGridSheetBuilder(this);
@@ -106,7 +105,6 @@ public class AboutActivity extends BaseActivity {
                 .addItem(R.mipmap.icon_more_operation_share_moment, "分享到朋友圈", TAG_SHARE_WECHAT_MOMENT, KBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
                 .addItem(R.mipmap.icon_more_operation_share_weibo, "分享到微博", TAG_SHARE_WEIBO, KBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
                 .addItem(R.mipmap.icon_more_operation_share_chat, "分享到短信", TAG_SHARE_CHAT, KBottomSheet.BottomGridSheetBuilder.FIRST_LINE)
-                .addItem(R.mipmap.icon_more_operation_save, "保存到本地", TAG_SHARE_LOCAL, KBottomSheet.BottomGridSheetBuilder.SECOND_LINE)
                 .setOnSheetItemClickListener(new KBottomSheet.BottomGridSheetBuilder.OnSheetItemClickListener() {
                     @Override
                     public void onClick(KBottomSheet dialog, View itemView) {
@@ -124,9 +122,6 @@ public class AboutActivity extends BaseActivity {
                                 break;
                             case TAG_SHARE_CHAT: // 分享到私信
                                 shareShortMessage(text);
-                                break;
-                            case TAG_SHARE_LOCAL: // 保存到本地
-                                saveImage(text);
                                 break;
                         }
                     }
@@ -177,12 +172,5 @@ public class AboutActivity extends BaseActivity {
             mwShare.onShare(MWShare.SHARE_TYPE_5);
         }
     }
-
-    /**
-     * 保存图片到SD卡
-     */
-    public void saveImage(String text) {
-    }
-
 
 }

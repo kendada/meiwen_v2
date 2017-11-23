@@ -2,18 +2,12 @@ package cc.meiwen.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.bumptech.glide.Glide;
 
 import cc.meiwen.R;
-import cc.meiwen.util.ImageConfigBuilder;
 import cc.meiwen.util.MnAppUtil;
 
 /**
@@ -61,37 +55,7 @@ public class ShowImageActivity extends BaseActivity {
     }
 
     private void setImageToBitmap(){
-        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(imgUrl);
-        int w = 1, h = 1;
-        if(bitmap!=null){
-            w = bitmap.getWidth();
-            h = bitmap.getHeight();
-            bitmap.recycle();
-            bitmap = null;
-        }
-        int newH = screenW*h/w;
-        ImageSize imageSize = new ImageSize(screenW, newH);
-        ImageLoader.getInstance().loadImage(imgUrl, imageSize, ImageConfigBuilder.TRANSPARENT_IMAGE, new ImageLoadingListener() {
-            @Override
-            public void onLoadingStarted(String s, View view) {
-
-            }
-
-            @Override
-            public void onLoadingFailed(String s, View view, FailReason failReason) {
-
-            }
-
-            @Override
-            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                image_view.setImageBitmap(bitmap);
-            }
-
-            @Override
-            public void onLoadingCancelled(String s, View view) {
-
-            }
-        });
+        Glide.with(getContext()).load(imgUrl).asBitmap().into(image_view);
     }
 
 }

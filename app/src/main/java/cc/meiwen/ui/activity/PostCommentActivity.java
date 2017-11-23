@@ -18,8 +18,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.koudai.kbase.widget.dialog.KTipDialog;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -197,7 +197,7 @@ public class PostCommentActivity extends BaseActivity{
                     content_img.setVisibility(View.VISIBLE);
                     LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ph);
                     content_img.setLayoutParams(llp);
-                    ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(getContext()).load(bmobFile.getFileUrl()).asBitmap().into(content_img);
                 } else {
                     content_img.setVisibility(View.GONE);
                 }
@@ -211,7 +211,7 @@ public class PostCommentActivity extends BaseActivity{
                 post_type_txt.setText(postType.getType());
                 if(isLoadImg){
                     type_icon.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().displayImage(postType.getIconUrl(), type_icon, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(getContext()).load(postType.getIconUrl()).asBitmap().into(type_icon);
                 } else {
                     type_icon.setVisibility(View.GONE);
                 }

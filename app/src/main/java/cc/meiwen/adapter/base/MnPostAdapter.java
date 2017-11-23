@@ -74,6 +74,13 @@ public abstract class MnPostAdapter extends MnBaseAdapter<Post>{
     @Override
     public void saveImage(Post post) {
         if (post == null) return;
-
+        BmobFile bmobFile = post.getConImg();
+        String imgUrl = null;
+        if(bmobFile != null){
+            imgUrl = bmobFile.getUrl();
+        } else {
+            imgUrl = post.getConImgUrl();
+        }
+        saveImageToSDCard(imgUrl);
     }
 }

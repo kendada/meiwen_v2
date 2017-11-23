@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -96,7 +96,7 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
                     content_img.setVisibility(View.VISIBLE);
                     LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ph);
                     content_img.setLayoutParams(llp);
-                    ImageLoader.getInstance().displayImage(bmobFile.getFileUrl(), content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(mContext).load(bmobFile.getFileUrl()).asBitmap().into(content_img);
                     //长按下载图片
                     content_img.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -124,7 +124,7 @@ public class MeFragmentAdapter extends MnBaseAdapter<Post>{
                 post_type_txt.setText(postType.getType());
                 if(isLoadImg){
                     type_icon.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().displayImage(postType.getIconUrl(), type_icon, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(mContext).load(postType.getIconUrl()).asBitmap().into(type_icon);
                 } else {
                     type_icon.setVisibility(View.GONE);
                 }

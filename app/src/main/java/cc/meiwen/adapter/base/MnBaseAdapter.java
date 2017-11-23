@@ -10,17 +10,16 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.koudai.kbase.widget.dialog.KBottomSheet;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import cc.meiwen.R;
-import cc.meiwen.model.Post;
 import cc.meiwen.ui.activity.BaseActivity;
 import cc.meiwen.util.FileUtils;
 import cc.meiwen.util.MnDateUtil;
@@ -154,25 +153,10 @@ public abstract class MnBaseAdapter<T> extends BaseAdapter {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                ImageLoader.getInstance().loadImage(url, new ImageLoadingListener() {
+                Glide.with(mContext).load(url).asBitmap().into(new SimpleTarget<Bitmap>() {
                     @Override
-                    public void onLoadingStarted(String s, View view) {
-
-                    }
-
-                    @Override
-                    public void onLoadingFailed(String s, View view, FailReason failReason) {
-
-                    }
-
-                    @Override
-                    public void onLoadingComplete(String s, View view, Bitmap bitmap) {
-                        saveBitmap(bitmap);
-                    }
-
-                    @Override
-                    public void onLoadingCancelled(String s, View view) {
-
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        saveBitmap(resource);
                     }
                 });
             }

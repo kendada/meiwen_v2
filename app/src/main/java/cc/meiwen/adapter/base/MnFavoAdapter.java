@@ -85,5 +85,13 @@ public abstract class MnFavoAdapter extends MnBaseAdapter<Favo>{
         if (favo == null) return;
         Post post = favo.getPost();
         if(post == null) return;
+        BmobFile bmobFile = post.getConImg();
+        String imgUrl = null;
+        if(bmobFile != null){
+            imgUrl = bmobFile.getUrl();
+        } else {
+            imgUrl = post.getConImgUrl();
+        }
+        saveImageToSDCard(imgUrl);
     }
 }

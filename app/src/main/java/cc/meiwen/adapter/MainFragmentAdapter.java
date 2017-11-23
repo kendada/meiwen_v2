@@ -10,13 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import cc.meiwen.R;
 import cc.meiwen.adapter.base.AdapterHolder;
-import cc.meiwen.adapter.base.MnBaseAdapter;
 import cc.meiwen.adapter.base.MnPostAdapter;
 import cc.meiwen.model.Favo;
 import cc.meiwen.model.Post;
@@ -91,7 +90,7 @@ public class MainFragmentAdapter extends MnPostAdapter{
                     } else {
                         imgUrl = post.getConImgUrl();
                     }
-                    ImageLoader.getInstance().displayImage(imgUrl, content_img, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(mContext).load(imgUrl).asBitmap().into(content_img);
                     //长按下载图片
                     content_img.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -127,7 +126,7 @@ public class MainFragmentAdapter extends MnPostAdapter{
                 post_type_title.setText(postType.getTitle());
                 if(isLoadImg){
                     type_icon.setVisibility(View.VISIBLE);
-                    ImageLoader.getInstance().displayImage(postType.getIconUrl(), type_icon, ImageConfigBuilder.USER_HEAD_HD_OPTIONS);
+                    Glide.with(mContext).load(postType.getIconUrl()).asBitmap().into(type_icon);
                 } else {
                     type_icon.setVisibility(View.GONE);
                 }
