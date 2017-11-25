@@ -51,7 +51,7 @@
                     android:layout_below="@id/name"
                     android:layout_gravity="center"
                     android:layout_marginLeft="11dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="3dp"
                     android:layout_toRightOf="@id/user_icon"
                     android:text="@string/jz_hen_lan_txt"
                     android:textSize="14sp" />

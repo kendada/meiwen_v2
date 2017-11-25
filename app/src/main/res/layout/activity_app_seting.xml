@@ -376,19 +376,19 @@
 	                        />
                     </RelativeLayout>
             </LinearLayout>
-            <LinearLayout 
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-                <RelativeLayout 
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/setting_item_h"
                     android:layout_marginBottom="@dimen/setting_item_m10"
                     android:background="?attr/theme_setting_item_bg"
                     android:id="@+id/app_recommed_layout"
                     >
-                    <ImageView 
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -397,7 +397,7 @@
                         android:id="@+id/recommend_icon"
                         android:src="@mipmap/setting_icon_recommend"
                         />
-                    <TextView 
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -408,7 +408,7 @@
                         android:textStyle="normal"
 	                    android:textSize="15sp"
                         />
-                    <ImageView 
+                    <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"

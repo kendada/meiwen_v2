@@ -15,6 +15,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koudai.kbase.widget.dialog.KTipDialog;
+
 import cc.meiwen.R;
 import cc.meiwen.constant.Constant;
 import cc.meiwen.model.User;
@@ -24,7 +26,9 @@ import cc.meiwen.util.task.ThreadPoolManager;
 import cc.meiwen.util.weibo.AccessTokenKeeper;
 import cc.meiwen.view.SwipeBackLayout;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.listener.BmobUpdateListener;
 import cn.bmob.v3.update.BmobUpdateAgent;
+import cn.bmob.v3.update.UpdateResponse;
 
 
 /**
@@ -46,7 +50,7 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	private RelativeLayout refresh_layout = null; //检查更新
 	private RelativeLayout opinion_layout = null; //意见反馈
 	private RelativeLayout app_recommed_layout = null; //应用推荐
-	
+
 	private AlertDialog deleteDialog = null; //清除缓存对话框
 	private AlertDialog fontSizeDialog = null; //选择字体大小
 	
@@ -58,11 +62,18 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	private ThreadPoolManager threadPoolManager;
 
 	private User mUser;
+
+	private KTipDialog mTipsDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_app_seting);
+
+		mTipsDialog = new KTipDialog.Builder(getContext())
+				.setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
+				.setTipWord("正在检查版本")
+				.create();
 
 		mUser = BmobUser.getCurrentUser(User.class);
 
@@ -100,7 +111,7 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 		about_layout.setOnClickListener(this);
 		refresh_layout = (RelativeLayout)findViewById(R.id.refresh_layout);
 		refresh_layout.setOnClickListener(this);
-		refresh_layout.setVisibility(View.GONE); //自动升级
+		refresh_layout.setVisibility(View.VISIBLE); //自动升级
 		opinion_layout = (RelativeLayout)findViewById(R.id.opinion_layout);
 		opinion_layout.setOnClickListener(this);
 		app_recommed_layout = (RelativeLayout)findViewById(R.id.app_recommed_layout);
@@ -300,6 +311,14 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 	 * 跳转到检查更新界面
 	 * */
 	private void refreshApp(){
+		mTipsDialog.show();
+		BmobUpdateAgent.setUpdateListener(new BmobUpdateListener() {
+			@Override
+			public void onUpdateReturned(int i, UpdateResponse updateResponse) {
+				mTipsDialog.dismiss();
+				Toast.makeText(getContext(), "已是最新版本", Toast.LENGTH_SHORT).show();
+			}
+		});
 		BmobUpdateAgent.forceUpdate(getContext());
 	}
 	
@@ -310,7 +329,7 @@ public class AppSettingActivity extends BaseActivity implements OnClickListener 
 		Intent intent = new Intent(this, FeedbackActivity.class);
 		startActivity(intent);
 	}
-	
+
 	/**
 	 * 跳转到应用推荐界面
 	 * */
