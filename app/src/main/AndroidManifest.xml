@@ -76,6 +76,7 @@
         <activity android:name=".ui.activity.ReviewedPostActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.HistorySignActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.WeiBoListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.HtmlMWListActivity" android:screenOrientation="portrait" />
 
         <!-- 第三方登录：腾讯 -->
         <activity

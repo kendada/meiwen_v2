@@ -32,6 +32,7 @@ import cc.meiwen.model.User;
 import cc.meiwen.ui.activity.AppSettingActivity;
 import cc.meiwen.ui.activity.FavoActivity;
 import cc.meiwen.ui.activity.FriendListActivity;
+import cc.meiwen.ui.activity.HtmlMWListActivity;
 import cc.meiwen.ui.activity.MeActivity;
 import cc.meiwen.ui.activity.MessageActivity;
 import cc.meiwen.ui.activity.ReviewedPostActivity;
@@ -115,6 +116,13 @@ public class UserInfoFragment extends BaseImageSelectFragment implements View.On
 
         reviewed_layout = (LinearLayout) view.findViewById(R.id.reviewed_layout);
         reviewed_layout.setOnClickListener(this);
+        reviewed_layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                startActivity(new Intent(getContext(), HtmlMWListActivity.class));
+                return true;
+            }
+        });
 
     }
 
