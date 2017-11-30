@@ -68,7 +68,7 @@
         <!-- 2.8.0增加 -->
 
         <!-- 3.0.0增加 -->
-        <activity android:name=".ui.activity.MostBeautifulActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.AppBrowserActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.MeActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.FriendListActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.MessageActivity" android:screenOrientation="portrait" />

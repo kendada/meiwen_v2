@@ -22,7 +22,7 @@ import cc.meiwen.model.Artcile;
 import cc.meiwen.model.Datas;
 import cc.meiwen.model.Post;
 import cc.meiwen.model.User;
-import cc.meiwen.ui.activity.MostBeautifulActivity;
+import cc.meiwen.ui.activity.AppBrowserActivity;
 import cc.meiwen.util.task.AsyncTask;
 import cc.meiwen.util.task.ThreadPoolManager;
 import cc.meiwen.view.LoadingDialog;
@@ -182,10 +182,7 @@ public class MostArtcileFragment extends BaseFragment {
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(), MostBeautifulActivity.class);
-                if(intent == null) return;
-                intent.putExtra("art", mList.get(i));
-                startActivity(intent);
+                AppBrowserActivity.start(getContext(), 1, mList.get(i));
             }
         });
 

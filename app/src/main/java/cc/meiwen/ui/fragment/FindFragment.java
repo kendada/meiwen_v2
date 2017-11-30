@@ -25,7 +25,7 @@ import cc.meiwen.model.Artcile;
 import cc.meiwen.model.RecommendPost;
 import cc.meiwen.model.calendarSign;
 import cc.meiwen.ui.activity.HistorySignActivity;
-import cc.meiwen.ui.activity.MostBeautifulActivity;
+import cc.meiwen.ui.activity.AppBrowserActivity;
 import cc.meiwen.ui.presenter.JuziListMvpView;
 import cc.meiwen.ui.presenter.JuziListPresenter;
 import cc.meiwen.view.FindSearchUserLiveLayout;
@@ -83,10 +83,7 @@ public class FindFragment extends BaseFragment implements JuziListMvpView, View.
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getContext(), MostBeautifulActivity.class);
-                if(intent == null) return;
-                intent.putExtra("art", mList.get(position));
-                startActivity(intent);
+                AppBrowserActivity.start(getContext(), 1, mList.get(position));
             }
         });
         addHeadView();
