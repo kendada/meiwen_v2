@@ -68,7 +68,7 @@
         <!-- 2.8.0增加 -->
 
         <!-- 3.0.0增加 -->
-        <activity android:name=".ui.activity.MostBeautifulActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.AppBrowserActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.MeActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.FriendListActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.MessageActivity" android:screenOrientation="portrait" />
@@ -76,6 +76,7 @@
         <activity android:name=".ui.activity.ReviewedPostActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.HistorySignActivity" android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.WeiBoListActivity" android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.HtmlMWListActivity" android:screenOrientation="portrait" />
 
         <!-- 第三方登录：腾讯 -->
         <activity

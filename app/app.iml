@@ -148,6 +148,7 @@
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/ShareSDK-ShortMessage-3.1.1.jar:unspecified@jar" level="project" />
     <orderEntry type="library" exported="" name="org.greenrobot:eventbus:3.0.0@jar" level="project" />
     <orderEntry type="library" exported="" name="__local_jars__:/Users/abc/StudioProjects/meiwen_v2/app/libs/BmobPush_v1.0.0_0627.jar:unspecified@jar" level="project" />
+    <orderEntry type="library" exported="" name="org.jsoup:jsoup:1.11.2@jar" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:appcompat-v7-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.android.support:support-core-ui-24.2.1" level="project" />
     <orderEntry type="library" exported="" name="com.github.bumptech.glide:glide:3.7.0@jar" level="project" />

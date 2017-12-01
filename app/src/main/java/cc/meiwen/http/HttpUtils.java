@@ -65,7 +65,7 @@ public class HttpUtils {
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
-    private static <T> void onRequestError(Subscriber<? super T> subscriber, Throwable ex) {
+    protected static <T> void onRequestError(Subscriber<? super T> subscriber, Throwable ex) {
         try {
             subscriber.onError(ex);
             subscriber.onCompleted();
@@ -74,7 +74,7 @@ public class HttpUtils {
         }
     }
 
-    private static OkHttpClient createOkHttpClient(OkBasicParamsInterceptor.Builder paramsBuilder){
+    protected static OkHttpClient createOkHttpClient(OkBasicParamsInterceptor.Builder paramsBuilder){
 
         OkBasicParamsInterceptor paramsInterceptor = paramsBuilder.build();
 

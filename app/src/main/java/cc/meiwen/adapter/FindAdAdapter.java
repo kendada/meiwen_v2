@@ -3,6 +3,7 @@ package cc.meiwen.adapter;
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import cc.meiwen.model.RecommendPost;
+import cc.meiwen.ui.activity.AppBrowserActivity;
 import cn.bmob.v3.datatype.BmobFile;
 
 /**
@@ -66,7 +68,10 @@ public class FindAdAdapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String url = item.webUrl;
+                if(!TextUtils.isEmpty(url)){
+                    AppBrowserActivity.start(mContext, 2, url);
+                }
             }
         });
         container.addView(view, 0);

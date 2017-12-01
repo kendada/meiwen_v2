@@ -12,4 +12,6 @@ public class RecommendPost extends BmobObject {
     public String title;
 
     public BmobFile imgFile;
+
+    public String webUrl; // 不为空时，才可以点击
 }

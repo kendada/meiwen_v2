@@ -82,4 +82,6 @@ dependencies {
     compile 'com.alibaba:fastjson:1.1.60.android'
 
     compile 'com.squareup.okhttp3:okhttp:3.9.1'
+
+    compile 'org.jsoup:jsoup:1.11.2'
 }
