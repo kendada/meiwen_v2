@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.koudai.kbase.imageselector.utils.ScreenUtils;
 import com.koudai.kbase.widget.dialog.KTipDialog;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class HistorySignActivity extends BaseActivity {
 
     private KTipDialog loadingDialog;
 
+    private int mW; // 屏幕分辨率
+
     private String TAG = HistorySignActivity.class.getSimpleName();
 
     @Override
@@ -60,6 +63,8 @@ public class HistorySignActivity extends BaseActivity {
     }
 
     private void initViews(){
+        mW = ScreenUtils.getWidthPx(this);
+
         loadingDialog = new KTipDialog.Builder(this)
                 .setIconType(KTipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord("正在加载")
@@ -67,7 +72,7 @@ public class HistorySignActivity extends BaseActivity {
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
 
-        mAdapter = new HistorySignAdapter(mList, this);
+        mAdapter = new HistorySignAdapter(mList, this, mW);
         recyclerView.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
