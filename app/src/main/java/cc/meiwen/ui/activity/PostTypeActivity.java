@@ -133,7 +133,9 @@ public class PostTypeActivity extends BaseActivity {
             }
         });
 
-        addHeadView();
+        if(postType != null){
+            addHeadView();
+        }
     }
 
     public void initData() {
